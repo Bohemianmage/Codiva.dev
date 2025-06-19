@@ -3,6 +3,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { motion } from 'framer-motion';
+import Heading from '../components/Heading';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Required'),
@@ -17,16 +18,23 @@ export default function Contact() {
       className="w-full px-6 md:px-12 py-24 flex justify-center bg-[#F9FAFB]"
     >
       <div className="w-full max-w-2xl bg-white rounded-xl px-6 md:px-12 py-12 shadow-sm border border-zinc-200">
-        <motion.h2
+        {/* Título */}
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-zinc-900 mb-10 text-center"
         >
-          Let’s talk
-        </motion.h2>
+          <Heading
+            as="h2"
+            size="text-3xl md:text-4xl"
+            className="text-codiva-primary text-center mb-10"
+          >
+            Let’s talk
+          </Heading>
+        </motion.div>
 
+        {/* Formulario */}
         <Formik
           initialValues={{ name: '', email: '', message: '' }}
           validationSchema={validationSchema}
@@ -36,12 +44,9 @@ export default function Contact() {
           }}
         >
           {({ isSubmitting }) => (
-            <Form className="space-y-6">
+            <Form className="space-y-6 font-inter text-zinc-800">
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium mb-1"
-                >
+                <label htmlFor="name" className="block text-sm font-medium mb-1">
                   Name
                 </label>
                 <Field
@@ -56,10 +61,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium mb-1"
-                >
+                <label htmlFor="email" className="block text-sm font-medium mb-1">
                   Email
                 </label>
                 <Field
@@ -75,10 +77,7 @@ export default function Contact() {
               </div>
 
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium mb-1"
-                >
+                <label htmlFor="message" className="block text-sm font-medium mb-1">
                   Message
                 </label>
                 <Field
@@ -97,7 +96,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="button-primary w-full"
+                className="w-full bg-codiva-primary text-white py-3 px-6 rounded-2xl hover:bg-[#0c3e3e] transition font-medium"
               >
                 Send Message
               </button>

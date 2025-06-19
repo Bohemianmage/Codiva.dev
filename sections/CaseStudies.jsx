@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Heading from '../components/Heading';
+import Paragraph from '../components/Paragraph';
 
 export default function CaseStudies() {
   const cases = [
@@ -16,6 +18,12 @@ export default function CaseStudies() {
         'A booking platform for a boutique hotel. Room availability, online payments, and live calendar with Google Maps integration.',
       tech: ['React', 'Stripe', 'i18n', 'Google Maps API'],
     },
+    {
+      name: 'Morningstar',
+      description:
+        'An e-commerce experience for a holistic bracelet brand. Combines product storytelling, online orders, and service booking for wellness sessions.',
+      tech: ['Next.js', 'Sanity', 'Tailwind', 'Calendly API'],
+    },
   ];
 
   return (
@@ -24,15 +32,21 @@ export default function CaseStudies() {
       className="w-full px-6 md:px-12 py-24 flex justify-center bg-transparent"
     >
       <div className="w-full max-w-5xl bg-white rounded-xl px-6 md:px-12 py-12 shadow-sm">
-        <motion.h2
+        {/* Título de sección */}
+        <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl font-bold text-zinc-900 mb-12 text-center"
         >
-          Case Studies
-        </motion.h2>
+          <Heading
+            as="h2"
+            size="text-3xl md:text-4xl"
+            className="text-codiva-primary text-center mb-12"
+          >
+            Case Studies
+          </Heading>
+        </motion.div>
 
         <div className="space-y-10">
           {cases.map((item, index) => (
@@ -44,12 +58,17 @@ export default function CaseStudies() {
               viewport={{ once: true }}
               className="bg-white border border-zinc-100 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
             >
-              <h3 className="text-2xl font-semibold text-zinc-900 mb-2">
+              <Heading
+                as="h3"
+                size="text-2xl"
+                className="text-zinc-900 font-semibold mb-2"
+              >
                 {item.name}
-              </h3>
-              <p className="text-zinc-600 text-base mb-4 leading-relaxed">
+              </Heading>
+              <Paragraph className="text-zinc-700 text-base mb-4">
                 {item.description}
-              </p>
+              </Paragraph>
+
               <div className="flex flex-wrap gap-2">
                 {item.tech.map((tech, i) => (
                   <span

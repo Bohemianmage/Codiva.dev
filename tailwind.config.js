@@ -16,7 +16,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        satoshi: ['var(--font-satoshi)', 'sans-serif'],
+        inter: ['var(--font-inter)', 'sans-serif'],
+        sans: ['var(--font-inter)', 'sans-serif'], // redefine base
       },
     },
   },
