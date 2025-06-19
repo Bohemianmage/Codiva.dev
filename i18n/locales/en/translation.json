@@ -1,7 +1,13 @@
 {
-  "Inicio": "Home",
-  "Sobre mí": "About",
-  "Servicios": "Services",
-  "Proyectos": "Projects",
-  "Contacto": "Contact"
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+
+ "footer": {
+  "rights": "All rights reserved."
+}
 }

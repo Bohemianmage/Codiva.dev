@@ -1,16 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const navItems = [
-  { label: 'Inicio', id: 'hero' },
-  { label: 'Sobre mí', id: 'about' },
-  { label: 'Servicios', id: 'services' },
-  { label: 'Proyectos', id: 'casos' },
-  { label: 'Contacto', id: 'contact' },
+  { labelKey: 'nav.home', id: 'hero' },
+  { labelKey: 'nav.about', id: 'about' },
+  { labelKey: 'nav.services', id: 'services' },
+  { labelKey: 'nav.projects', id: 'casos' },
+  { labelKey: 'nav.contact', id: 'contact' },
 ];
 
 const navVariants = {
@@ -31,6 +32,9 @@ const itemVariants = {
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const { t } = useTranslation();
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -38,8 +42,28 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setShowNavbar(false); // scroll down
+      } else {
+        setShowNavbar(true); // scroll up
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   return (
-    <nav className="w-full fixed top-0 z-50 bg-white border-b border-[#6A757A33] px-6 md:px-12 py-4 font-inter">
+    <motion.nav
+      initial={{ y: 0 }}
+      animate={{ y: showNavbar ? 0 : -80 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className="w-full fixed top-0 z-50 bg-white border-b border-[#6A757A33] px-6 md:px-12 py-4 font-inter"
+    >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo animado */}
         <motion.div
@@ -71,14 +95,14 @@ export default function Navbar() {
             initial="hidden"
             animate="visible"
           >
-            {navItems.map(({ label, id }) => (
+            {navItems.map(({ labelKey, id }) => (
               <motion.button
                 key={id}
                 variants={itemVariants}
                 onClick={() => scrollTo(id)}
                 className="text-codiva-secondary hover:text-zinc-900 hover:underline underline-offset-4 transition-colors font-medium"
               >
-                {label}
+                {t(labelKey)}
               </motion.button>
             ))}
           </motion.div>
@@ -137,20 +161,20 @@ export default function Navbar() {
               exit="hidden"
               className="space-y-4"
             >
-              {navItems.map(({ label, id }) => (
+              {navItems.map(({ labelKey, id }) => (
                 <motion.button
                   key={id}
                   variants={itemVariants}
                   onClick={() => scrollTo(id)}
                   className="block w-full text-left text-codiva-secondary hover:text-zinc-900 transition font-medium"
                 >
-                  {label}
+                  {t(labelKey)}
                 </motion.button>
               ))}
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 }

@@ -1,8 +1,9 @@
 'use client';
 
+import { useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import Heading from '../components/Heading';
 
 const validationSchema = Yup.object({
@@ -12,18 +13,22 @@ const validationSchema = Yup.object({
 });
 
 export default function Contact() {
+  const sectionRef = useRef(null);
+  const inView = useInView(sectionRef, { triggerOnce: false, threshold: 0.6 });
+
   return (
     <section
       id="contact"
-      className="w-full px-6 md:px-12 py-24 flex justify-center bg-[#F9FAFB]"
+      ref={sectionRef}
+      className="w-full px-6 md:px-12 py-24 flex justify-center bg-zinc-50"
     >
-      <div className="w-full max-w-2xl bg-white rounded-xl px-6 md:px-12 py-12 shadow-sm border border-zinc-200">
+      <div className="w-full max-w-2xl bg-white rounded-xl shadow-md px-6 md:px-12 py-12">
         {/* Título */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          key={inView ? 'form-title-in' : 'form-title-out'}
         >
           <Heading
             as="h2"
@@ -45,7 +50,11 @@ export default function Contact() {
         >
           {({ isSubmitting }) => (
             <Form className="space-y-6 font-inter text-zinc-800">
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
                 <label htmlFor="name" className="block text-sm font-medium mb-1">
                   Name
                 </label>
@@ -58,9 +67,13 @@ export default function Contact() {
                   component="div"
                   className="text-red-500 text-sm mt-1"
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
                 <label htmlFor="email" className="block text-sm font-medium mb-1">
                   Email
                 </label>
@@ -74,9 +87,13 @@ export default function Contact() {
                   component="div"
                   className="text-red-500 text-sm mt-1"
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
                 <label htmlFor="message" className="block text-sm font-medium mb-1">
                   Message
                 </label>
@@ -91,15 +108,17 @@ export default function Contact() {
                   component="div"
                   className="text-red-500 text-sm mt-1"
                 />
-              </div>
+              </motion.div>
 
-              <button
+              <motion.button
                 type="submit"
                 disabled={isSubmitting}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 className="w-full bg-codiva-primary text-white py-3 px-6 rounded-2xl hover:bg-[#0c3e3e] transition font-medium"
               >
                 Send Message
-              </button>
+              </motion.button>
             </Form>
           )}
         </Formik>
