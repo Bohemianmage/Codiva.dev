@@ -1,0 +1,24 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './app/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './sections/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        codiva: {
+          primary: '#104E4E',      // Dark Teal - principal
+          background: '#F9FAFB',   // Gris cálido tenue
+          secondary: '#6A757A',    // Gris suave para texto complementario
+          muted: '#E5E7EB',        // Gris claro para borders y fondo neutral suave
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+};
