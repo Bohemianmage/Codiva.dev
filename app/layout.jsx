@@ -3,8 +3,11 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export const metadata = {
-  title: 'Codiva.dev',
+  title: 'codiva.dev – Custom web & SaaS development',
   description: 'Clean code. Custom tech. Without the agency noise.',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }) {
