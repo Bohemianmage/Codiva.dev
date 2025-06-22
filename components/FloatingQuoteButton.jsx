@@ -12,6 +12,7 @@ export default function FloatingQuoteButton() {
   const [showArrow, setShowArrow] = useState(true);
   const { t } = useTranslation();
 
+  // Detectar nivel de zoom para decidir si mostrar flecha animada
   useEffect(() => {
     const handleZoom = () => {
       const zoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -23,6 +24,16 @@ export default function FloatingQuoteButton() {
     return () => window.removeEventListener('resize', handleZoom);
   }, []);
 
+  // Permitir cerrar el modal con la tecla Escape
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   const validationSchema = Yup.object({
     name: Yup.string().required(t('quote.errors.name')),
     projectType: Yup.string().required(t('quote.errors.projectType')),
@@ -31,16 +42,13 @@ export default function FloatingQuoteButton() {
 
   return (
     <>
+      {/* Botón flotante */}
       <div className="fixed bottom-6 right-6 z-50">
         <div className="relative flex items-center">
-          {/* Animación visible solo en escritorio y sin zoom alto */}
+          {/* Flecha animada solo en escritorio y sin zoom alto */}
           {showArrow && (
             <div className="hidden md:block absolute right-full mr-4 -mt-1">
-              <motion.svg
-                viewBox="0 0 300 500"
-                className="w-72 h-[500px] text-codiva-primary"
-              >
-                {/* Línea curva personalizada */}
+              <motion.svg viewBox="0 0 300 500" className="w-72 h-[500px] text-codiva-primary">
                 <motion.path
                   d="M100,1 C180,-20 350,50 170,160 C120,200 190,250 293,250"
                   fill="none"
@@ -51,20 +59,10 @@ export default function FloatingQuoteButton() {
                   animate={{ pathLength: 1 }}
                   transition={{ duration: 2, ease: 'easeInOut' }}
                 />
-                {/* Flecha con pulsación rápida */}
                 <motion.g
                   initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: [0, 1],
-                    scale: [1, 1.3, 1],
-                  }}
-                  transition={{
-                    delay: 2,
-                    repeat: Infinity,
-                    repeatType: 'loop',
-                    duration: 0.4,
-                    ease: 'easeInOut',
-                  }}
+                  animate={{ opacity: [0, 1], scale: [1, 1.3, 1] }}
+                  transition={{ delay: 2, repeat: Infinity, duration: 0.4, ease: 'easeInOut' }}
                 >
                   <path
                     d="M288,245 L293,250 L288,255"
@@ -89,6 +87,7 @@ export default function FloatingQuoteButton() {
         </div>
       </div>
 
+      {/* Modal de cotización */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -105,6 +104,7 @@ export default function FloatingQuoteButton() {
               transition={{ duration: 0.3 }}
               className="bg-white w-full max-w-md rounded-xl shadow-xl p-6 relative"
             >
+              {/* Botón de cierre */}
               <button
                 onClick={() => setOpen(false)}
                 className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-800 transition"
@@ -112,10 +112,12 @@ export default function FloatingQuoteButton() {
                 <X className="w-5 h-5" />
               </button>
 
+              {/* Encabezado del modal */}
               <h2 className="text-lg font-semibold mb-4 text-codiva-primary">
                 {t('quote.title')}
               </h2>
 
+              {/* Formulario con Formik */}
               <Formik
                 initialValues={{ name: '', projectType: '', message: '' }}
                 validationSchema={validationSchema}
@@ -129,6 +131,7 @@ export default function FloatingQuoteButton() {
               >
                 {() => (
                   <Form className="space-y-4 text-sm text-zinc-800">
+                    {/* Nombre */}
                     <div>
                       <label htmlFor="name" className="block mb-1 font-medium">
                         {t('quote.fields.name')}
@@ -140,6 +143,7 @@ export default function FloatingQuoteButton() {
                       <ErrorMessage name="name" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
+                    {/* Tipo de proyecto */}
                     <div>
                       <label htmlFor="projectType" className="block mb-1 font-medium">
                         {t('quote.fields.projectType')}
@@ -150,17 +154,14 @@ export default function FloatingQuoteButton() {
                         className="w-full border border-zinc-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-codiva-primary"
                       >
                         <option value="">{t('quote.fields.selectOption')}</option>
-                        <option value={t('quote.fields.options.landing')}>
-                          {t('quote.fields.options.landing')}
+                        <option value={t('quote.fields.options.webEssentials')}>
+                          {t('quote.fields.options.webEssentials')}
                         </option>
-                        <option value={t('quote.fields.options.corporate')}>
-                          {t('quote.fields.options.corporate')}
+                        <option value={t('quote.fields.options.appsSystems')}>
+                          {t('quote.fields.options.appsSystems')}
                         </option>
-                        <option value={t('quote.fields.options.webapp')}>
-                          {t('quote.fields.options.webapp')}
-                        </option>
-                        <option value={t('quote.fields.options.ecommerce')}>
-                          {t('quote.fields.options.ecommerce')}
+                        <option value={t('quote.fields.options.cto')}>
+                          {t('quote.fields.options.cto')}
                         </option>
                         <option value={t('quote.fields.options.other')}>
                           {t('quote.fields.options.other')}
@@ -169,6 +170,7 @@ export default function FloatingQuoteButton() {
                       <ErrorMessage name="projectType" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
+                    {/* Mensaje */}
                     <div>
                       <label htmlFor="message" className="block mb-1 font-medium">
                         {t('quote.fields.message')}
@@ -182,6 +184,7 @@ export default function FloatingQuoteButton() {
                       <ErrorMessage name="message" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
+                    {/* Botón de envío */}
                     <button
                       type="submit"
                       className="w-full bg-codiva-primary text-white py-2.5 rounded-lg hover:bg-[#0c3e3e] transition font-medium"

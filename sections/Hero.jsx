@@ -6,14 +6,13 @@ import Heading from '../components/Heading';
 import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
-  const { t, i18n } = useTranslation();  // Acceso a las traducciones y el cambio de idioma
+  const { t, i18n } = useTranslation();
 
-  // Definir los textos estáticos y dinámicos
-  const staticText1 = t('hero.cleanCode');  // "Clean code."
-  const staticText2 = t('hero.withoutNoise');  // "Without the agency noise."
+  // Textos traducidos
+  const staticText1 = t('hero.cleanCode');         // Ej. "Clean code."
+  const staticText2 = t('hero.withoutNoise');      // Ej. "Without the agency noise."
+  const fullText = t('hero.customTech');           // Ej. "Custom tech." o "Tecnología a la medida."
 
-  const fullText = t('hero.customTech');  // Traducción para el texto animado (ejemplo "Custom tech." o "Tecnología a la medida.")
-  
   const [typedText, setTypedText] = useState('');
   const [typedIndex, setTypedIndex] = useState(0);
   const [done, setDone] = useState(false);
@@ -22,17 +21,17 @@ export default function Hero() {
   const heroRef = useRef(null);
   const isInView = useInView(heroRef, { threshold: 0.6 });
 
-  // Reinicia animaciones al entrar en la sección
+  // Reinicia la animación al entrar en vista
   useEffect(() => {
     if (isInView) {
       setTypedText('');
       setTypedIndex(0);
       setDone(false);
-      setAnimationKey((prev) => prev + 1);  // Fuerza un remount
+      setAnimationKey((prev) => prev + 1);
     }
   }, [isInView]);
 
-  // Lógica de mecanografiado
+  // Mecanografiado letra por letra
   useEffect(() => {
     if (typedIndex < fullText.length) {
       const timeout = setTimeout(() => {
@@ -45,13 +44,13 @@ export default function Hero() {
     }
   }, [typedIndex, fullText]);
 
-  // Detectar cuando cambia el idioma y reiniciar la animación
+  // Reinicia al cambiar de idioma
   useEffect(() => {
     setTypedText('');
     setTypedIndex(0);
     setDone(false);
-    setAnimationKey((prev) => prev + 1);  // Reiniciar animación cuando cambie el idioma
-  }, [i18n.language]);  // Esto se dispara cuando el idioma cambia
+    setAnimationKey((prev) => prev + 1);
+  }, [i18n.language]);
 
   return (
     <section
@@ -59,8 +58,9 @@ export default function Hero() {
       ref={heroRef}
       className="min-h-screen flex flex-col justify-center items-center text-center px-6 bg-codiva-background"
     >
+      {/* Encabezado principal animado */}
       <motion.div
-        key={animationKey} // 🔁 Fuerza remount del bloque
+        key={animationKey}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -78,10 +78,18 @@ export default function Hero() {
           <br />
           {staticText2}
         </Heading>
+
+        {/* Fallback SEO para bots sin JS */}
+        <noscript>
+          <h1 style={{ display: 'none' }}>
+            {staticText1} {fullText} {staticText2}
+          </h1>
+        </noscript>
       </motion.div>
 
+      {/* Botón animado para scroll */}
       <motion.button
-        key={`btn-${animationKey}`} // 🔁 también reinicia animación del botón
+        key={`btn-${animationKey}`}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2 }}
