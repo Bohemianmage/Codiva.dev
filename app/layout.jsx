@@ -5,9 +5,11 @@ import Footer from '../components/Footer';
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
 
+// ✅ Importa el componente de toast
+import { Toaster } from 'react-hot-toast';
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-// Satoshi no está en Google Fonts, así que se carga localmente:
 const satoshi = localFont({
   src: [
     {
@@ -39,6 +41,15 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
+
+        {/* ✅ Aquí agregamos el componente del toast */}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            className: 'font-inter text-sm',
+          }}
+        />
       </body>
     </html>
   );

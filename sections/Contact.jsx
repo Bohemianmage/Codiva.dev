@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { motion, useInView } from 'framer-motion';
+import toast from 'react-hot-toast';
 import Heading from '../components/Heading';
 
 export default function Contact() {
@@ -12,7 +13,7 @@ export default function Contact() {
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { triggerOnce: false, threshold: 0.6 });
 
-  // Validación dinámica con i18n
+  // Validación multilingüe
   const validationSchema = Yup.object({
     name: Yup.string().required(t('contact.validation.required')),
     email: Yup.string()
@@ -49,14 +50,34 @@ export default function Contact() {
         <Formik
           initialValues={{ name: '', email: '', message: '' }}
           validationSchema={validationSchema}
-          onSubmit={(values, { resetForm }) => {
-            alert(JSON.stringify(values, null, 2));
-            resetForm();
+          onSubmit={async (values, { resetForm, setSubmitting }) => {
+            const toastId = toast.loading(t('contact.loading') || 'Sending message...');
+
+            try {
+              const response = await fetch('/api/send-contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(values),
+              });
+
+              if (!response.ok) {
+                throw new Error('Error sending message');
+              }
+
+              toast.success(t('contact.success') || 'Message sent successfully', { id: toastId });
+              resetForm();
+            } catch (error) {
+              toast.error(t('contact.error') || 'Something went wrong. Try again later.', {
+                id: toastId,
+              });
+            } finally {
+              setSubmitting(false);
+            }
           }}
         >
           {({ isSubmitting }) => (
             <Form className="space-y-6 font-inter text-zinc-800">
-              {/* Campo: Nombre */}
+              {/* Nombre */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -76,7 +97,7 @@ export default function Contact() {
                 />
               </motion.div>
 
-              {/* Campo: Email */}
+              {/* Email */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -97,7 +118,7 @@ export default function Contact() {
                 />
               </motion.div>
 
-              {/* Campo: Mensaje */}
+              {/* Mensaje */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

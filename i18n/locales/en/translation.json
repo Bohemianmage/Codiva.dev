@@ -93,7 +93,10 @@
       "required": "Required",
       "invalidEmail": "Invalid email",
       "tooShort": "Too short"
-    }
+    },
+  "success": "Message sent successfully!",
+  "error": "Something went wrong. Please try again later.",
+  "loading": "Sending message..."
   },
  "footer": {
   "rights": "All rights reserved."

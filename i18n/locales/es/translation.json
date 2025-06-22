@@ -93,7 +93,10 @@
       "required": "Requerido",
       "invalidEmail": "Correo inválido",
       "tooShort": "Muy corto"
-    }
+    },
+  "success": "¡Mensaje enviado correctamente!",
+  "error": "Ocurrió un error. Intenta de nuevo más tarde.",
+  "loading": "Enviando mensaje..."
   },
  "footer": {
   "rights": "Derechos reservados."
