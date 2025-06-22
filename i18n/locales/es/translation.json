@@ -6,7 +6,95 @@
     "projects": "Proyectos",
     "contact": "Contacto"
   },
-
+  "about": {
+    "title": "Transformando la visión en claridad técnica",
+    "paragraph1Part1": "En ",
+    "paragraph1Part2": ", cerramos la brecha entre ideas complejas y una ejecución técnica elegante. Nuestra experiencia radica en ayudar a equipos y fundadores a convertir su visión en productos digitales estructurados y escalables. Desde el concepto inicial hasta una solución completamente realizada, ofrecemos claridad y precisión para navegar por las complejidades de la tecnología.",
+    "paragraph2Part1": "Somos más que solo desarrolladores; somos tu socio estratégico, enfocados en entregar soluciones de alto impacto y listas para el futuro. Ya sea que estés lanzando un nuevo producto, escalando una plataforma existente o buscando orientación técnica, ",
+    "paragraph2Part2": " garantiza que tu proyecto progrese con rapidez, confianza y sostenibilidad."
+},
+"hero": {
+    "cleanCode": "Código limpio.",
+    "customTech": "Tecnología a la medida.",
+    "withoutNoise": "Sin el ruido de la agencia.",
+    "viewServices": "Ver servicios"
+  },
+"services": {
+    "title": "Servicios",
+    "list": [
+      {
+        "title": "Web Esenciales",
+        "description": "Sitios informativos, landing pages, branding digital personalizado.",
+        "badge": "",
+        "details": [
+          "Diseño personalizado responsive",
+          "1–3 secciones informativas",
+          "Formulario de contacto o llamada a la acción",
+          "Estructura inicial de SEO",
+          "Multilenguaje (opcional)"
+        ]
+      },
+      {
+        "title": "Apps y Sistemas",
+        "description": "Desarrollo a medida, frontend y backend, plataformas SaaS.",
+        "badge": "Ideal para MVPs",
+        "details": [
+          "Frontend y backend a medida",
+          "Lógica de negocio y validaciones",
+          "Manejo de archivos encriptados",
+          "Integración con Stripe, mapas o APIs de correo",
+          "Dashboard administrativo (opcional)"
+        ]
+      },
+      {
+        "title": "CTO como servicio",
+        "description": "Soporte continuo, evolución de producto, mantenimiento técnico.",
+        "badge": "",
+        "details": [
+          "Diagnóstico técnico y recomendaciones",
+          "1–2 sesiones estratégicas mensuales",
+          "Soporte remoto",
+          "Documentación y roadmap (opcional)",
+          "No incluye ejecución de tareas"
+        ]
+      }
+    ],
+    "button": {
+      "show": "Ver más",
+      "hide": "Ocultar detalles"
+    }
+  },
+"cases": {
+    "title": "Casos de Éxito",
+    "list": [
+      {
+        "name": "Inquilia",
+        "description": "Una PWA centrada en la privacidad para subir documentos, encriptada con AES-256 y almacenada en Supabase. Diseñada para velocidad, claridad y facilidad de uso."
+      },
+      {
+        "name": "CD648",
+        "description": "Plataforma de reservas para un hotel boutique. Disponibilidad en tiempo real, pagos en línea y calendario integrado con Google Maps."
+      },
+      {
+        "name": "Quimialcla",
+        "description": "Sitio web corporativo para soluciones químicas, enfocado en mantener los más altos estándares de calidad y eficiencia en sus servicios."
+      }
+    ]
+  },
+"contact": {
+    "title": "Hablemos",
+    "fields": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "message": "Mensaje"
+    },
+    "button": "Enviar mensaje",
+    "validation": {
+      "required": "Requerido",
+      "invalidEmail": "Correo inválido",
+      "tooShort": "Muy corto"
+    }
+  },
  "footer": {
   "rights": "Derechos reservados."
 }

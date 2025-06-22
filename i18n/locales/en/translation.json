@@ -6,7 +6,95 @@
     "projects": "Projects",
     "contact": "Contact"
   },
-
+  "about": {
+    "title": "Transforming vision into technical clarity",
+    "paragraph1Part1": "At ", 
+    "paragraph1Part2": ", we bridge the gap between complex ideas and elegant technical execution. Our expertise lies in helping teams and founders turn their vision into structured, scalable digital products. From the initial concept to a fully realized solution, we provide clarity and precision to navigate the complexities of technology.",
+    "paragraph2Part1": "We are more than just developers; we are your strategic partner, focused on delivering high-impact, future-ready solutions. Whether you're launching a new product, scaling an existing platform, or seeking technical guidance, ",
+    "paragraph2Part2": " ensures your project progresses with speed, confidence, and sustainability."
+},
+ "hero": {
+    "cleanCode": "Clean code.",
+    "customTech": "Custom tech.",
+    "withoutNoise": "Without the agency noise.",
+    "viewServices": "View services"
+  },
+"services": {
+    "title": "Services",
+    "list": [
+      {
+        "title": "Web Essentials",
+        "description": "Informational websites, landing pages, bespoke digital branding.",
+        "badge": "",
+        "details": [
+          "Responsive custom design",
+          "1–3 informational sections",
+          "Basic CTA or contact form",
+          "Initial SEO structure",
+          "Multilanguage (optional)"
+        ]
+      },
+      {
+        "title": "Apps & Systems",
+        "description": "Tailored development, frontend and backend, SaaS platforms.",
+        "badge": "Best for MVPs",
+        "details": [
+          "Frontend & backend development",
+          "Business logic & validations",
+          "Encrypted file handling",
+          "Stripe, Maps or mailing APIs",
+          "Admin dashboard (optional)"
+        ]
+      },
+      {
+        "title": "CTO-as-a-service",
+        "description": "Ongoing support, product evolution, technical maintenance.",
+        "badge": "",
+        "details": [
+          "Tech diagnosis & recommendations",
+          "1–2 monthly strategic sessions",
+          "Remote support",
+          "Documentation & roadmap (optional)",
+          "Task execution not included"
+        ]
+      }
+    ],
+    "button": {
+      "show": "View more",
+      "hide": "Hide details"
+    }
+  },
+"cases": {
+    "title": "Success Stories",
+    "list": [
+      {
+        "name": "Inquilia",
+        "description": "A privacy-first PWA for document uploads, AES-256 encrypted and stored in Supabase. Designed for speed, clarity and ease of use."
+      },
+      {
+        "name": "CD648",
+        "description": "A booking platform for a boutique hotel. Room availability, online payments, and live calendar with Google Maps integration."
+      },
+      {
+        "name": "Quimialcla",
+        "description": "A company website providing chemical solutions, focused on maintaining the highest standards of quality and efficiency in its services."
+      }
+    ]
+  },
+"contact": {
+    "title": "Let’s talk",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message"
+    },
+    "button": "Send Message",
+    "validation": {
+      "required": "Required",
+      "invalidEmail": "Invalid email",
+      "tooShort": "Too short"
+    }
+  },
  "footer": {
   "rights": "All rights reserved."
 }

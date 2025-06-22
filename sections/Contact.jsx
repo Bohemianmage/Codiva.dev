@@ -1,20 +1,27 @@
 'use client';
 
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { motion, useInView } from 'framer-motion';
 import Heading from '../components/Heading';
 
-const validationSchema = Yup.object({
-  name: Yup.string().required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
-  message: Yup.string().min(10, 'Too short').required('Required'),
-});
-
 export default function Contact() {
+  const { t } = useTranslation();
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { triggerOnce: false, threshold: 0.6 });
+
+  // Validación dinámica con i18n
+  const validationSchema = Yup.object({
+    name: Yup.string().required(t('contact.validation.required')),
+    email: Yup.string()
+      .email(t('contact.validation.invalidEmail'))
+      .required(t('contact.validation.required')),
+    message: Yup.string()
+      .min(10, t('contact.validation.tooShort'))
+      .required(t('contact.validation.required')),
+  });
 
   return (
     <section
@@ -28,14 +35,13 @@ export default function Contact() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6 }}
-          key={inView ? 'form-title-in' : 'form-title-out'}
         >
           <Heading
             as="h2"
             size="text-3xl md:text-4xl"
             className="text-codiva-primary text-center mb-10"
           >
-            Let’s talk
+            {t('contact.title')}
           </Heading>
         </motion.div>
 
@@ -50,13 +56,14 @@ export default function Contact() {
         >
           {({ isSubmitting }) => (
             <Form className="space-y-6 font-inter text-zinc-800">
+              {/* Campo: Nombre */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
                 <label htmlFor="name" className="block text-sm font-medium mb-1">
-                  Name
+                  {t('contact.fields.name')}
                 </label>
                 <Field
                   name="name"
@@ -69,13 +76,14 @@ export default function Contact() {
                 />
               </motion.div>
 
+              {/* Campo: Email */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <label htmlFor="email" className="block text-sm font-medium mb-1">
-                  Email
+                  {t('contact.fields.email')}
                 </label>
                 <Field
                   name="email"
@@ -89,13 +97,14 @@ export default function Contact() {
                 />
               </motion.div>
 
+              {/* Campo: Mensaje */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 <label htmlFor="message" className="block text-sm font-medium mb-1">
-                  Message
+                  {t('contact.fields.message')}
                 </label>
                 <Field
                   name="message"
@@ -110,6 +119,7 @@ export default function Contact() {
                 />
               </motion.div>
 
+              {/* Botón */}
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
@@ -117,7 +127,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.98 }}
                 className="w-full bg-codiva-primary text-white py-3 px-6 rounded-2xl hover:bg-[#0c3e3e] transition font-medium"
               >
-                Send Message
+                {t('contact.button')}
               </motion.button>
             </Form>
           )}

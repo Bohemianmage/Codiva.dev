@@ -3,9 +3,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { useInView, motion } from 'framer-motion';
 import Heading from '../components/Heading';
+import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
-  const fullText = 'Custom tech.';
+  const { t, i18n } = useTranslation();  // Acceso a las traducciones y el cambio de idioma
+
+  // Definir los textos estáticos y dinámicos
+  const staticText1 = t('hero.cleanCode');  // "Clean code."
+  const staticText2 = t('hero.withoutNoise');  // "Without the agency noise."
+
+  const fullText = t('hero.customTech');  // Traducción para el texto animado (ejemplo "Custom tech." o "Tecnología a la medida.")
+  
   const [typedText, setTypedText] = useState('');
   const [typedIndex, setTypedIndex] = useState(0);
   const [done, setDone] = useState(false);
@@ -20,7 +28,7 @@ export default function Hero() {
       setTypedText('');
       setTypedIndex(0);
       setDone(false);
-      setAnimationKey((prev) => prev + 1);
+      setAnimationKey((prev) => prev + 1);  // Fuerza un remount
     }
   }, [isInView]);
 
@@ -36,6 +44,14 @@ export default function Hero() {
       setDone(true);
     }
   }, [typedIndex, fullText]);
+
+  // Detectar cuando cambia el idioma y reiniciar la animación
+  useEffect(() => {
+    setTypedText('');
+    setTypedIndex(0);
+    setDone(false);
+    setAnimationKey((prev) => prev + 1);  // Reiniciar animación cuando cambie el idioma
+  }, [i18n.language]);  // Esto se dispara cuando el idioma cambia
 
   return (
     <section
@@ -54,13 +70,13 @@ export default function Hero() {
           size="text-4xl md:text-6xl"
           className="text-zinc-900 leading-tight mb-6"
         >
-          Clean code.{' '}
+          {staticText1}{' '}
           <span className="text-codiva-primary">
             {typedText}
             {!done && <span className="animate-pulse">|</span>}
           </span>
           <br />
-          Without the agency noise.
+          {staticText2}
         </Heading>
       </motion.div>
 
@@ -75,7 +91,7 @@ export default function Hero() {
         }}
         className="bg-codiva-primary text-white px-6 py-3 rounded-2xl hover:bg-[#0c3e3e] transition"
       >
-        View services
+        {t('hero.viewServices')}
       </motion.button>
     </section>
   );

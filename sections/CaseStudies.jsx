@@ -1,41 +1,39 @@
 'use client';
 
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import Heading from '../components/Heading';
 import Paragraph from '../components/Paragraph';
 
+const casesMeta = [
+  {
+    name: 'Inquilia',
+    year: '2024',
+    url: 'https://inquilia.com',
+    tech: ['Next.js', 'Tailwind', 'Supabase', 'CryptoJS'],
+  },
+  {
+    name: 'CD648',
+    year: '2024',
+    url: 'https://cd648.com',
+    tech: ['React', 'Stripe', 'i18n', 'Google Maps API'],
+  },
+  {
+    name: 'Quimialcla',
+    year: '2025',
+    url: 'https://www.quimialcla.com.mx',
+    tech: ['React', 'Tailwind', 'i18n', 'Vercel'],
+  },
+];
+
 export default function CaseStudies() {
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { triggerOnce: false, threshold: 0.6 });
 
-  const cases = [
-    {
-      name: 'Inquilia',
-      description:
-        'A privacy-first PWA for document uploads, AES-256 encrypted and stored in Supabase. Designed for speed, clarity and ease of use.',
-      tech: ['Next.js', 'Tailwind', 'Supabase', 'CryptoJS'],
-      url: 'https://inquilia.com',
-      year: '2024',
-    },
-    {
-      name: 'CD648',
-      description:
-        'A booking platform for a boutique hotel. Room availability, online payments, and live calendar with Google Maps integration.',
-      tech: ['React', 'Stripe', 'i18n', 'Google Maps API'],
-      url: 'https://cd648.com',
-      year: '2024',
-    },
-    {
-      name: 'Morningstar',
-      description:
-        'An e-commerce experience for a holistic bracelet brand. Combines product storytelling, online orders, and service booking for wellness sessions.',
-      tech: ['Next.js', 'Sanity', 'Tailwind', 'Calendly API'],
-      url: 'https://morningstar.com',
-      year: '2023',
-    },
-  ];
+  const { t } = useTranslation();
+  const cases = t('cases.list', { returnObjects: true });
 
   return (
     <section
@@ -48,19 +46,18 @@ export default function CaseStudies() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={{ duration: 0.6 }}
-          key={inView ? 'title-in' : 'title-out'}
         >
           <Heading
             as="h2"
             size="text-3xl md:text-4xl"
             className="text-codiva-primary text-center mb-8"
           >
-            Success Stories
+            {t('cases.title')}
           </Heading>
         </motion.div>
 
         <div className="space-y-10">
-          {cases.map((item, index) => (
+          {casesMeta.map((meta, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
@@ -68,38 +65,42 @@ export default function CaseStudies() {
               transition={{ duration: 0.5, delay: index * 0.15 }}
               className="bg-white border border-zinc-100 hover:border-codiva-primary/40 rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all hover:translate-y-1"
             >
+              {/* Preview iframe */}
               <div className="rounded-lg overflow-hidden mb-4 border border-zinc-200 shadow aspect-video">
                 <iframe
-                  src={item.url}
+                  src={meta.url}
                   loading="lazy"
-                  title={`Preview of ${item.name}`}
+                  title={`Preview of ${meta.name}`}
                   className="w-full h-full"
                 ></iframe>
               </div>
 
+              {/* Título con año y link */}
               <Heading
                 as="h3"
                 size="text-lg sm:text-xl md:text-2xl"
                 className="text-zinc-900 font-semibold tracking-tight mb-2 flex flex-wrap items-center gap-2"
               >
                 <a
-                  href={item.url}
+                  href={meta.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:underline text-zinc-800 hover:text-codiva-primary transition-colors"
                 >
-                  {item.name}
+                  {meta.name}
                 </a>
-                <span className="text-sm text-zinc-400 font-normal">· {item.year}</span>
+                <span className="text-sm text-zinc-400 font-normal">· {meta.year}</span>
                 <ExternalLink className="w-4 h-4 text-zinc-400" />
               </Heading>
 
+              {/* Descripción traducida */}
               <Paragraph className="text-zinc-600 text-base mb-4">
-                {item.description}
+                {cases[index].description}
               </Paragraph>
 
+              {/* Badges tecnológicas */}
               <div className="flex flex-wrap gap-2">
-                {item.tech.map((tech, i) => (
+                {meta.tech.map((tech, i) => (
                   <motion.span
                     key={i}
                     initial={{ opacity: 0, y: 8 }}
