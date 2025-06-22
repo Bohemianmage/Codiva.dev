@@ -36,7 +36,7 @@ export const metadata = {
     icon: '/favicon.ico',
   },
   other: {
-    'google-site-verification': 'vaG5cbLjCNMZe1GgmHoQ2TV4A23cMK1IqFCZsmj_yA8',
+    'google-site-verification': 'vaG5cbLjCNMZe1GDYegB9d3X1f8XFODHZGmk4PtJjFA',
     'og:title': 'Codiva.dev | Desarrollo web a la medida',
     'og:description': 'Soluciones digitales a tu medida. Frontend, backend y UX de alta calidad. Solicita tu cotización.',
     'og:url': 'https://www.codiva.dev/',
