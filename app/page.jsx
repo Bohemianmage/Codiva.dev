@@ -17,7 +17,7 @@ export default function Home() {
           name="description"
           content="Creamos soluciones web personalizadas, modernas y funcionales. Desarrollo frontend, backend y experiencia completa. Cotiza hoy con Codiva.dev."
         />
-        <meta name="google-site-verification" content="TU-CODIGO-DE-VERIFICACION" />
+        <meta name="google-site-verification" content="<meta name="google-site-verification" content="vaG5cbLjCNMZe1GDYegB9d3X1f8XFODHZGmk4PtJjFA" />" />
         <meta name="robots" content="index, follow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://www.codiva.dev/" />
