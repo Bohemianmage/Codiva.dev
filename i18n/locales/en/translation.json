@@ -98,6 +98,29 @@
   "error": "Something went wrong. Please try again later.",
   "loading": "Sending message..."
   },
+"quote": {
+  "button": "Get a quote",
+  "title": "Request your quote",
+  "fields": {
+    "name": "Full name",
+    "projectType": "Project type",
+    "message": "Message or requirements",
+    "selectOption": "Select an option",
+    "options": {
+      "landing": "Landing page",
+      "corporate": "Corporate site",
+      "webapp": "Web App",
+      "ecommerce": "Ecommerce",
+      "other": "Other"
+    }
+  },
+  "errors": {
+    "name": "Name is required",
+    "projectType": "Select a project type",
+    "messageShort": "Too short"
+  },
+  "submit": "Send via WhatsApp"
+},
  "footer": {
   "rights": "All rights reserved."
 }

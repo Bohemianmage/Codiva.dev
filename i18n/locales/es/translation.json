@@ -98,6 +98,29 @@
   "error": "Ocurrió un error. Intenta de nuevo más tarde.",
   "loading": "Enviando mensaje..."
   },
+"quote": {
+  "button": "Quiero mi cotización",
+  "title": "Solicita tu cotización",
+  "fields": {
+    "name": "Nombre completo",
+    "projectType": "Tipo de proyecto",
+    "message": "Mensaje o requerimientos",
+    "selectOption": "Selecciona una opción",
+    "options": {
+      "landing": "Landing page",
+      "corporate": "Sitio corporativo",
+      "webapp": "Web App",
+      "ecommerce": "Ecommerce",
+      "other": "Otro"
+    }
+  },
+  "errors": {
+    "name": "Nombre requerido",
+    "projectType": "Selecciona un tipo de proyecto",
+    "messageShort": "Demasiado corto"
+  },
+  "submit": "Enviar por WhatsApp"
+},
  "footer": {
   "rights": "Derechos reservados."
 }

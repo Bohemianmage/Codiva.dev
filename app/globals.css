@@ -43,3 +43,18 @@ a {
 .button-primary {
   @apply bg-codiva-primary text-white px-5 py-2 rounded-md hover:bg-[#0c3e3e] transition;
 }
+
+@keyframes ping-fast {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.5; }
+}
+
+.animate-ping-fast {
+  animation: ping-fast 0.8s ease-in-out infinite;
+}
+
+@media (max-width: 950px) {
+  .hide-on-zoom {
+    display: none !important;
+  }
+}

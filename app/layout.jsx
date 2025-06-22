@@ -1,6 +1,7 @@
 import './globals.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import FloatingQuoteButton from '../components/FloatingQuoteButton';
 
 import { Inter } from 'next/font/google';
 import localFont from 'next/font/local';
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
+        <FloatingQuoteButton />
 
         {/* ✅ Aquí agregamos el componente del toast */}
         <Toaster
