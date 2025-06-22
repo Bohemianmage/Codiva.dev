@@ -27,24 +27,38 @@ const satoshi = localFont({
   variable: '--font-satoshi',
 });
 
+// ✅ Metadatos SEO
 export const metadata = {
-  title: 'Codiva.dev – Custom web & SaaS development',
-  description: 'Clean code. Custom tech. Without the agency noise.',
+  title: 'Codiva.dev | Desarrollo web a la medida sin complicaciones',
+  description:
+    'Creamos soluciones web personalizadas, modernas y funcionales. Desarrollo frontend, backend y experiencia completa. Cotiza hoy con Codiva.dev.',
   icons: {
     icon: '/favicon.ico',
+  },
+  other: {
+    'google-site-verification': 'vaG5cbLjCNMZe1GgmHoQ2TV4A23cMK1IqFCZsmj_yA8',
+    'og:title': 'Codiva.dev | Desarrollo web a la medida',
+    'og:description': 'Soluciones digitales a tu medida. Frontend, backend y UX de alta calidad. Solicita tu cotización.',
+    'og:url': 'https://www.codiva.dev/',
+    'og:type': 'website',
+    'og:image': 'https://www.codiva.dev/og-image.jpg',
+    'twitter:card': 'summary_large_image',
+    'twitter:title': 'Codiva.dev | Desarrollo web a la medida',
+    'twitter:description': 'Desarrollos a medida con experiencia visual y funcional impecable.',
+    'twitter:image': 'https://www.codiva.dev/og-image.jpg',
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${satoshi.variable}`}>
+    <html lang="es" className={`${inter.variable} ${satoshi.variable}`}>
       <body className="bg-neutral-50 text-zinc-900 font-sans antialiased">
         <Navbar />
         {children}
         <Footer />
         <FloatingQuoteButton />
 
-        {/* ✅ Aquí agregamos el componente del toast */}
+        {/* ✅ Toasts globales */}
         <Toaster
           position="top-right"
           toastOptions={{
