@@ -37,17 +37,21 @@ export default function Footer() {
               href="https://github.com/Bohemianmage"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-white transition"
+              aria-label="GitHub"
+              title="GitHub"
+              className="text-zinc-400 hover:text-white transition-all duration-200 transform hover:-translate-y-0.5 p-1"
             >
-              <Github size={18} />
+              <Github size={20} strokeWidth={1.8} />
             </a>
             <a
               href="https://www.linkedin.com/company/codiva-dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 hover:text-white transition"
+              aria-label="LinkedIn"
+              title="LinkedIn"
+              className="text-zinc-400 hover:text-white transition-all duration-200 transform hover:-translate-y-0.5 p-1"
             >
-              <Linkedin size={18} />
+              <Linkedin size={20} strokeWidth={1.8} />
             </a>
           </div>
         </div>

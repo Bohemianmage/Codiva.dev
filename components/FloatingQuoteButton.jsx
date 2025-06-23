@@ -12,7 +12,7 @@ export default function FloatingQuoteButton() {
   const [showArrow, setShowArrow] = useState(true);
   const { t } = useTranslation();
 
-  // Detectar nivel de zoom para decidir si mostrar flecha animada
+  // Detectar nivel de zoom
   useEffect(() => {
     const handleZoom = () => {
       const zoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -24,7 +24,7 @@ export default function FloatingQuoteButton() {
     return () => window.removeEventListener('resize', handleZoom);
   }, []);
 
-  // Permitir cerrar el modal con la tecla Escape
+  // Cerrar modal con Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') setOpen(false);
@@ -45,10 +45,13 @@ export default function FloatingQuoteButton() {
       {/* Botón flotante */}
       <div className="fixed bottom-6 right-6 z-50">
         <div className="relative flex items-center">
-          {/* Flecha animada solo en escritorio y sin zoom alto */}
+          {/* Flecha animada sin interferencia de eventos */}
           {showArrow && (
-            <div className="hidden md:block absolute right-full mr-4 -mt-1">
-              <motion.svg viewBox="0 0 300 500" className="w-72 h-[500px] text-codiva-primary">
+            <div className="hidden md:block absolute right-full mr-4 -mt-1 pointer-events-none">
+              <motion.svg
+                viewBox="0 0 300 500"
+                className="w-72 h-[500px] text-codiva-primary pointer-events-none"
+              >
                 <motion.path
                   d="M100,1 C180,-20 350,50 170,160 C120,200 190,250 293,250"
                   fill="none"
@@ -104,7 +107,7 @@ export default function FloatingQuoteButton() {
               transition={{ duration: 0.3 }}
               className="bg-white w-full max-w-md rounded-xl shadow-xl p-6 relative"
             >
-              {/* Botón de cierre */}
+              {/* Cerrar modal */}
               <button
                 onClick={() => setOpen(false)}
                 className="absolute top-4 right-4 text-zinc-500 hover:text-zinc-800 transition"
@@ -112,12 +115,12 @@ export default function FloatingQuoteButton() {
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Encabezado del modal */}
+              {/* Título */}
               <h2 className="text-lg font-semibold mb-4 text-codiva-primary">
                 {t('quote.title')}
               </h2>
 
-              {/* Formulario con Formik */}
+              {/* Formulario */}
               <Formik
                 initialValues={{ name: '', projectType: '', message: '' }}
                 validationSchema={validationSchema}
@@ -131,7 +134,6 @@ export default function FloatingQuoteButton() {
               >
                 {() => (
                   <Form className="space-y-4 text-sm text-zinc-800">
-                    {/* Nombre */}
                     <div>
                       <label htmlFor="name" className="block mb-1 font-medium">
                         {t('quote.fields.name')}
@@ -143,7 +145,6 @@ export default function FloatingQuoteButton() {
                       <ErrorMessage name="name" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
-                    {/* Tipo de proyecto */}
                     <div>
                       <label htmlFor="projectType" className="block mb-1 font-medium">
                         {t('quote.fields.projectType')}
@@ -170,7 +171,6 @@ export default function FloatingQuoteButton() {
                       <ErrorMessage name="projectType" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
-                    {/* Mensaje */}
                     <div>
                       <label htmlFor="message" className="block mb-1 font-medium">
                         {t('quote.fields.message')}
@@ -184,7 +184,6 @@ export default function FloatingQuoteButton() {
                       <ErrorMessage name="message" component="div" className="text-red-500 text-xs mt-1" />
                     </div>
 
-                    {/* Botón de envío */}
                     <button
                       type="submit"
                       className="w-full bg-codiva-primary text-white py-2.5 rounded-lg hover:bg-[#0c3e3e] transition font-medium"
