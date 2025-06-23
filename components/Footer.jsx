@@ -42,7 +42,7 @@ export default function Footer() {
               <Github size={18} />
             </a>
             <a
-              href="https://www.linkedin.com/in/jcmartell/"
+              href="https://www.linkedin.com/company/codiva-dev"
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-400 hover:text-white transition"
