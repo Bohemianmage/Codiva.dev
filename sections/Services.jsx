@@ -69,9 +69,9 @@ export default function Services() {
                   service.badge ? 'border-codiva-primary/30 bg-codiva-primary/5' : 'border-zinc-100'
                 } rounded-xl p-6 shadow-sm hover:shadow-md hover:scale-[1.015] transition-transform duration-300 flex flex-col justify-between`}
               >
-                {/* Badge destacado */}
+                {/* Badge destacado refinado para desktop y mobile */}
                 {service.badge && (
-                  <span className="text-xs text-white bg-codiva-primary px-2 py-0.5 rounded-full absolute top-4 right-4">
+                  <span className="text-[11px] md:text-xs font-medium text-white bg-codiva-primary px-3 py-1 rounded-full absolute -top-2 -right-2 shadow-sm">
                     {service.badge}
                   </span>
                 )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import i18n from '@/i18n/i18n';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,11 +15,22 @@ const LANGUAGES = [
 export default function LanguageSwitcher() {
   const isReady = useClientReady();
   const [open, setOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const currentLang = i18n.language;
   const dropdownRef = useRef(null);
   const timeoutRef = useRef(null);
 
   useClickOutside(dropdownRef, () => setOpen(false));
+
+  // Detecta si estamos en modo desktop
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    handleResize(); // detectar al montar
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (!isReady) return null;
 
@@ -30,16 +41,23 @@ export default function LanguageSwitcher() {
     <div
       ref={dropdownRef}
       className="relative w-7 h-7"
-      onMouseLeave={() => {
-        timeoutRef.current = setTimeout(() => setOpen(false), 150);
-      }}
       onMouseEnter={() => {
-        clearTimeout(timeoutRef.current);
+        if (isDesktop) {
+          clearTimeout(timeoutRef.current);
+          setOpen(true);
+        }
+      }}
+      onMouseLeave={() => {
+        if (isDesktop) {
+          timeoutRef.current = setTimeout(() => setOpen(false), 150);
+        }
       }}
     >
-      {/* Botón de bandera con animación inicial + transición al cambiar */}
+      {/* Botón de idioma */}
       <motion.button
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => {
+          if (!isDesktop) setOpen((prev) => !prev);
+        }}
         aria-label="Cambiar idioma"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

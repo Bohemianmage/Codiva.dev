@@ -9,12 +9,17 @@ import Paragraph from '../components/Paragraph';
 export default function About() {
   const { t } = useTranslation();
   const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { triggerOnce: false, threshold: 0.85 });
+
+  // Animación siempre activa al entrar al viewport
+  const inView = useInView(sectionRef, {
+    triggerOnce: false,
+    threshold: 0.85,
+  });
 
   return (
     <section
       id="about"
-      className="w-full px-6 md:px-12 py-24 flex justify-center bg-zinc-50"
+      className="w-full px-6 md:px-12 py-20 md:py-24 flex justify-center bg-zinc-50"
     >
       <div
         ref={sectionRef}
@@ -30,6 +35,8 @@ export default function About() {
             as="h2"
             size="text-3xl md:text-4xl"
             className="text-codiva-primary mb-6"
+            role="heading"
+            aria-level={2}
           >
             <motion.span
               initial={{ opacity: 0, y: 10 }}
@@ -42,9 +49,7 @@ export default function About() {
 
           {/* Fallback SEO */}
           <noscript>
-            <h2 style={{ display: 'none' }}>
-              {t('about.title')}
-            </h2>
+            <h2 style={{ display: 'none' }}>{t('about.title')}</h2>
           </noscript>
         </motion.div>
 
@@ -54,7 +59,7 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.2 }}
           key={inView ? 'visible-text' : 'hidden-text'}
         >
-          <Paragraph className="max-w-2xl mx-auto text-codiva-secondary text-lg mb-4">
+          <Paragraph className="max-w-2xl mx-auto text-codiva-secondary text-base md:text-lg mb-4">
             {t('about.paragraph1Part1')}
             <motion.span
               key="codiva"
@@ -77,7 +82,7 @@ export default function About() {
             {t('about.paragraph1Part2')}
           </Paragraph>
 
-          <Paragraph className="max-w-2xl mx-auto text-zinc-600 text-base">
+          <Paragraph className="max-w-2xl mx-auto text-zinc-600 text-base md:text-lg">
             {t('about.paragraph2Part1')}
             <motion.span
               key="codiva2"

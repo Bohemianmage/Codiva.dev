@@ -5,7 +5,9 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
+import { Sling as Hamburger } from 'hamburger-react';
 
+// Menú de navegación
 const navItems = [
   { labelKey: 'nav.home', id: 'hero' },
   { labelKey: 'nav.about', id: 'about' },
@@ -14,14 +16,13 @@ const navItems = [
   { labelKey: 'nav.contact', id: 'contact' },
 ];
 
+// Animaciones
 const navVariants = {
   hidden: { opacity: 0, y: -10 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      staggerChildren: 0.08,
-    },
+    transition: { staggerChildren: 0.03 },
   },
 };
 
@@ -42,20 +43,25 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
+  // Mostrar u ocultar el navbar según el scroll
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setShowNavbar(false); // scroll down
-      } else {
-        setShowNavbar(true); // scroll up
-      }
+      setShowNavbar(currentScrollY <= 80 || currentScrollY < lastScrollY);
       setLastScrollY(currentScrollY);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  // Cerrar menú con tecla Escape
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, []);
 
   return (
     <motion.nav
@@ -65,7 +71,7 @@ export default function Navbar() {
       className="w-full fixed top-0 z-50 bg-white border-b border-[#6A757A33] px-6 md:px-12 py-4 font-inter"
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo animado */}
+        {/* Logo */}
         <motion.div
           onClick={() => scrollTo('hero')}
           initial={{ opacity: 0, y: -6 }}
@@ -100,7 +106,7 @@ export default function Navbar() {
                 key={id}
                 variants={itemVariants}
                 onClick={() => scrollTo(id)}
-                className="text-codiva-secondary hover:text-zinc-900 hover:underline underline-offset-4 transition-colors font-medium"
+                className="relative text-codiva-secondary hover:text-zinc-900 transition-colors font-medium after:absolute after:left-0 after:bottom-[-2px] after:h-[2px] after:bg-codiva-primary after:w-0 hover:after:w-full after:transition-all"
               >
                 {t(labelKey)}
               </motion.button>
@@ -112,67 +118,62 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile toggle */}
-        <div className="md:hidden">
-          <button onClick={() => setMenuOpen(!menuOpen)} aria-label="Menú">
-            <svg
-              className="w-6 h-6 text-zinc-700"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+        {/* Mobile: Idioma + hamburguesa */}
+        <div className="md:hidden flex items-center gap-3">
+          <LanguageSwitcher />
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Menú"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+          >
+            <Hamburger toggled={menuOpen} toggle={setMenuOpen} size={20} color="#1E293B" />
           </button>
         </div>
       </div>
 
-      {/* Mobile nav */}
+      {/* Menú mobile + backdrop */}
       <AnimatePresence>
         {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98, y: -4 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.98, y: -4 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="md:hidden mt-4 px-6 pb-6"
-          >
-            {/* Idioma */}
+          <>
+            {/* Backdrop clickeable */}
             <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.2 }}
-              className="mb-4"
-            >
-              <LanguageSwitcher />
-            </motion.div>
+              onClick={() => setMenuOpen(false)}
+              className="fixed inset-0 bg-white/80 backdrop-blur-sm z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
 
-            {/* Botones animados */}
+            {/* Menú mobile */}
             <motion.div
-              variants={navVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-              className="space-y-4"
+              id="mobile-menu"
+              initial={{ opacity: 0, scale: 0.98, y: -4 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98, y: -4 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="fixed top-[72px] left-0 right-0 z-50 px-6 pb-6 bg-white"
             >
-              {navItems.map(({ labelKey, id }) => (
-                <motion.button
-                  key={id}
-                  variants={itemVariants}
-                  onClick={() => scrollTo(id)}
-                  className="block w-full text-left text-codiva-secondary hover:text-zinc-900 transition font-medium"
-                >
-                  {t(labelKey)}
-                </motion.button>
-              ))}
+              <motion.div
+                variants={navVariants}
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                className="space-y-4"
+              >
+                {navItems.map(({ labelKey, id }) => (
+                  <motion.button
+                    key={id}
+                    variants={itemVariants}
+                    onClick={() => scrollTo(id)}
+                    className="block w-full text-left text-codiva-secondary hover:text-zinc-900 transition font-medium"
+                  >
+                    {t(labelKey)}
+                  </motion.button>
+                ))}
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>
