@@ -63,6 +63,11 @@ a {
   }
 }
 
+/* Espaciado vertical estándar entre secciones */
+.section-spacing {
+   @apply pt-12 pb-12 md:pt-24 md:pb-24 lg:pt-28 lg:pb-28;
+}
+
 /* 🎯 Animaciones para carruseles infinitos */
 
 @keyframes scroll-left {

@@ -28,7 +28,7 @@ export default function Contact() {
       id="contact"
       ref={sectionRef}
       aria-labelledby="contact-heading"
-      className="w-full px-6 md:px-12 py-24 flex justify-center bg-zinc-50"
+      className="section-spacing w-full px-6 md:px-12 flex justify-center bg-zinc-50"
     >
       <div className="w-full max-w-2xl bg-white rounded-xl shadow-md px-6 md:px-12 py-12">
         {/* Título */}
@@ -72,9 +72,12 @@ export default function Contact() {
           }}
         >
           {({ isSubmitting }) => (
-            <Form role="form" aria-describedby="contact-heading" className="space-y-6 font-inter text-zinc-800">
+            <Form
+              role="form"
+              aria-describedby="contact-heading"
+              className="space-y-6 font-inter text-zinc-800"
+            >
               <fieldset className="space-y-6" disabled={isSubmitting}>
-
                 {/* Nombre */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}

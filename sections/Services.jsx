@@ -27,14 +27,13 @@ export default function Services() {
   const sectionRef = useRef(null);
   const inView = useInView(sectionRef, { triggerOnce: false, threshold: 0.6 });
 
-  // Obtener lista traducida de servicios
   const services = t('services.list', { returnObjects: true });
 
   return (
     <section
       id="services"
       ref={sectionRef}
-      className="w-full px-6 md:px-12 py-24 flex justify-center bg-zinc-50"
+      className="section-spacing w-full px-6 md:px-12 flex justify-center bg-zinc-50"
     >
       <div className="w-full max-w-6xl bg-white rounded-xl shadow-md px-6 md:px-12 py-12 text-center">
         {/* Título de la sección */}
@@ -71,7 +70,6 @@ export default function Services() {
                   service.badge ? 'border-codiva-primary/30 bg-codiva-primary/5' : 'border-zinc-100'
                 } rounded-xl p-6 shadow-sm hover:shadow-md hover:scale-[1.015] transition-transform duration-300 flex flex-col justify-between`}
               >
-                {/* Etiqueta destacada */}
                 {service.badge && (
                   <span className="text-[11px] md:text-xs font-medium text-white bg-codiva-primary px-3 py-1 rounded-full absolute -top-2 -right-2 shadow-sm">
                     {service.badge}
@@ -79,7 +77,6 @@ export default function Services() {
                 )}
 
                 <div>
-                  {/* Título con ícono */}
                   <h3 className="text-zinc-900 font-semibold text-xl mb-2 flex items-center gap-2">
                     {ICONS[index]}
                     {service.title}
@@ -91,7 +88,6 @@ export default function Services() {
                 </div>
 
                 <div className="mt-4">
-                  {/* Precio del servicio */}
                   <p
                     className="text-base text-codiva-primary font-semibold mb-3"
                     data-price={price}
@@ -99,7 +95,6 @@ export default function Services() {
                     {price}
                   </p>
 
-                  {/* Botón para ver detalles */}
                   <button
                     onClick={() => setExpandedIndex(isExpanded ? null : index)}
                     aria-expanded={isExpanded}
@@ -123,7 +118,6 @@ export default function Services() {
                     )}
                   </button>
 
-                  {/* Lista expandible de beneficios */}
                   <AnimatePresence>
                     {isExpanded && (
                       <motion.ul
@@ -139,7 +133,6 @@ export default function Services() {
                             key={i}
                             className="flex items-start gap-2 text-sm text-zinc-600"
                           >
-                            {/* Ícono check con tamaño fijo responsivo */}
                             <CheckCircle className="text-codiva-primary shrink-0 w-4 h-4 md:w-5 md:h-5 mt-[2px] md:mt-[3px]" />
                             {item}
                           </li>

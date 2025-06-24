@@ -54,14 +54,14 @@ export default function CaseStudies() {
     const interval = setInterval(() => {
       setHoveredProject(logos[i % logos.length]?.name);
       i++;
-    }, 2000); // Cambia cada 2 segundos
+    }, 2000);
     return () => clearInterval(interval);
   }, [isMobile, logos]);
 
   return (
     <section
       id="casos"
-      className="w-full px-6 md:px-12 py-20 md:py-24 flex justify-center bg-zinc-50"
+      className="section-spacing w-full px-6 md:px-12 flex justify-center bg-zinc-50"
     >
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -85,7 +85,7 @@ export default function CaseStudies() {
             ref={logoContainerRef}
             className="
               flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max
-              animate-scroll-right animate-slow sm:animate-medium lg:animate-fast
+              animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6
             "
             style={{ transform: 'translateX(var(--scroll-offset, -25%))' }}
           >
