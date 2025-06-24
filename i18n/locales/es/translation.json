@@ -5,21 +5,44 @@
     "home": "Inicio",
     "about": "Nosotros",
     "services": "Servicios",
-    "projects": "Proyectos",
-    "contact": "Contacto"
+    "cases": "Casos de Éxito",
+    "contact": "Contacto",
+    "quote": "Cotización"
   },
-  "about": {
-    "title": "Transformamos ideas en soluciones digitales escalables",
-    "paragraph1Part1": "En ",
-    "paragraph1Part2": ", cerramos la brecha entre conceptos complejos y una ejecución técnica impecable. Ayudamos a startups, equipos y fundadores a convertir su visión en productos web funcionales, modernos y seguros. Desde el prototipo hasta el despliegue final, brindamos claridad técnica para cada etapa del desarrollo.",
-    "paragraph2Part1": "No solo desarrollamos: colaboramos como aliados estratégicos para lanzar y escalar soluciones digitales de alto impacto. Ya sea que necesites construir desde cero o evolucionar tu plataforma existente, ",
-    "paragraph2Part2": " asegura progreso ágil, confianza técnica y una base sólida para tu crecimiento."
+  "common": {
+    "fields": {
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "message": "Mensaje",
+      "projectType": "Tipo de proyecto"
+    },
+    "validation": {
+      "required": "Requerido",
+      "invalidEmail": "Correo inválido",
+      "tooShort": "Muy corto"
+    },
+    "buttons": {
+      "send": "Enviar mensaje",
+      "submit": "Enviar",
+      "seeMore": "Ver más",
+      "hide": "Ocultar detalles"
+    },
+    "status": {
+      "loading": "Enviando mensaje...",
+      "success": "¡Mensaje enviado correctamente!",
+      "error": "Ocurrió un error. Intenta de nuevo más tarde."
+    }
   },
   "hero": {
     "cleanCode": "Código limpio.",
     "customTech": "Tecnología personalizada.",
     "withoutNoise": "Sin burocracia, sin complicaciones.",
     "viewServices": "Ver servicios"
+  },
+  "about": {
+    "title": "Transformamos ideas en soluciones digitales escalables",
+    "paragraph1": "En Codiva.dev, cerramos la brecha entre conceptos complejos y una ejecución técnica impecable. Ayudamos a startups, equipos y fundadores a convertir su visión en productos web funcionales, modernos y seguros. Desde el prototipo hasta el despliegue final, brindamos claridad técnica para cada etapa del desarrollo.",
+    "paragraph2": "No solo desarrollamos: colaboramos como aliados estratégicos para lanzar y escalar soluciones digitales de alto impacto. Ya sea que necesites construir desde cero o evolucionar tu plataforma existente, Codiva.dev asegura progreso ágil, confianza técnica y una base sólida para tu crecimiento."
   },
   "services": {
     "title": "Servicios",
@@ -60,11 +83,7 @@
           "No incluye ejecución operativa directa"
         ]
       }
-    ],
-    "button": {
-      "show": "Ver más",
-      "hide": "Ocultar detalles"
-    }
+    ]
   },
   "cases": {
     "title": "Casos de Éxito",
@@ -84,30 +103,12 @@
     ]
   },
   "contact": {
-    "title": "Hablemos",
-    "fields": {
-      "name": "Nombre",
-      "email": "Correo electrónico",
-      "message": "Mensaje"
-    },
-    "button": "Enviar mensaje",
-    "validation": {
-      "required": "Requerido",
-      "invalidEmail": "Correo inválido",
-      "tooShort": "Muy corto"
-    },
-    "success": "¡Mensaje enviado correctamente!",
-    "error": "Ocurrió un error. Intenta de nuevo más tarde.",
-    "loading": "Enviando mensaje..."
+    "title": "Hablemos"
   },
   "quote": {
     "title": "Solicita tu cotización",
     "button": "Quiero mi cotización",
-    "submit": "Enviar",
     "fields": {
-      "name": "Nombre completo",
-      "projectType": "Tipo de proyecto",
-      "message": "Mensaje",
       "selectOption": "Selecciona una opción",
       "options": {
         "webEssentials": "Esenciales Web",
@@ -120,10 +121,38 @@
       "name": "El nombre es obligatorio",
       "projectType": "Selecciona un tipo de proyecto",
       "messageShort": "El mensaje es muy corto"
-    }
+    },
+    "submitWhatsApp": "Enviar por WhatsApp"
+  },
+  "portafolio": {
+    "tratamiento": {
+      "titulo": "Plantas de tratamiento",
+      "sub": {
+        "daf": {
+          "titulo": "Plantas de tratamiento físico químico – DAF",
+          "texto": "Texto sobre DAF en español..."
+        },
+        "aguas": {
+          "titulo": "Plantas de tratamiento físico químico – Aguas grises",
+          "texto": "Texto sobre aguas grises en español..."
+        },
+        "biologico": {
+          "titulo": "Biológico convencional – lodos activados",
+          "texto": "Texto sobre tratamiento biológico en español..."
+        }
+      }
+    },
+    "lagunas": {
+      "titulo": "Lagunas, fuentes y albercas",
+      "texto": "Texto sobre lagunas y cuerpos de agua en español..."
+    },
+    "quimicos": {
+      "titulo": "Productos químicos",
+      "texto": "Texto sobre químicos en español..."
+    },
+    "contacto": "¡Contáctanos!"
   },
   "footer": {
     "rights": "Todos los derechos reservados."
-  },
-  "submit": "Enviar por WhatsApp"
+  }
 }

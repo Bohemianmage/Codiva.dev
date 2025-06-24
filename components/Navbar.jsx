@@ -7,12 +7,12 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Sling as Hamburger } from 'hamburger-react';
 
-// Menú de navegación
+// Menú de navegación (actualizado con la nueva key "nav.cases")
 const navItems = [
   { labelKey: 'nav.home', id: 'hero' },
   { labelKey: 'nav.about', id: 'about' },
   { labelKey: 'nav.services', id: 'services' },
-  { labelKey: 'nav.projects', id: 'casos' },
+  { labelKey: 'nav.cases', id: 'casos' }, // ✅ Corregido
   { labelKey: 'nav.contact', id: 'contact' },
 ];
 

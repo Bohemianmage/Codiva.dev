@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -11,6 +11,7 @@ export default function FloatingQuoteButton() {
   const [open, setOpen] = useState(false);
   const [showArrow, setShowArrow] = useState(true);
   const { t } = useTranslation();
+  const modalRef = useRef(null);
 
   // Detectar nivel de zoom
   useEffect(() => {
@@ -34,10 +35,27 @@ export default function FloatingQuoteButton() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // Cerrar modal al hacer clic fuera del contenido
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [open]);
+
   const validationSchema = Yup.object({
-    name: Yup.string().required(t('quote.errors.name')),
-    projectType: Yup.string().required(t('quote.errors.projectType')),
-    message: Yup.string().min(10, t('quote.errors.messageShort')),
+    name: Yup.string().required(t('common.validation.required')),
+    projectType: Yup.string().required(t('common.validation.required')),
+    message: Yup.string().min(10, t('common.validation.tooShort')),
   });
 
   return (
@@ -45,7 +63,6 @@ export default function FloatingQuoteButton() {
       {/* Botón flotante */}
       <div className="fixed bottom-6 right-6 z-50">
         <div className="relative flex items-center">
-          {/* Flecha animada sin interferencia de eventos */}
           {showArrow && (
             <div className="hidden md:block absolute right-full mr-4 -mt-1 pointer-events-none">
               <motion.svg
@@ -101,6 +118,7 @@ export default function FloatingQuoteButton() {
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
           >
             <motion.div
+              ref={modalRef}
               initial={{ scale: 0.9, y: 40 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 40 }}
@@ -126,7 +144,7 @@ export default function FloatingQuoteButton() {
                 validationSchema={validationSchema}
                 onSubmit={(values) => {
                   const { name, projectType, message } = values;
-                  const text = `¡Hola! Me gustaría recibir una cotización.\n\n👤 *${t('quote.fields.name')}:* ${name}\n💼 *${t('quote.fields.projectType')}:* ${projectType}\n📝 *${t('quote.fields.message')}:* ${message || 'N/A'}`;
+                  const text = `¡Hola! Me gustaría recibir una cotización.\n\n👤 *${t('common.fields.name')}:* ${name}\n💼 *${t('common.fields.projectType')}:* ${projectType}\n📝 *${t('common.fields.message')}:* ${message || 'N/A'}`;
                   const url = `https://wa.me/5215566819736?text=${encodeURIComponent(text)}`;
                   window.open(url, '_blank');
                   setOpen(false);
@@ -136,7 +154,7 @@ export default function FloatingQuoteButton() {
                   <Form className="space-y-4 text-sm text-zinc-800">
                     <div>
                       <label htmlFor="name" className="block mb-1 font-medium">
-                        {t('quote.fields.name')}
+                        {t('common.fields.name')}
                       </label>
                       <Field
                         name="name"
@@ -147,7 +165,7 @@ export default function FloatingQuoteButton() {
 
                     <div>
                       <label htmlFor="projectType" className="block mb-1 font-medium">
-                        {t('quote.fields.projectType')}
+                        {t('common.fields.projectType')}
                       </label>
                       <Field
                         as="select"
@@ -173,7 +191,7 @@ export default function FloatingQuoteButton() {
 
                     <div>
                       <label htmlFor="message" className="block mb-1 font-medium">
-                        {t('quote.fields.message')}
+                        {t('common.fields.message')}
                       </label>
                       <Field
                         as="textarea"
@@ -188,7 +206,7 @@ export default function FloatingQuoteButton() {
                       type="submit"
                       className="w-full bg-codiva-primary text-white py-2.5 rounded-lg hover:bg-[#0c3e3e] transition font-medium"
                     >
-                      {t('quote.submit')}
+                      {t('common.buttons.submit')}
                     </button>
                   </Form>
                 )}

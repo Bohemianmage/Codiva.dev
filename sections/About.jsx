@@ -16,6 +16,30 @@ export default function About() {
     threshold: 0.85,
   });
 
+  // Insertar "Codiva.dev" estilizado dentro de un texto
+  const CodivaDev = () => (
+    <>
+      <motion.span
+        key="codiva"
+        initial={{ opacity: 0, y: 10 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="inline-block font-semibold text-zinc-900"
+      >
+        Codiva
+      </motion.span>
+      <motion.span
+        key="dev"
+        initial={{ opacity: 0, y: 10 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="inline-block text-codiva-primary"
+      >
+        .dev
+      </motion.span>
+    </>
+  );
+
   return (
     <section
       id="about"
@@ -25,6 +49,7 @@ export default function About() {
         ref={sectionRef}
         className="w-full max-w-4xl bg-white rounded-xl shadow-lg px-8 py-12 text-center"
       >
+        {/* Título animado */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
@@ -53,6 +78,7 @@ export default function About() {
           </noscript>
         </motion.div>
 
+        {/* Párrafos animados */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -60,49 +86,15 @@ export default function About() {
           key={inView ? 'visible-text' : 'hidden-text'}
         >
           <Paragraph className="max-w-2xl mx-auto text-codiva-secondary text-base md:text-lg mb-4">
-            {t('about.paragraph1Part1')}
-            <motion.span
-              key="codiva"
-              initial={{ opacity: 0, y: 10 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="inline-block font-semibold text-zinc-900"
-            >
-              Codiva
-            </motion.span>
-            <motion.span
-              key="dev"
-              initial={{ opacity: 0, y: 10 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="inline-block text-codiva-primary"
-            >
-              .dev
-            </motion.span>
-            {t('about.paragraph1Part2')}
+            {t('about.paragraph1').split('Codiva.dev')[0]}
+            <CodivaDev />
+            {t('about.paragraph1').split('Codiva.dev')[1]}
           </Paragraph>
 
           <Paragraph className="max-w-2xl mx-auto text-zinc-600 text-base md:text-lg">
-            {t('about.paragraph2Part1')}
-            <motion.span
-              key="codiva2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="inline-block font-semibold text-zinc-900"
-            >
-              Codiva
-            </motion.span>
-            <motion.span
-              key="dev2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="inline-block text-codiva-primary"
-            >
-              .dev
-            </motion.span>
-            {t('about.paragraph2Part2')}
+            {t('about.paragraph2').split('Codiva.dev')[0]}
+            <CodivaDev />
+            {t('about.paragraph2').split('Codiva.dev')[1]}
           </Paragraph>
         </motion.div>
       </div>

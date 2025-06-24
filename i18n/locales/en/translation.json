@@ -5,109 +5,110 @@
     "home": "Home",
     "about": "About us",
     "services": "Services",
-    "projects": "Projects",
-    "contact": "Contact"
+    "cases": "Case Studies",
+    "contact": "Contact",
+    "quote": "Quote"
   },
-  "about": {
-    "title": "We turn ideas into scalable digital solutions",
-    "paragraph1Part1": "At ",
-    "paragraph1Part2": ", we close the gap between technical complexity and real-world execution. We help startups, founders, and teams turn ambitious ideas into secure, structured, and future-ready digital products. From prototype to launch, we offer clarity, speed, and expertise.",
-    "paragraph2Part1": "We’re not just developers — we’re your strategic tech partner. Whether you’re building a product from scratch, evolving a platform, or seeking ongoing guidance, ",
-    "paragraph2Part2": " ensures your project grows with confidence and technical precision."
+  "common": {
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "projectType": "Project type"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "invalidEmail": "Please enter a valid email.",
+      "tooShort": "Too short. Please provide more detail."
+    },
+    "buttons": {
+      "send": "Send Message",
+      "submit": "Send",
+      "seeMore": "See more",
+      "hide": "Hide"
+    },
+    "status": {
+      "loading": "Sending message...",
+      "success": "Message sent successfully!",
+      "error": "Something went wrong. Please try again later."
+    }
   },
   "hero": {
     "cleanCode": "Clean code.",
-    "customTech": "Tailored tech.",
-    "withoutNoise": "No agency noise, just results.",
+    "customTech": "Custom tech.",
+    "withoutNoise": "No bureaucracy, no complications.",
     "viewServices": "View services"
   },
+  "about": {
+    "title": "We turn ideas into scalable digital solutions",
+    "paragraph1": "At Codiva.dev, we bridge the gap between technical complexity and real-world execution. We help startups, founders, and teams bring ambitious ideas to life through secure, structured, and future-proof products.",
+    "paragraph2": "We’re more than just developers — we’re your strategic tech partner. Whether you’re starting from scratch, evolving a platform, or seeking ongoing guidance, Codiva.dev helps you grow with confidence and precision."
+  },
   "services": {
-    "title": "Services",
+    "title": "Our Services",
     "list": [
       {
         "title": "Web Essentials",
-        "description": "Custom websites, landing pages, and branded digital presence.",
+        "description": "Informational websites, landing pages, and responsive branding.",
         "badge": "",
         "details": [
-          "Mobile-first custom design",
+          "Custom responsive design",
           "1–3 conversion-optimized sections",
-          "Call-to-action or contact form",
-          "SEO-ready foundation",
+          "Contact form or clear call-to-action",
+          "SEO-ready structure",
           "Multilingual support"
         ]
       },
       {
         "title": "Apps & Systems",
-        "description": "Tailored applications, SaaS platforms, and full-stack systems.",
-        "badge": "Best for MVPs",
+        "description": "Web apps, SaaS platforms, and tailored backend systems.",
+        "badge": "Ideal for MVPs",
         "details": [
-          "Frontend & backend development",
-          "Business logic and workflows",
-          "Encrypted file handling",
-          "Stripe, Maps, and third-party APIs",
+          "Custom frontend and backend",
+          "Business logic automation",
+          "Secure file and data management",
+          "Integration with Stripe, maps, and external services",
           "Optional admin dashboard"
         ]
       },
       {
         "title": "CTO as a Service",
-        "description": "Technical strategy, product scaling, and advisory support.",
+        "description": "Ongoing tech guidance, product evolution, and strategic support.",
         "badge": "",
         "details": [
-          "Technical audits and recommendations",
-          "1–2 monthly strategic sessions",
+          "Technical audit and recommendations",
+          "1–2 strategic sessions per month",
           "Flexible remote support",
-          "Documentation and tech roadmap (optional)",
-          "Execution services not included"
+          "Documentation and roadmap (optional)",
+          "Does not include operational execution"
         ]
       }
-    ],
-    "button": {
-      "show": "View more",
-      "hide": "Hide details"
-    }
+    ]
   },
   "cases": {
-    "title": "Success Stories",
+    "title": "Case Studies",
     "list": [
       {
         "name": "Inquilia",
-        "description": "A privacy-focused web app for document uploading, AES-256 encrypted and hosted on Supabase. Built for speed, clarity, and simplicity."
+        "description": "Privacy-focused web application. AES-256 encrypted document upload with Supabase storage. Fast, intuitive, and secure."
       },
       {
         "name": "CD648",
-        "description": "Booking system for a boutique hotel. Real-time availability, online payments, and live Google Maps integration."
+        "description": "Online reservation system for a boutique hotel. Real-time availability, integrated payments, and Google Maps connectivity."
       },
       {
         "name": "Quimialcla",
-        "description": "Corporate website for a chemical solutions company. Clean layout, product clarity, and a focus on service excellence."
+        "description": "Corporate website for a chemical solutions company. Clear visual communication, efficient catalog, and quality standards focus."
       }
     ]
   },
   "contact": {
-    "title": "Let’s talk",
-    "fields": {
-      "name": "Name",
-      "email": "Email",
-      "message": "Message"
-    },
-    "button": "Send Message",
-    "validation": {
-      "required": "Required",
-      "invalidEmail": "Invalid email",
-      "tooShort": "Too short"
-    },
-    "success": "Message sent successfully!",
-    "error": "Something went wrong. Please try again later.",
-    "loading": "Sending message..."
+    "title": "Let’s Talk"
   },
   "quote": {
-    "title": "Request your quote",
+    "title": "Request a Quote",
     "button": "Get a quote",
-    "submit": "Send",
     "fields": {
-      "name": "Full name",
-      "projectType": "Project type",
-      "message": "Message",
       "selectOption": "Select an option",
       "options": {
         "webEssentials": "Web Essentials",
@@ -117,13 +118,41 @@
       }
     },
     "errors": {
-      "name": "Name is required",
-      "projectType": "Please select a project type",
-      "messageShort": "Message is too short"
-    }
+      "name": "Name is required.",
+      "projectType": "Please select a project type.",
+      "messageShort": "Message is too short."
+    },
+    "submitWhatsApp": "Send via WhatsApp"
+  },
+  "portafolio": {
+    "tratamiento": {
+      "titulo": "Water Treatment Plants",
+      "sub": {
+        "daf": {
+          "titulo": "Physicochemical Treatment – DAF",
+          "texto": "Dissolved Air Flotation (DAF) systems are ideal for removing suspended solids, oils, and greases from wastewater in industrial and municipal applications."
+        },
+        "aguas": {
+          "titulo": "Physicochemical Treatment – Greywater",
+          "texto": "Greywater systems reduce environmental impact by treating water from sinks, showers, and washing machines for safe reuse in non-potable applications."
+        },
+        "biologico": {
+          "titulo": "Conventional Biological – Activated Sludge",
+          "texto": "This process uses microorganisms to break down organic matter in wastewater, producing clear effluent with reduced contaminants."
+        }
+      }
+    },
+    "lagunas": {
+      "titulo": "Ponds, Pools, and Fountains",
+      "texto": "Design and maintenance of artificial bodies of water for aesthetic and ecological purposes. Includes recirculation, filtration, and water treatment systems."
+    },
+    "quimicos": {
+      "titulo": "Chemical Products",
+      "texto": "Wide range of specialized chemical solutions for water treatment, industrial processes, and maintenance applications."
+    },
+    "contacto": "Contact us"
   },
   "footer": {
     "rights": "All rights reserved."
-  },
-  "submit": "Send via WhatsApp"
+  }
 }

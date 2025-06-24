@@ -14,13 +14,13 @@ export default function Contact() {
   const inView = useInView(sectionRef, { triggerOnce: false, threshold: 0.6 });
 
   const validationSchema = Yup.object({
-    name: Yup.string().required(t('contact.validation.required')),
+    name: Yup.string().required(t('common.validation.required')),
     email: Yup.string()
-      .email(t('contact.validation.invalidEmail'))
-      .required(t('contact.validation.required')),
+      .email(t('common.validation.invalidEmail'))
+      .required(t('common.validation.required')),
     message: Yup.string()
-      .min(10, t('contact.validation.tooShort'))
-      .required(t('contact.validation.required')),
+      .min(10, t('common.validation.tooShort'))
+      .required(t('common.validation.required')),
   });
 
   return (
@@ -52,7 +52,7 @@ export default function Contact() {
           initialValues={{ name: '', email: '', message: '' }}
           validationSchema={validationSchema}
           onSubmit={async (values, { resetForm, setSubmitting }) => {
-            const toastId = toast.loading(t('contact.loading') || 'Sending message...');
+            const toastId = toast.loading(t('common.status.loading'));
             try {
               const response = await fetch('/api/send-contact', {
                 method: 'POST',
@@ -62,10 +62,10 @@ export default function Contact() {
 
               if (!response.ok) throw new Error('Error sending message');
 
-              toast.success(t('contact.success') || 'Message sent successfully', { id: toastId });
+              toast.success(t('common.status.success'), { id: toastId });
               resetForm();
             } catch (error) {
-              toast.error(t('contact.error') || 'Something went wrong.', { id: toastId });
+              toast.error(t('common.status.error'), { id: toastId });
             } finally {
               setSubmitting(false);
             }
@@ -82,7 +82,7 @@ export default function Contact() {
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
                   <label htmlFor="name" className="block text-sm font-medium mb-1">
-                    {t('contact.fields.name')}
+                    {t('common.fields.name')}
                   </label>
                   <Field
                     id="name"
@@ -106,7 +106,7 @@ export default function Contact() {
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
                   <label htmlFor="email" className="block text-sm font-medium mb-1">
-                    {t('contact.fields.email')}
+                    {t('common.fields.email')}
                   </label>
                   <Field
                     id="email"
@@ -131,7 +131,7 @@ export default function Contact() {
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
                   <label htmlFor="message" className="block text-sm font-medium mb-1">
-                    {t('contact.fields.message')}
+                    {t('common.fields.message')}
                   </label>
                   <Field
                     id="message"
@@ -158,7 +158,7 @@ export default function Contact() {
                   whileTap={{ scale: 0.98 }}
                   className="w-full bg-codiva-primary text-white py-3 px-6 rounded-2xl hover:bg-[#0c3e3e] transition font-medium"
                 >
-                  {t('contact.button')}
+                  {t('common.buttons.submit')}
                 </motion.button>
               </fieldset>
             </Form>
