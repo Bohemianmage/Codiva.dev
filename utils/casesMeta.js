@@ -1,0 +1,67 @@
+const casesMeta = [
+  {
+    name: 'Inquilia',
+    url: 'https://inquilia.com',
+    logo: '/logos/inquilia.svg',
+    tech: [
+      'Next.js',
+      'i18n',
+      'Tailwind',
+      'Supabase',
+      'CryptoJS',
+      'AES-256',
+      'Formik',
+      'Yup',
+      'Vercel',
+      'Resend',
+    ],
+  },
+  {
+    name: 'CD648',
+    url: 'https://cd648.com',
+    logo: '/logos/cd648.svg',
+    tech: [
+      'React',
+      'Stripe',
+      'i18n',
+      'Google Maps API',
+      'MongoDB',
+      'Express',
+      'Node.js',
+      'Framer Motion',
+      'Formik',
+      'Yup',
+      'Tailwind',
+      'Custom Hooks',
+    ],
+  },
+  {
+    name: 'Quimialcla',
+    url: 'https://quimialcla.vercel.app',
+    logo: '/logos/quimialcla.svg',
+    tech: [
+      'React',
+      'Tailwind',
+      'i18n',
+      'Vercel',
+      'HTML/CSS',
+      'Responsive Design',
+      'Custom Hooks',
+    ],
+  },
+  {
+    name: 'Morningstar',
+    url: 'https://morningstar.com',
+    logo: '/logos/morningstar.png',
+    tech: [
+      'Next.js',
+      'Tailwind',
+      'Contentful',
+      'Vercel',
+      'CI/CD',
+      'Design Systems',
+    ],
+  },
+];
+
+export default casesMeta;
