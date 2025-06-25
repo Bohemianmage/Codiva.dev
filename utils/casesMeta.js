@@ -51,7 +51,7 @@ const casesMeta = [
   },
   {
     name: 'Morningstar',
-    url: 'https://morningstar.com',
+    url: 'https://morningstar.lat',
     logo: '/logos/morningstar.png',
     tech: [
       'Next.js',

@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import Heading from '../components/Heading';
-import casesMeta from '../utils/casesMeta'; // Asegúrate que exista y esté correcto
+import casesMeta from '../utils/casesMeta';
 
+// Mezcla aleatoria
 function shuffleArray(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
@@ -13,8 +14,6 @@ function shuffleArray(arr) {
 export default function CaseStudies() {
   const { t } = useTranslation();
   const [hoveredProject, setHoveredProject] = useState(null);
-  const logoContainerRef = useRef(null);
-  const techContainerRef = useRef(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   const logos = useMemo(() => shuffleArray(casesMeta), []);
@@ -24,30 +23,7 @@ export default function CaseStudies() {
     return shuffleArray([...techSet]);
   }, []);
 
-  // Centrado automático
-  useEffect(() => {
-    const calcOffset = (ref) => {
-      const el = ref.current;
-      if (!el) return;
-      const totalWidth = el.scrollWidth / 2;
-      const visibleWidth = el.parentElement.offsetWidth;
-      const offset = (visibleWidth - totalWidth) / 2;
-      el.style.setProperty('--scroll-offset', `${offset}px`);
-    };
-
-    calcOffset(logoContainerRef);
-    calcOffset(techContainerRef);
-
-    const handleResize = () => {
-      calcOffset(logoContainerRef);
-      calcOffset(techContainerRef);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Hover automático en móvil
+  // Hover automático móvil
   useEffect(() => {
     if (!isMobile) return;
     let i = 0;
@@ -57,6 +33,9 @@ export default function CaseStudies() {
     }, 2000);
     return () => clearInterval(interval);
   }, [isMobile, logos]);
+
+  const defaultProject = logos[0]?.name;
+  const activeProject = hoveredProject || (isMobile ? defaultProject : null);
 
   return (
     <section
@@ -73,6 +52,7 @@ export default function CaseStudies() {
         {/* Título */}
         <Heading
           as="h2"
+          id="casos"
           size="text-3xl md:text-4xl"
           className="text-codiva-primary mb-12"
         >
@@ -82,12 +62,10 @@ export default function CaseStudies() {
         {/* Carrusel de logos */}
         <div className="relative w-full overflow-hidden px-2 sm:px-8 mb-10">
           <div
-            ref={logoContainerRef}
             className="
               flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max
               animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6
             "
-            style={{ transform: 'translateX(var(--scroll-offset, -25%))' }}
           >
             {[...logos, ...logos].map((item, index) => (
               <a
@@ -97,14 +75,15 @@ export default function CaseStudies() {
                 rel="noopener noreferrer"
                 onMouseEnter={() => !isMobile && setHoveredProject(item.name)}
                 onMouseLeave={() => !isMobile && setHoveredProject(null)}
-                className="flex-shrink-0"
+                className="flex-shrink-0 flex items-center justify-center"
+                style={{ height: '6rem', minWidth: '6rem' }}
                 aria-label={`Go to ${item.name} project`}
               >
                 <img
                   src={item.logo}
                   alt={`${item.name} logo`}
-                  className={`h-12 sm:h-16 md:h-20 transition-all duration-300 ${
-                    hoveredProject === item.name
+                  className={`h-full w-auto object-contain transition-all duration-300 ${
+                    activeProject === item.name
                       ? 'scale-110 drop-shadow-lg'
                       : 'opacity-60 md:opacity-100'
                   }`}
@@ -115,23 +94,22 @@ export default function CaseStudies() {
         </div>
 
         {/* Carrusel de tecnologías */}
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden" aria-label="Technology stack used" role="list">
           <div
-            ref={techContainerRef}
             className="
               flex gap-4 whitespace-nowrap min-w-max
               animate-scroll-left animate-slow sm:animate-medium lg:animate-fast
             "
-            style={{ transform: 'translateX(var(--scroll-offset, -25%))' }}
           >
             {[...techs, ...techs].map((tech, i) => {
-              const isHighlighted = hoveredProject
-                ? casesMeta.find(c => c.name === hoveredProject)?.tech.includes(tech)
+              const isHighlighted = activeProject
+                ? casesMeta.find(c => c.name === activeProject)?.tech.includes(tech)
                 : false;
 
               return (
                 <span
                   key={`tech-${i}`}
+                  role="listitem"
                   className={`px-3 py-1 border text-sm rounded-full whitespace-nowrap flex-shrink-0 transition-all duration-300 ease-in-out ${
                     isHighlighted
                       ? 'bg-codiva-primary text-white border-codiva-primary'
