@@ -10,19 +10,26 @@ import { X } from 'lucide-react';
 export default function FloatingQuoteButton() {
   const [open, setOpen] = useState(false);
   const [showArrow, setShowArrow] = useState(true);
+  const [isLandscape, setIsLandscape] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false); // Nuevo: distinguir escritorio
   const { t } = useTranslation();
   const modalRef = useRef(null);
 
-  // Detectar nivel de zoom
+  // Detectar zoom, orientación y desktop
   useEffect(() => {
-    const handleZoom = () => {
+    const handleResize = () => {
       const zoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
       setShowArrow(zoomLevel < 150);
+
+      const landscape = window.matchMedia('(orientation: landscape)').matches;
+      setIsLandscape(landscape);
+
+      setIsDesktop(window.innerWidth >= 1024);
     };
 
-    handleZoom();
-    window.addEventListener('resize', handleZoom);
-    return () => window.removeEventListener('resize', handleZoom);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Cerrar modal con Escape
@@ -35,7 +42,7 @@ export default function FloatingQuoteButton() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Cerrar modal al hacer clic fuera del contenido
+  // Cerrar modal al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -52,6 +59,7 @@ export default function FloatingQuoteButton() {
     };
   }, [open]);
 
+  // Validación del formulario
   const validationSchema = Yup.object({
     name: Yup.string().required(t('common.validation.required')),
     projectType: Yup.string().required(t('common.validation.required')),
@@ -63,7 +71,8 @@ export default function FloatingQuoteButton() {
       {/* Botón flotante */}
       <div className="fixed bottom-6 right-6 z-50">
         <div className="relative flex items-center">
-          {showArrow && (
+          {/* Mostrar flecha si no está en landscape móvil o si es desktop */}
+          {showArrow && (!isLandscape || isDesktop) && (
             <div className="hidden md:block absolute right-full mr-4 -mt-1 pointer-events-none">
               <motion.svg
                 viewBox="0 0 300 500"

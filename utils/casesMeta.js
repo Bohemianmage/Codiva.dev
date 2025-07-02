@@ -37,7 +37,7 @@ const casesMeta = [
   },
   {
     name: 'Quimialcla',
-    url: 'https://www.quimialcla.com.mx',
+    url: 'https://quimialcla.com.mx',
     logo: '/logos/quimialcla.svg',
     tech: [
       'React',

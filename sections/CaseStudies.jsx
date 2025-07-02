@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import Heading from '../components/Heading';
 import casesMeta from '../utils/casesMeta';
 
-// Mezcla aleatoria
+// Mezcla aleatoria (sólo para cliente)
 function shuffleArray(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
@@ -14,18 +14,25 @@ function shuffleArray(arr) {
 export default function CaseStudies() {
   const { t } = useTranslation();
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [logos, setLogos] = useState([]);
+  const [techs, setTechs] = useState([]);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
-  const logos = useMemo(() => shuffleArray(casesMeta), []);
-  const techs = useMemo(() => {
+  // Generar logos aleatorios SOLO en cliente
+  useEffect(() => {
+    setLogos(shuffleArray(casesMeta));
+  }, []);
+
+  // Generar techs aleatorios SOLO en cliente
+  useEffect(() => {
     const techSet = new Set();
     casesMeta.forEach(p => p.tech.forEach(t => techSet.add(t)));
-    return shuffleArray([...techSet]);
+    setTechs(shuffleArray([...techSet]));
   }, []);
 
   // Hover automático móvil
   useEffect(() => {
-    if (!isMobile) return;
+    if (!isMobile || logos.length === 0) return;
     let i = 0;
     const interval = setInterval(() => {
       setHoveredProject(logos[i % logos.length]?.name);
@@ -36,6 +43,9 @@ export default function CaseStudies() {
 
   const defaultProject = logos[0]?.name;
   const activeProject = hoveredProject || (isMobile ? defaultProject : null);
+
+  // Evitar render incompleto durante carga inicial en cliente
+  if (logos.length === 0 || techs.length === 0) return null;
 
   return (
     <section
@@ -60,7 +70,7 @@ export default function CaseStudies() {
         </Heading>
 
         {/* Carrusel de logos */}
-        <div className="relative w-full overflow-hidden px-2 sm:px-8 mb-10">
+        <div className="relative w-full overflow-x-auto scrollbar-hidden md:overflow-hidden px-2 sm:px-8 mb-10">
           <div
             className="
               flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max
@@ -94,7 +104,11 @@ export default function CaseStudies() {
         </div>
 
         {/* Carrusel de tecnologías */}
-        <div className="relative w-full overflow-hidden" aria-label="Technology stack used" role="list">
+        <div
+          className="relative w-full overflow-x-auto scrollbar-hidden md:overflow-hidden"
+          aria-label="Technology stack used"
+          role="list"
+        >
           <div
             className="
               flex gap-4 whitespace-nowrap min-w-max
