@@ -2,12 +2,10 @@
   "title": "Codiva.dev | Desarrollo web personalizado y soluciones digitales",
   "description": "Expertos en sitios web, plataformas SaaS y sistemas a medida. En Codiva.dev convertimos ideas complejas en tecnología clara, eficiente y lista para escalar.",
   "nav": {
-    "home": "Inicio",
     "about": "Nosotros",
     "services": "Servicios",
     "cases": "Casos de Éxito",
-    "contact": "Contacto",
-    "quote": "Cotización"
+    "contact": "Contacto"
   },
   "common": {
     "fields": {

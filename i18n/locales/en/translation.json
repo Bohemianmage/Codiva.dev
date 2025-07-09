@@ -2,12 +2,10 @@
   "title": "Codiva.dev | Custom web development and digital solutions",
   "description": "We build tailored websites, SaaS platforms, and scalable systems. Codiva.dev transforms complex ideas into secure, efficient, and growth-ready tech.",
   "nav": {
-    "home": "Home",
     "about": "About us",
     "services": "Services",
     "cases": "Case Studies",
-    "contact": "Contact",
-    "quote": "Quote"
+    "contact": "Contact"
   },
   "common": {
     "fields": {
