@@ -106,8 +106,10 @@
     "title": "Let’s Talk"
   },
   "quote": {
-    "title": "Request a Quote",
+    "thankYou": "Thank you for contacting us. We will get back to you soon.",
     "button": "Get a quote",
+    "knowWhatIWant": "I know what I want",
+    "needHelp": "I need help",
     "fields": {
       "selectOption": "Select an option",
       "options": {
@@ -124,33 +126,52 @@
     },
     "submitWhatsApp": "Send via WhatsApp"
   },
-  "portafolio": {
-    "tratamiento": {
-      "titulo": "Water Treatment Plants",
-      "sub": {
-        "daf": {
-          "titulo": "Physicochemical Treatment – DAF",
-          "texto": "Dissolved Air Flotation (DAF) systems are ideal for removing suspended solids, oils, and greases from wastewater in industrial and municipal applications."
-        },
-        "aguas": {
-          "titulo": "Physicochemical Treatment – Greywater",
-          "texto": "Greywater systems reduce environmental impact by treating water from sinks, showers, and washing machines for safe reuse in non-potable applications."
-        },
-        "biologico": {
-          "titulo": "Conventional Biological – Activated Sludge",
-          "texto": "This process uses microorganisms to break down organic matter in wastewater, producing clear effluent with reduced contaminants."
-        }
-      }
-    },
-    "lagunas": {
-      "titulo": "Ponds, Pools, and Fountains",
-      "texto": "Design and maintenance of artificial bodies of water for aesthetic and ecological purposes. Includes recirculation, filtration, and water treatment systems."
-    },
-    "quimicos": {
-      "titulo": "Chemical Products",
-      "texto": "Wide range of specialized chemical solutions for water treatment, industrial processes, and maintenance applications."
-    },
-    "contacto": "Contact us"
+  "fields": {
+    "name": "Full name",
+    "company": "Company / Brand",
+    "email": "Email",
+    "phone": "WhatsApp / Phone",
+    "need": "What do you need?",
+    "sections": "Desired sections",
+    "functionalities": "Required functionalities",
+    "hasContent": "Do you have content?",
+    "hasDomain": "Do you have a domain?",
+    "hasHosting": "Do you have hosting?",
+    "selectOption": "Select an option",
+    "budget": "Estimated budget (MXN)",
+    "referenceSite": "Reference site (URL)",
+    "privacyConsent": "I accept the privacy policy"
+  },
+  "sections": {
+    "start": "Home",
+    "services": "Services",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "functionalities": {
+    "login": "Login",
+    "catalog": "Catalog",
+    "admin": "Admin",
+    "pwa": "PWA",
+    "blog": "Blog",
+    "multilang": "Multilanguage"
+  },
+  "options": {
+    "yes": "Yes",
+    "no": "No",
+    "partial": "Partial"
+  },
+  "buttons": {
+    "submit": "Submit request"
+  },
+  "validation": {
+    "required": "Required",
+    "invalidEmail": "Invalid email",
+    "invalidUrl": "Invalid URL"
+  },
+  "status": {
+    "success": "Thank you for your request!",
+    "error": "There was an error sending. Please try again."
   },
   "footer": {
     "rights": "All rights reserved."

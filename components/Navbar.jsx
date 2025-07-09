@@ -6,17 +6,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 import { Sling as Hamburger } from 'hamburger-react';
+import { useRouter, usePathname } from 'next/navigation';
 
-// Menú de navegación (actualizado con la nueva key "nav.cases")
+// Menú de navegación (ya sin 'Home')
 const navItems = [
-  { labelKey: 'nav.home', id: 'hero' },
   { labelKey: 'nav.about', id: 'about' },
   { labelKey: 'nav.services', id: 'services' },
-  { labelKey: 'nav.cases', id: 'casos' }, // ✅ Corregido
+  { labelKey: 'nav.cases', id: 'casos' },
   { labelKey: 'nav.contact', id: 'contact' },
 ];
 
-// Animaciones
+// Animaciones del navbar
 const navVariants = {
   hidden: { opacity: 0, y: -10 },
   visible: {
@@ -32,18 +32,29 @@ const itemVariants = {
 };
 
 export default function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { t } = useTranslation();
 
+  /**
+   * Navega a la sección correspondiente.
+   * Si estamos fuera de '/', redirige con hash.
+   * Si estamos en '/', hace scroll suave.
+   */
   const scrollTo = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (pathname !== '/') {
+      router.push(`/#${id}`);
+    } else {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
     setMenuOpen(false);
   };
 
-  // Mostrar u ocultar el navbar según el scroll
+  // Mostrar u ocultar navbar según el scroll
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -54,7 +65,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  // Cerrar menú con tecla Escape
+  // Cerrar menú con Escape
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'Escape') setMenuOpen(false);
@@ -71,7 +82,7 @@ export default function Navbar() {
       className="w-full fixed top-0 z-50 bg-white border-b border-[#6A757A33] px-6 md:px-12 py-4 font-inter"
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo */}
+        {/* Logo principal (click lleva al inicio) */}
         <motion.div
           onClick={() => scrollTo('hero')}
           initial={{ opacity: 0, y: -6 }}
@@ -93,7 +104,7 @@ export default function Navbar() {
           </div>
         </motion.div>
 
-        {/* Desktop nav */}
+        {/* Navegación desktop */}
         <div className="hidden md:flex items-center justify-between gap-6">
           <motion.div
             className="flex gap-12"
@@ -118,7 +129,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile: Idioma + hamburguesa */}
+        {/* Mobile: idioma + hamburguesa */}
         <div className="md:hidden flex items-center gap-3">
           <LanguageSwitcher />
           <button
@@ -136,7 +147,7 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Backdrop clickeable */}
+            {/* Fondo clickeable para cerrar */}
             <motion.div
               onClick={() => setMenuOpen(false)}
               className="fixed inset-0 bg-white/80 backdrop-blur-sm z-40"
@@ -145,7 +156,7 @@ export default function Navbar() {
               exit={{ opacity: 0 }}
             />
 
-            {/* Menú mobile */}
+            {/* Menú móvil */}
             <motion.div
               id="mobile-menu"
               initial={{ opacity: 0, scale: 0.98, y: -4 }}

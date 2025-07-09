@@ -106,8 +106,10 @@
     "title": "Hablemos"
   },
   "quote": {
-    "title": "Solicita tu cotización",
+    "thankYou": "Gracias por contactarnos. Pronto nos comunicaremos contigo.",
     "button": "Quiero mi cotización",
+    "knowWhatIWant": "Ya sé lo que quiero",
+    "needHelp": "Necesito ayuda",
     "fields": {
       "selectOption": "Selecciona una opción",
       "options": {
@@ -124,35 +126,55 @@
     },
     "submitWhatsApp": "Enviar por WhatsApp"
   },
-  "portafolio": {
-    "tratamiento": {
-      "titulo": "Plantas de tratamiento",
-      "sub": {
-        "daf": {
-          "titulo": "Plantas de tratamiento físico químico – DAF",
-          "texto": "Texto sobre DAF en español..."
-        },
-        "aguas": {
-          "titulo": "Plantas de tratamiento físico químico – Aguas grises",
-          "texto": "Texto sobre aguas grises en español..."
-        },
-        "biologico": {
-          "titulo": "Biológico convencional – lodos activados",
-          "texto": "Texto sobre tratamiento biológico en español..."
-        }
-      }
-    },
-    "lagunas": {
-      "titulo": "Lagunas, fuentes y albercas",
-      "texto": "Texto sobre lagunas y cuerpos de agua en español..."
-    },
-    "quimicos": {
-      "titulo": "Productos químicos",
-      "texto": "Texto sobre químicos en español..."
-    },
-    "contacto": "¡Contáctanos!"
-  },
   "footer": {
     "rights": "Todos los derechos reservados."
+  },
+  "fields": {
+    "name": "Nombre completo",
+    "company": "Empresa / Marca",
+    "email": "Correo electrónico",
+    "phone": "WhatsApp / Teléfono",
+    "need": "¿Qué necesitas?",
+    "sections": "Secciones deseadas",
+    "functionalities": "Funcionalidades requeridas",
+    "hasContent": "¿Tienes contenido?",
+    "hasDomain": "¿Tienes dominio?",
+    "hasHosting": "¿Tienes hosting?",
+    "selectOption": "Selecciona una opción",
+    "budget": "Presupuesto estimado (MXN)",
+    "referenceSite": "Sitio de referencia (URL)",
+    "privacyConsent": "Acepto el aviso de privacidad"
+  },
+  "sections": {
+    "start": "Inicio",
+    "services": "Servicios",
+    "blog": "Blog",
+    "contact": "Contacto"
+  },
+  "functionalities": {
+    "login": "Login",
+    "catalog": "Catálogo",
+    "admin": "Admin",
+    "pwa": "PWA",
+    "blog": "Blog",
+    "multilang": "Multilenguaje"
+  },
+  "options": {
+    "yes": "Sí",
+    "no": "No",
+    "partial": "Parcial"
+  },
+  "buttons": {
+    "submit": "Enviar solicitud"
+  },
+  "validation": {
+    "required": "Requerido",
+    "invalidEmail": "Email inválido",
+    "invalidUrl": "URL inválida"
+  },
+  "status": {
+    "success": "¡Gracias por tu solicitud!",
+    "error": "Hubo un error al enviar. Intenta nuevamente."
   }
+}
 }
