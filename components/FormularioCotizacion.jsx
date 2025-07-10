@@ -72,7 +72,6 @@ export default function FormularioCotizacion() {
       onSubmit={formik.handleSubmit}
       className="max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-xl space-y-6"
     >
-      <h2 className="text-2xl font-bold text-codiva-primary">{t('quote.title')}</h2>
 
       {/* Datos básicos */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
