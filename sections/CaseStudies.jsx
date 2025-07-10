@@ -19,9 +19,7 @@ export default function CaseStudies() {
 
   useEffect(() => {
     setIsMobile(typeof window !== 'undefined' && window.innerWidth < 768);
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -61,16 +59,20 @@ export default function CaseStudies() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: false, amount: 0.3 }}
-        className="w-full max-w-4xl bg-white rounded-xl shadow-lg px-8 py-12 text-center mb-12"
+        className="w-full max-w-4xl bg-white rounded-xl shadow-lg px-8 py-12 text-center"
       >
         <Heading
           as="h2"
           id="casos"
           size="text-3xl md:text-4xl"
-          className="text-codiva-primary mb-12"
+          className="text-codiva-primary mb-6"
         >
           {t('cases.title')}
         </Heading>
+
+        <p className="text-zinc-600 text-base md:text-lg mb-10">
+          {t('cases.description')}
+        </p>
 
         {isMobile ? (
           <>
@@ -92,7 +94,9 @@ export default function CaseStudies() {
                       src={item.logo}
                       alt={`${item.name} logo`}
                       className={`h-full w-auto object-contain transition-all duration-300 ${
-                        activeProject === item.name ? 'scale-110 drop-shadow-lg' : 'opacity-60 md:opacity-100'
+                        activeProject === item.name
+                          ? 'scale-110 drop-shadow-lg'
+                          : 'opacity-60 md:opacity-100'
                       }`}
                     />
                   </a>
@@ -128,7 +132,10 @@ export default function CaseStudies() {
           </>
         ) : (
           <div className="mt-12">
-            <TechProjectNetwork hoveredProject={hoveredProject} hoveredTech={hoveredTech} />
+            <TechProjectNetwork
+              hoveredProject={hoveredProject}
+              hoveredTech={hoveredTech}
+            />
           </div>
         )}
       </motion.div>
