@@ -23,7 +23,7 @@
       "send": "Send Message",
       "submit": "Send",
       "seeMore": "See more",
-      "hide": "Hide"
+      "hide": "Hide details"
     },
     "status": {
       "loading": "Sending message...",
@@ -55,6 +55,13 @@
           "Contact form or clear call-to-action",
           "SEO-ready structure",
           "Multilingual support"
+        ],
+        "extras": [
+          "Advanced animations",
+          "Multilanguage",
+          "Professional content writing",
+          "CRM / mailing integration",
+          "Premium UI/UX design"
         ]
       },
       {
@@ -67,6 +74,13 @@
           "Secure file and data management",
           "Integration with Stripe, maps, and external services",
           "Optional admin dashboard"
+        ],
+        "extras": [
+          "Advanced scalability / architecture",
+          "Advanced security (auth, encryption, logs)",
+          "Payment / SaaS integration",
+          "Custom external APIs",
+          "Premium UI/UX design"
         ]
       },
       {
@@ -79,9 +93,17 @@
           "Flexible remote support",
           "Documentation and roadmap (optional)",
           "Does not include operational execution"
+        ],
+        "extras": [
+          "Direct technical implementation",
+          "Team training",
+          "Leadership on critical projects",
+          "Advanced audits (security, performance)",
+          "Extended technical documentation"
         ]
       }
-    ]
+    ],
+    "extrasTitle": "Billable extras"
   },
   "cases": {
     "title": "Success stories",
@@ -124,6 +146,9 @@
       "messageShort": "Message is too short."
     },
     "submitWhatsApp": "Send via WhatsApp"
+  },
+  "footer": {
+    "rights": "All rights reserved."
   },
   "fields": {
     "name": "Full name",
@@ -172,8 +197,5 @@
   "status": {
     "success": "Thank you for your request!",
     "error": "There was an error sending. Please try again."
-  },
-  "footer": {
-    "rights": "All rights reserved."
   }
 }

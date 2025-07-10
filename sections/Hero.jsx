@@ -9,9 +9,9 @@ export default function Hero() {
   const { t, i18n } = useTranslation();
 
   // Textos traducidos
-  const staticText1 = t('hero.cleanCode');         // Ej. "Clean code."
-  const staticText2 = t('hero.withoutNoise');      // Ej. "Without the agency noise."
-  const fullText = t('hero.customTech');           // Ej. "Custom tech." o "Tecnología a la medida."
+  const staticText1 = t('hero.cleanCode');
+  const staticText2 = t('hero.withoutNoise');
+  const fullText = t('hero.customTech') || '...'; // Fallback en caso de que no cargue i18n a tiempo
 
   const [typedText, setTypedText] = useState('');
   const [typedIndex, setTypedIndex] = useState(0);
@@ -19,9 +19,23 @@ export default function Hero() {
   const [animationKey, setAnimationKey] = useState(0);
 
   const heroRef = useRef(null);
-  const isInView = useInView(heroRef, { threshold: 0.6 });
 
-  // Reinicia la animación al entrar en vista
+  // Umbral reducido para asegurar disparo en pantallas chicas/móvil
+  const isInView = useInView(heroRef, { threshold: 0.1 });
+
+  /**
+   * Al montar el componente, iniciar animación
+   */
+  useEffect(() => {
+    setTypedText('');
+    setTypedIndex(0);
+    setDone(false);
+    setAnimationKey((prev) => prev + 1);
+  }, []);
+
+  /**
+   * Reinicia la animación cuando el Hero entra en vista (scroll up/down)
+   */
   useEffect(() => {
     if (isInView) {
       setTypedText('');
@@ -31,7 +45,9 @@ export default function Hero() {
     }
   }, [isInView]);
 
-  // Mecanografiado letra por letra
+  /**
+   * Mecanografiado letra por letra
+   */
   useEffect(() => {
     if (typedIndex < fullText.length) {
       const timeout = setTimeout(() => {
@@ -44,13 +60,17 @@ export default function Hero() {
     }
   }, [typedIndex, fullText]);
 
-  // Reinicia al cambiar de idioma
+  /**
+   * Reinicia al cambiar de idioma
+   */
   useEffect(() => {
-    setTypedText('');
-    setTypedIndex(0);
-    setDone(false);
-    setAnimationKey((prev) => prev + 1);
-  }, [i18n.language]);
+    if (i18n.isInitialized) {
+      setTypedText('');
+      setTypedIndex(0);
+      setDone(false);
+      setAnimationKey((prev) => prev + 1);
+    }
+  }, [i18n.language, i18n.isInitialized]);
 
   return (
     <section

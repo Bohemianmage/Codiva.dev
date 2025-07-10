@@ -55,6 +55,13 @@
           "Formulario de contacto o llamada a la acción",
           "Estructura base para SEO",
           "Soporte multilenguaje"
+        ],
+        "extras": [
+          "Animaciones avanzadas",
+          "Multilenguaje",
+          "Redacción profesional",
+          "Integración CRM / mailing",
+          "Diseño UI/UX premium"
         ]
       },
       {
@@ -67,6 +74,13 @@
           "Manejo seguro de archivos y datos sensibles",
           "Integración con Stripe, mapas y servicios externos",
           "Dashboard administrativo opcional"
+        ],
+        "extras": [
+          "Escalabilidad / arquitectura avanzada",
+          "Seguridad avanzada (auth, encryption, logs)",
+          "Integración pagos / SaaS",
+          "APIs externas personalizadas",
+          "Diseño UI/UX premium"
         ]
       },
       {
@@ -79,9 +93,17 @@
           "Soporte remoto flexible",
           "Documentación técnica y roadmap (opcional)",
           "No incluye ejecución operativa directa"
+        ],
+        "extras": [
+          "Implementación técnica directa",
+          "Capacitación de equipo",
+          "Liderazgo en proyectos críticos",
+          "Auditorías avanzadas (seguridad, performance)",
+          "Documentación técnica extendida"
         ]
       }
-    ]
+    ],
+    "extrasTitle": "Extras cotizables"
   },
   "cases": {
     "title": "Casos de Éxito",

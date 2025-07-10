@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import casesMeta from '../utils/casesMeta';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 
 export default function TechProjectNetwork() {
   const containerRef = useRef(null);
@@ -10,6 +10,8 @@ export default function TechProjectNetwork() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [hoveredProject, setHoveredProject] = useState(null);
   const [hoveredTech, setHoveredTech] = useState(null);
+
+  const isInView = useInView(containerRef, { threshold: 0.2 });
 
   useEffect(() => {
     function updateDimensions() {
@@ -27,9 +29,8 @@ export default function TechProjectNetwork() {
 
   const centerX = dimensions.width / 2;
   const centerY = dimensions.height / 2;
-
   const outerRadiusX = centerX * 0.9;
-  const outerRadiusY = centerY * 0.8; // 🔧 aumentamos de 0.6 a 0.8 para distribuir mejor verticalmente
+  const outerRadiusY = centerY * 0.8;
   const innerRadiusX = outerRadiusX * 0.5;
   const innerRadiusY = outerRadiusY * 0.5;
 
@@ -38,12 +39,10 @@ export default function TechProjectNetwork() {
     return techListRaw.sort(() => Math.random() - 0.5);
   }, []);
 
-  const allItems = useMemo(() => {
-    return [
-      ...casesMeta.map(c => ({ type: 'project', name: c.name })),
-      ...shuffledTechList.map(t => ({ type: 'tech', name: t })),
-    ];
-  }, [shuffledTechList]);
+  const allItems = useMemo(() => [
+    ...casesMeta.map(c => ({ type: 'project', name: c.name })),
+    ...shuffledTechList.map(t => ({ type: 'tech', name: t })),
+  ], [shuffledTechList]);
 
   const techPositions = shuffledTechList.map((tech, idx) => ({
     name: tech,
@@ -114,9 +113,12 @@ export default function TechProjectNetwork() {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-[900px] select-none">
+    <div
+      ref={containerRef}
+      className="relative w-full h-[900px] select-none"
+    >
       <svg width="100%" height="100%" className="absolute top-0 left-0 z-0">
-        {casesMeta.flatMap(project => {
+        {casesMeta.flatMap((project) => {
           const projPos = projectPositions.find(p2 => p2.name === project.name);
           return project.tech.map(tech => {
             const techPos = techPositions.find(t => t.name === tech);
@@ -128,6 +130,9 @@ export default function TechProjectNetwork() {
               (hoveredProject && hoveredProject === project.name) ||
               (hoveredTech && hoveredTech === tech);
 
+            const baseOpacity = hoveredProject || hoveredTech ? (isHighlighted ? 1 : 0.1) : 0.4;
+            const lineWidth = isHighlighted ? 2 : 1;
+
             return (
               <motion.line
                 key={`${project.name}-${tech}`}
@@ -136,19 +141,18 @@ export default function TechProjectNetwork() {
                 x2={logoOffset.x}
                 y2={logoOffset.y}
                 stroke={isHighlighted ? '#104E4E' : '#6A757A'}
-                strokeWidth={1}
+                strokeWidth={lineWidth}
                 strokeLinecap="round"
-                animate={{
-                  opacity: hoveredProject || hoveredTech ? (isHighlighted ? 1 : 0.1) : 0.4,
-                }}
-                transition={{ duration: 0.3 }}
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={isInView ? { pathLength: 1, opacity: baseOpacity } : { pathLength: 0, opacity: 0 }}
+                transition={{ duration: 1, ease: 'easeInOut' }}
               />
             );
           });
         })}
       </svg>
 
-      {techPositions.map(tech => {
+      {techPositions.map((tech, idx) => {
         const isHighlighted =
           (hoveredProject &&
             casesMeta.find(c => c.name === hoveredProject)?.tech.includes(tech.name)) ||
@@ -173,8 +177,8 @@ export default function TechProjectNetwork() {
               color: isHighlighted ? '#FFFFFF' : '#6A757A',
               zIndex: 10,
             }}
+            transition={{ duration: 0.6, delay: idx * 0.05 }}
             whileHover={{ scale: 1.2 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             onMouseEnter={() => handleMouseEnterTech(tech.name)}
             onMouseLeave={handleMouseLeave}
           >
@@ -183,8 +187,8 @@ export default function TechProjectNetwork() {
         );
       })}
 
-      {projectPositions.map(project => (
-        <a
+      {projectPositions.map((project, idx) => (
+        <motion.a
           key={project.name}
           href={project.url}
           target="_blank"
@@ -197,6 +201,7 @@ export default function TechProjectNetwork() {
             height: `${project.size}px`,
             zIndex: 20,
           }}
+          transition={{ duration: 0.6, delay: idx * 0.05 + 0.3 }}
           onMouseEnter={() => handleMouseEnterProject(project.name)}
           onMouseLeave={handleMouseLeave}
         >
@@ -208,7 +213,7 @@ export default function TechProjectNetwork() {
             whileHover={{ scale: 1.2 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
           />
-        </a>
+        </motion.a>
       ))}
     </div>
   );

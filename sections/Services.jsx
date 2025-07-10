@@ -1,5 +1,3 @@
-'use client';
-
 import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
@@ -10,6 +8,7 @@ import {
   ChevronDown,
   ChevronUp,
   CheckCircle,
+  ChevronRight
 } from 'lucide-react';
 import Heading from '../components/Heading';
 import Paragraph from '../components/Paragraph';
@@ -17,7 +16,7 @@ import Paragraph from '../components/Paragraph';
 const ICONS = [
   <Globe className="w-5 h-5 text-codiva-primary" />,
   <Code2 className="w-5 h-5 text-codiva-primary" />,
-  <Settings className="w-5 h-5 text-codiva-primary" />,
+  <Settings className="w-5 h-5 text-codiva-primary" />
 ];
 
 export default function Services() {
@@ -36,7 +35,6 @@ export default function Services() {
       className="section-spacing w-full px-6 md:px-12 flex justify-center bg-zinc-50"
     >
       <div className="w-full max-w-6xl bg-white rounded-xl shadow-md px-6 md:px-12 py-12 text-center">
-        {/* Título de la sección */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
@@ -51,14 +49,13 @@ export default function Services() {
           </Heading>
         </motion.div>
 
-        {/* Tarjetas de servicios */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
           {services.map((service, index) => {
             const isExpanded = expandedIndex === index;
             const detailsId = `service-details-${index}`;
             const price = currentLang === 'es'
-              ? ['Desde $12,000 MXN', 'Desde $30,000 MXN', 'Desde $8,000 MXN/mes'][index]
-              : ['From $700 USD', 'From $1,750 USD', 'From $470 USD/month'][index];
+              ? ['Desde $28,000 MXN', 'Desde $60,000 MXN', 'Desde $10,000 MXN/mes'][index]
+              : ['From $1,400 USD', 'From $3,000 USD', 'From $500 USD/month'][index];
 
             return (
               <motion.div
@@ -120,7 +117,7 @@ export default function Services() {
 
                   <AnimatePresence>
                     {isExpanded && (
-                      <motion.ul
+                      <motion.div
                         id={detailsId}
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
@@ -128,16 +125,34 @@ export default function Services() {
                         transition={{ duration: 0.3 }}
                         className="mt-4 pl-1 space-y-2"
                       >
-                        {service.details.map((item, i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2 text-sm text-zinc-600"
-                          >
-                            <CheckCircle className="text-codiva-primary shrink-0 w-4 h-4 md:w-5 md:h-5 mt-[2px] md:mt-[3px]" />
-                            {item}
-                          </li>
-                        ))}
-                      </motion.ul>
+                        <ul className="space-y-2">
+                          {service.details.map((item, i) => (
+                            <li
+                              key={i}
+                              className="flex items-start gap-2 text-sm text-zinc-600"
+                            >
+                              <CheckCircle className="text-codiva-primary shrink-0 w-4 h-4 md:w-5 md:h-5 mt-[2px] md:mt-[3px]" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+
+                        {service.extras && (
+                          <div className="mt-4">
+                            <h4 className="text-sm font-semibold text-zinc-700 mb-2">
+                              {t('services.extrasTitle')}
+                            </h4>
+                            <ul className="pl-1 space-y-1">
+                              {service.extras.map((extra, i) => (
+                                <li key={i} className="flex items-start gap-2 text-sm text-zinc-600">
+                                  <ChevronRight className="text-codiva-primary w-4 h-4 mt-[2px]" />
+                                  {extra}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
