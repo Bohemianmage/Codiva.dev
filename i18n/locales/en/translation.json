@@ -135,6 +135,7 @@
     "hasContent": "Do you have content?",
     "hasDomain": "Do you have a domain?",
     "hasHosting": "Do you have hosting?",
+    "deliveryDate": "Desired delivery date",
     "selectOption": "Select an option",
     "budget": "Estimated budget (MXN)",
     "referenceSite": "Reference site (URL)",
