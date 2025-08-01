@@ -129,6 +129,8 @@
   "quote": {
     "thankYou": "Gracias por contactarnos. Pronto nos comunicaremos contigo.",
     "button": "Quiero mi cotización",
+    "promptTitle": "¿Cómo prefieres avanzar?",
+    "promptSubtitle": "Elige la vía que se adapte mejor a ti.",
     "knowWhatIWant": "Ya sé lo que quiero",
     "needHelp": "Necesito ayuda",
     "fields": {

@@ -129,6 +129,8 @@
   "quote": {
     "thankYou": "Thank you for contacting us. We will get back to you soon.",
     "button": "Get a quote",
+    "promptTitle": "How do you want to proceed?",
+    "promptSubtitle": "Choose the option that works best for you.",
     "knowWhatIWant": "I know what I want",
     "needHelp": "I need help",
     "fields": {

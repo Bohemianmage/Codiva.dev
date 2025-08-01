@@ -7,10 +7,11 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Mail, MessageCircle } from 'lucide-react'; 
 
 export default function FloatingQuoteButton() {
-  const [open, setOpen] = useState(false);           // Estado modal principal
-  const [showForm, setShowForm] = useState(false);  // Estado para mostrar formulario
+  const [open, setOpen] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [showArrow, setShowArrow] = useState(true);
   const [isLandscape, setIsLandscape] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -144,28 +145,37 @@ export default function FloatingQuoteButton() {
                 <X className="w-5 h-5" />
               </button>
 
-              {!showForm ? (
-                // Menú inicial con dos opciones
-                <div className="space-y-4 text-center">
-                  <h2 className="text-lg font-semibold text-codiva-primary mb-4">
-                  </h2>
-                  <button
-                    onClick={() => {
-                      setOpen(false);
-                      router.push('/cotiza');
-                    }}
-                    className="w-full bg-codiva-primary text-white py-2.5 rounded-lg hover:bg-[#0c3e3e] transition font-medium"
-                  >
-                    {t('quote.knowWhatIWant')}
-                  </button>
-                  <button
-                    onClick={() => setShowForm(true)}
-                    className="w-full bg-zinc-200 text-zinc-700 py-2.5 rounded-lg hover:bg-zinc-300 transition font-medium"
-                  >
-                    {t('quote.needHelp')}
-                  </button>
-                </div>
-              ) : (
+             {!showForm ? (
+  <div className="space-y-5 text-center">
+    <h2 className="text-lg font-semibold text-zinc-800">
+      {t('quote.promptTitle')}
+    </h2>
+    <p className="text-sm text-zinc-600">
+      {t('quote.promptSubtitle')}
+    </p>
+
+    <div className="space-y-3 mt-6">
+      <button
+        onClick={() => {
+          setOpen(false);
+          router.push('/cotiza');
+        }}
+        className="w-full border-2 border-codiva-primary text-codiva-primary py-2.5 rounded-lg hover:bg-codiva-primary hover:text-white transition font-medium flex items-center justify-center gap-2"
+      >
+        <Mail className="w-4 h-4" />
+        {t('quote.knowWhatIWant')}
+      </button>
+
+      <button
+        onClick={() => setShowForm(true)}
+        className="w-full bg-[#104E4E] text-white py-2.5 rounded-lg hover:bg-[#0c3e3e] transition font-medium flex items-center justify-center gap-2"
+      >
+        <MessageCircle className="w-4 h-4" />
+        {t('quote.needHelp')}
+      </button>
+    </div>
+  </div>
+) : (
                 // Formulario para enviar a WhatsApp
                 <Formik
                   initialValues={{ name: '', projectType: '', message: '' }}
