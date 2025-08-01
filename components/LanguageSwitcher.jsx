@@ -16,7 +16,7 @@ export default function LanguageSwitcher() {
   const isReady = useClientReady();
   const [open, setOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
-  const currentLang = i18n.language;
+  const currentLang = i18n.resolvedLanguage;
   const dropdownRef = useRef(null);
   const timeoutRef = useRef(null);
 

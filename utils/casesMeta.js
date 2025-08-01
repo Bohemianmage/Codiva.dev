@@ -62,6 +62,19 @@ const casesMeta = [
       'Design Systems',
     ],
   },
+  {
+    name: 'AMIDA',
+    url: 'https://amida.com.mx',
+    logo: '/logos/amida.svg',
+    tech: [
+      'Next.js',
+      'Tailwind',
+      'Framer Motion',
+      'i18next',
+      'Keen Slider',
+      'EmailJS'
+    ],
+  },
 ];
 
 export default casesMeta;

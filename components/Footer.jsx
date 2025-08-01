@@ -1,6 +1,6 @@
 'use client';
 
-import { Github, Linkedin } from 'lucide-react';
+import { Github, Linkedin, Instagram } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
@@ -52,6 +52,16 @@ export default function Footer() {
               className="text-zinc-400 hover:text-white transition-all duration-200 transform hover:-translate-y-0.5 p-1"
             >
               <Linkedin size={20} strokeWidth={1.8} />
+            </a>
+            <a
+              href="https://www.instagram.com/codiva_dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              title="Instagram"
+              className="text-zinc-400 hover:text-white transition-all duration-200 transform hover:-translate-y-0.5 p-1"
+            >
+              <Instagram size={20} strokeWidth={1.8} />
             </a>
           </div>
         </div>

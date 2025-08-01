@@ -9,6 +9,22 @@ function shuffleArray(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
 
+// Variantes de animación
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0 }
+};
+
 export default function CaseStudies() {
   const { t } = useTranslation();
   const [hoveredProject, setHoveredProject] = useState(null);
@@ -55,89 +71,96 @@ export default function CaseStudies() {
       className="section-spacing w-full px-6 md:px-12 flex flex-col items-center bg-zinc-50"
     >
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
         viewport={{ once: false, amount: 0.3 }}
         className="w-full max-w-4xl bg-white rounded-xl shadow-lg px-8 py-12 text-center"
       >
-        <Heading
-          as="h2"
-          id="casos"
-          size="text-3xl md:text-4xl"
-          className="text-codiva-primary mb-6"
+        <motion.div variants={fadeInUp}>
+          <Heading
+            as="h2"
+            id="casos"
+            size="text-3xl md:text-4xl"
+            className="text-codiva-primary mb-6"
+          >
+            {t('cases.title')}
+          </Heading>
+        </motion.div>
+
+        <motion.p
+          variants={fadeInUp}
+          className="text-zinc-600 text-base md:text-lg mb-10"
         >
-          {t('cases.title')}
-        </Heading>
-
-        <p className="text-zinc-600 text-base md:text-lg mb-10">
           {t('cases.description')}
-        </p>
+        </motion.p>
 
-        {isMobile ? (
-          <>
-            <div className="relative w-full overflow-x-auto scrollbar-hidden px-2 sm:px-8 mb-10">
-              <div className="flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6">
-                {[...logos, ...logos].map((item, index) => (
-                  <a
-                    key={`logo-${index}`}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onMouseEnter={() => setHoveredProject(item.name)}
-                    onMouseLeave={() => setHoveredProject(null)}
-                    className="flex-shrink-0 flex items-center justify-center"
-                    style={{ height: '6rem', minWidth: '6rem' }}
-                    aria-label={`Go to ${item.name} project`}
-                  >
-                    <img
-                      src={item.logo}
-                      alt={`${item.name} logo`}
-                      className={`h-full w-auto object-contain transition-all duration-300 ${
-                        activeProject === item.name
-                          ? 'scale-110 drop-shadow-lg'
-                          : 'opacity-60 md:opacity-100'
-                      }`}
-                    />
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="relative w-full overflow-x-auto scrollbar-hidden">
-              <div className="flex gap-4 whitespace-nowrap min-w-max animate-scroll-left animate-slow sm:animate-medium lg:animate-fast">
-                {[...techs, ...techs].map((tech, i) => {
-                  const isHighlighted = activeProject
-                    ? casesMeta.find(c => c.name === activeProject)?.tech.includes(tech)
-                    : false;
-
-                  return (
-                    <span
-                      key={`tech-${i}`}
-                      role="listitem"
-                      onMouseEnter={() => setHoveredTech(tech)}
-                      onMouseLeave={() => setHoveredTech(null)}
-                      className={`px-3 py-1 border text-sm rounded-full whitespace-nowrap flex-shrink-0 cursor-pointer transition-all duration-300 ease-in-out ${
-                        isHighlighted
-                          ? 'bg-codiva-primary text-white border-codiva-primary'
-                          : 'bg-zinc-100 border-zinc-200 text-zinc-700'
-                      }`}
+        <motion.div variants={fadeInUp}>
+          {isMobile ? (
+            <>
+              <div className="relative w-full overflow-x-auto scrollbar-hidden px-2 sm:px-8 mb-10">
+                <div className="flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6">
+                  {[...logos, ...logos].map((item, index) => (
+                    <a
+                      key={`logo-${index}`}
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onMouseEnter={() => setHoveredProject(item.name)}
+                      onMouseLeave={() => setHoveredProject(null)}
+                      className="flex-shrink-0 flex items-center justify-center"
+                      style={{ height: '6rem', minWidth: '6rem' }}
+                      aria-label={`Go to ${item.name} project`}
                     >
-                      {tech}
-                    </span>
-                  );
-                })}
+                      <img
+                        src={item.logo}
+                        alt={`${item.name} logo`}
+                        className={`h-full w-auto object-contain transition-all duration-300 ${
+                          activeProject === item.name
+                            ? 'scale-110 drop-shadow-lg'
+                            : 'opacity-60 md:opacity-100'
+                        }`}
+                      />
+                    </a>
+                  ))}
+                </div>
               </div>
+
+              <div className="relative w-full overflow-x-auto scrollbar-hidden">
+                <div className="flex gap-4 whitespace-nowrap min-w-max animate-scroll-left animate-slow sm:animate-medium lg:animate-fast">
+                  {[...techs, ...techs].map((tech, i) => {
+                    const isHighlighted = activeProject
+                      ? casesMeta.find(c => c.name === activeProject)?.tech.includes(tech)
+                      : false;
+
+                    return (
+                      <span
+                        key={`tech-${i}`}
+                        role="listitem"
+                        onMouseEnter={() => setHoveredTech(tech)}
+                        onMouseLeave={() => setHoveredTech(null)}
+                        className={`px-3 py-1 border text-sm rounded-full whitespace-nowrap flex-shrink-0 cursor-pointer transition-all duration-300 ease-in-out ${
+                          isHighlighted
+                            ? 'bg-codiva-primary text-white border-codiva-primary'
+                            : 'bg-zinc-100 border-zinc-200 text-zinc-700'
+                        }`}
+                      >
+                        {tech}
+                      </span>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="mt-12">
+              <TechProjectNetwork
+                hoveredProject={hoveredProject}
+                hoveredTech={hoveredTech}
+              />
             </div>
-          </>
-        ) : (
-          <div className="mt-12">
-            <TechProjectNetwork
-              hoveredProject={hoveredProject}
-              hoveredTech={hoveredTech}
-            />
-          </div>
-        )}
+          )}
+        </motion.div>
       </motion.div>
     </section>
   );
