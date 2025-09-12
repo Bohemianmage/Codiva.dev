@@ -150,7 +150,8 @@
     "submitWhatsApp": "Enviar por WhatsApp"
   },
   "footer": {
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "ticketLink": "Tickets"
   },
   "fields": {
     "name": "Nombre completo",

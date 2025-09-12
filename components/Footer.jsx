@@ -1,12 +1,13 @@
 'use client';
 
+import Link from 'next/link';
 import { Github, Linkedin, Instagram } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 export default function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const footerRef = useRef(null);
   const inView = useInView(footerRef, { triggerOnce: false, threshold: 0.4 });
 
@@ -25,6 +26,15 @@ export default function Footer() {
         </span>
 
         <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+          {/* Link a Tickets */}
+          <Link
+            href="/ticket"
+            locale={i18n?.language}
+            className="text-codiva-primary hover:text-white font-medium transition-colors"
+          >
+            {t('footer.ticketLink')}
+          </Link>
+
           <a
             href="mailto:hello@codiva.dev"
             className="text-codiva-primary hover:text-white font-medium transition-colors"
