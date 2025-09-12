@@ -6,16 +6,14 @@ import { Resend } from 'resend';
 import { put } from '@vercel/blob';
 
 const MAX_FILES = 5;
-const MAX_BYTES = 10 * 1024 * 1024; // 10MB
+const MAX_BYTES = 10 * 1024 * 1024;
 
 const toStr = (v) => (typeof v === 'string' ? v : (v ?? '').toString());
 
 const validate = (p) => {
   const e = [];
   const req = ['name', 'email', 'company', 'issueTitle', 'issueDescription', 'priority'];
-  req.forEach((k) => {
-    if (!p[k] || p[k].trim() === '') e.push(`${k} requerido`);
-  });
+  req.forEach((k) => { if (!p[k] || p[k].trim() === '') e.push(`${k} requerido`); });
   if (p.email && !/^\S+@\S+\.\S+$/.test(p.email)) e.push('email inválido');
   if (p.priority && !['Alta', 'Media', 'Baja'].includes(p.priority)) e.push('priority inválido');
   return e;
@@ -34,6 +32,10 @@ const notionProps = (body, fileUrls) => {
     'Created At': { date: { start: new Date().toISOString() } },
   };
 
+  if (body.incidentTime) {
+    props['Incident Time'] = { rich_text: [{ text: { content: body.incidentTime } }] };
+  }
+
   if (fileUrls.length) {
     props.Attachments = {
       files: fileUrls.map((u) => ({
@@ -49,7 +51,6 @@ const notifyEmail = async ({ subject, text }) => {
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   const RESEND_FROM = process.env.RESEND_FROM || 'Codiva Tickets <hello@codiva.dev>';
   const TO = 'hello@codiva.dev';
-
   if (!RESEND_API_KEY) return { skipped: true };
   const resend = new Resend(RESEND_API_KEY);
   await resend.emails.send({ from: RESEND_FROM, to: [TO], subject, text });
@@ -72,13 +73,13 @@ export async function POST(req) {
       issueTitle: toStr(form.get('issueTitle')),
       issueDescription: toStr(form.get('issueDescription')),
       priority: toStr(form.get('priority')),
-      privacyConsent: toStr(form.get('privacyConsent')),
+      incidentTime: toStr(form.get('incidentTime')), // HH:mm opcional
     };
 
     const errors = validate(body);
     if (errors.length) return NextResponse.json({ error: errors.join(' | ') }, { status: 400 });
 
-    // Adjuntos
+    // Adjuntos si los tienes activos en el form (mantén este bloque)
     const files = form.getAll('attachments').filter(Boolean);
     if (files.length > MAX_FILES) {
       return NextResponse.json({ error: `Máximo ${MAX_FILES} archivos` }, { status: 400 });
@@ -101,10 +102,7 @@ export async function POST(req) {
     const NOTION_TOKEN = process.env.NOTION_TOKEN;
     const NOTION_TICKETS_DB_ID = process.env.NOTION_TICKETS_DB_ID;
     if (!NOTION_TOKEN || !NOTION_TICKETS_DB_ID) {
-      return NextResponse.json(
-        { error: 'Faltan NOTION_TOKEN/NOTION_TICKETS_DB_ID' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Faltan NOTION_TOKEN/NOTION_TICKETS_DB_ID' }, { status: 500 });
     }
 
     const notion = new Notion({ auth: NOTION_TOKEN });
@@ -115,30 +113,24 @@ export async function POST(req) {
 
     const notionUrl = page?.url ?? '(sin URL)';
 
-    const subject = `[Ticket] ${body.priority} · ${body.issueTitle}`;
     const lines = [
-      `Nuevo ticket`,
-      `Prioridad: ${body.priority}`,
-      `Título: ${body.issueTitle}`,
+      `[Ticket] ${body.priority} · ${body.issueTitle}`,
       `Empresa: ${body.company}`,
       `Reportado por: ${body.name} <${body.email}>`,
+      body.incidentTime ? `Hora del incidente: ${body.incidentTime}` : null,
       `Descripción: ${body.issueDescription}`,
       `Notion: ${notionUrl}`,
-    ];
-    if (uploadedUrls.length) {
-      lines.push('Adjuntos:');
-      uploadedUrls.forEach((u, i) => lines.push(`  ${i + 1}. ${u}`));
-    }
-    const mail = await notifyEmail({ subject, text: lines.join('\n') });
+    ].filter(Boolean);
+
+    const mail = await notifyEmail({ subject: `[Ticket] ${body.priority} · ${body.issueTitle}`, text: lines.join('\n') });
 
     return NextResponse.json(
       { ok: true, notionUrl, files: uploadedUrls, mailSkipped: mail.skipped },
       { status: 201 }
     );
   } catch (err) {
-    // Usamos la variable para cumplir ESLint y dejar trazabilidad
     console.error('Error en POST /api/ticket:', err);
-    const message = (err && err.message) ? `Error: ${err.message}` : 'Error inesperado';
+    const message = err?.message ? `Error: ${err.message}` : 'Error inesperado';
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
