@@ -105,7 +105,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Faltan NOTION_TICKETS_TOKEN/NOTION_TICKETS_DB_ID' }, { status: 500 });
     }
 
-    const notion = new Notion({ auth: NOTION_TOKEN });
+    const notion = new Notion({ auth: NOTION_TICKETS_TOKEN });
     const page = await notion.pages.create({
       parent: { database_id: NOTION_TICKETS_DB_ID },
       properties: notionProps(body, uploadedUrls),
