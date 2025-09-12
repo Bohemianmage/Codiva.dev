@@ -1,28 +1,77 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+/**
+ * Formulario de tickets con adjuntos (múltiples).
+ * Envío como multipart/form-data a /api/ticket.
+ *
+ * Fix de foco:
+ * - Field extraído fuera de TicketPage para que su tipo sea estable y no se re-monte en cada render.
+ * - onBlur usa únicamente formik.handleBlur (sin refocus programático).
+ */
+
+import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 const PRIMARY = '#104E4E';
-const NAVBAR_OFFSET = '6rem'; // ~96px. Ajusta si tu navbar es distinto.
+
+/* ---------- Field estable (fuera de TicketPage) ---------- */
+function Field({ formik, label, name, as = 'input', id, ...rest }) {
+  const inputId = id || name;
+
+  return (
+    <div>
+      <label htmlFor={inputId} className="block mb-1 text-sm font-medium text-zinc-800">
+        {label}
+      </label>
+
+      {as === 'textarea' ? (
+        <textarea
+          id={inputId}
+          name={name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values[name]}
+          className="w-full rounded-lg border border-zinc-300 px-4 py-2 outline-none focus:ring-2"
+          rows={rest.rows || 4}
+          {...rest}
+        />
+      ) : as === 'select' ? (
+        <select
+          id={inputId}
+          name={name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values[name]}
+          className="w-full rounded-lg border border-zinc-300 px-4 py-2 outline-none focus:ring-2"
+          {...rest}
+        />
+      ) : (
+        <input
+          id={inputId}
+          name={name}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values[name]}
+          className="w-full rounded-lg border border-zinc-300 px-4 py-2 outline-none focus:ring-2"
+          {...rest}
+        />
+      )}
+
+      {formik.touched[name] && formik.errors[name] && (
+        <p className="mt-1 text-xs text-red-600">{formik.errors[name]}</p>
+      )}
+    </div>
+  );
+}
+/* --------------------------------------------------------- */
 
 export default function TicketPage() {
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState('');
+  const [files, setFiles] = useState([]); // archivos seleccionados
 
-  // Ocultar CTA global "Quote" SOLO en esta página (si existe .global-quote-btn)
-  useEffect(() => {
-    const prev = [];
-    document.querySelectorAll('.global-quote-btn').forEach((el) => {
-      prev.push({ el, display: el.style.display });
-      el.style.display = 'none';
-    });
-    return () => {
-      prev.forEach(({ el, display }) => (el.style.display = display));
-    };
-  }, []);
-
+  // Validación
   const validationSchema = Yup.object({
     name: Yup.string().required('Requerido'),
     email: Yup.string().email('Correo inválido').required('Requerido'),
@@ -30,9 +79,9 @@ export default function TicketPage() {
     issueTitle: Yup.string().required('Requerido'),
     issueDescription: Yup.string().min(10, 'Describe con más detalle').required('Requerido'),
     priority: Yup.mixed().oneOf(['Alta', 'Media', 'Baja']).required('Requerido'),
-    // incidentTime es opcional -> sin validación
   });
 
+  // Formik
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -49,13 +98,14 @@ export default function TicketPage() {
       try {
         const fd = new FormData();
         Object.entries(values).forEach(([k, v]) => fd.append(k, v));
-        // Adjuntos existentes: mantén si ya los implementaste
-        // files.forEach((f) => fd.append('attachments', f));
+        files.forEach((f) => fd.append('attachments', f));
 
         const res = await fetch('/api/ticket', { method: 'POST', body: fd });
+
         if (res.ok) {
           setSubmitted(true);
           resetForm();
+          setFiles([]);
         } else {
           const data = await res.json().catch(() => ({}));
           setServerError(data?.error || 'Error al crear el ticket.');
@@ -66,56 +116,18 @@ export default function TicketPage() {
     },
   });
 
-  const Field = ({ label, name, as = 'input', ...rest }) => (
-    <div>
-      <label className="block mb-1 text-sm font-medium text-zinc-800">{label}</label>
-      {as === 'textarea' ? (
-        <textarea
-          name={name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values[name]}
-          className="w-full rounded-xl border border-zinc-300 px-4 py-2 outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#104E4E20]"
-          rows={rest.rows || 4}
-          {...rest}
-        />
-      ) : as === 'select' ? (
-        <select
-          name={name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values[name]}
-          className="w-full rounded-xl border border-zinc-300 px-4 py-2 outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#104E4E20]"
-          {...rest}
-        />
-      ) : (
-        <input
-          name={name}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values[name]}
-          className="w-full rounded-xl border border-zinc-300 px-4 py-2 outline-none focus:ring-2 focus:ring-offset-1 focus:ring-[#104E4E20]"
-          {...rest}
-        />
-      )}
-      {formik.touched[name] && formik.errors[name] && (
-        <p className="mt-1 text-xs text-red-600">{formik.errors[name]}</p>
-      )}
-    </div>
-  );
-
+  // Pantalla de éxito
   if (submitted) {
     return (
-      <div
-        className="min-h-[calc(100vh-var(--nav-offset))] flex items-center justify-center px-4"
-        style={{ ['--nav-offset']: NAVBAR_OFFSET }}
-      >
-        <div className="w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm">
-          <h1 className="text-2xl font-semibold mb-2" style={{ color: PRIMARY }}>Ticket registrado</h1>
+      <div className="min-h-[70vh] flex items-center justify-center px-4">
+        <div className="w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-8">
+          <h1 className="text-2xl font-semibold mb-2" style={{ color: PRIMARY }}>
+            Ticket registrado
+          </h1>
           <p className="text-zinc-700">Hemos recibido tu reporte.</p>
           <button
             onClick={() => setSubmitted(false)}
-            className="mt-6 w-full rounded-lg py-3 text-white hover:opacity-90 transition"
+            className="mt-6 w-full rounded-lg py-3 text-white"
             style={{ backgroundColor: PRIMARY }}
           >
             Crear otro ticket
@@ -125,43 +137,45 @@ export default function TicketPage() {
     );
   }
 
+  // Formulario
   return (
-    <main
-      className="bg-[#F9FAFB] px-4"
-      style={{ paddingTop: `clamp(3rem, 6vw, ${NAVBAR_OFFSET})`, paddingBottom: '4rem' }}
-    >
-      <div className="mx-auto w-full max-w-2xl rounded-3xl border border-zinc-200 bg-white p-8 shadow-sm">
+    <main className="min-h-[80vh] flex items-center justify-center bg-[#F9FAFB] px-4 py-10 pt-24">
+      <div className="w-full max-w-2xl rounded-2xl border border-zinc-200 bg-white p-8">
         <header className="mb-6">
-          <h1 className="text-3xl font-semibold mb-2" style={{ color: PRIMARY }}>Reportar ticket</h1>
+          <h1 className="text-3xl font-semibold mb-1" style={{ color: PRIMARY }}>
+            Reportar ticket
+          </h1>
           <p className="text-sm text-zinc-600">
-            Describe el problema, incluye pasos para reproducir y URLs si aplica.
+            Incluye pasos, URLs y adjunta capturas si aplica.
           </p>
         </header>
 
         <form onSubmit={formik.handleSubmit} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="Nombre" name="name" />
-            <Field label="Correo" name="email" type="email" />
-            <Field label="Empresa" name="company" />
-            <Field label="Prioridad" name="priority" as="select">
+            <Field formik={formik} label="Nombre" name="name" type="text" />
+            <Field formik={formik} label="Correo" name="email" type="email" />
+            <Field formik={formik} label="Empresa" name="company" type="text" />
+            <Field formik={formik} label="Prioridad" name="priority" as="select">
               <option value="Alta">Alta</option>
               <option value="Media">Media</option>
               <option value="Baja">Baja</option>
             </Field>
           </div>
 
-          <Field label="Título del ticket" name="issueTitle" />
+          <Field formik={formik} label="Título del ticket" name="issueTitle" type="text" />
 
+          {/* Hora del incidente (opcional) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Field
+              formik={formik}
               label="Hora del incidente (opcional)"
               name="incidentTime"
               type="time"
-              placeholder="HH:mm"
             />
           </div>
 
           <Field
+            formik={formik}
             label="Descripción del problema"
             name="issueDescription"
             as="textarea"
@@ -169,11 +183,23 @@ export default function TicketPage() {
             placeholder="Qué esperabas, qué ocurrió, pasos para reproducir, capturas/URLs…"
           />
 
-          {/* Si ya tienes adjuntos, mantenlos aquí. Eliminé el checkbox de privacidad como pediste. */}
+          {/* Adjuntos */}
+          <div>
+            <label className="block mb-1 text-sm font-medium text-zinc-800">Adjuntos (opcional)</label>
+            <input
+              type="file"
+              multiple
+              onChange={(e) => setFiles(Array.from(e.target.files || []))}
+              className="w-full rounded-lg border border-zinc-300 px-4 py-2"
+            />
+            <p className="mt-1 text-xs text-zinc-500">
+              Se aceptan imágenes y documentos. Máx. ~10MB por archivo.
+            </p>
+          </div>
 
           <button
             type="submit"
-            className="w-full rounded-lg py-3 text-white hover:opacity-90 transition"
+            className="w-full rounded-lg py-3 text-white"
             style={{ backgroundColor: PRIMARY }}
             disabled={formik.isSubmitting}
           >
@@ -183,11 +209,6 @@ export default function TicketPage() {
           {serverError && <p className="text-center text-sm text-red-600">{serverError}</p>}
         </form>
       </div>
-
-      {/* Ocultar CTA global "Quote" si el botón global usa .global-quote-btn */}
-      <style jsx global>{`
-        .global-quote-btn { display: none !important; }
-      `}</style>
     </main>
   );
 }

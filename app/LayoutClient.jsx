@@ -2,6 +2,7 @@
 
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation'; // ← NUEVO
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -39,6 +40,12 @@ export default function LayoutClient({ children }) {
     "description": t('description')
   };
 
+  // --- NUEVO: ocultar FloatingQuoteButton en /ticket (también /es/ticket, /en/ticket, etc.)
+  const pathname = usePathname();
+  const segments = (pathname || '').split('/').filter(Boolean);
+  const onTicket = segments[segments.length - 1] === 'ticket';
+  const showQuote = !onTicket;
+
   return (
     <div className="bg-neutral-50 text-zinc-900 font-sans antialiased">
       {/* Microdatos JSON-LD */}
@@ -49,7 +56,8 @@ export default function LayoutClient({ children }) {
       <Navbar />
       {children}
       <Footer />
-      <FloatingQuoteButton />
+
+      {showQuote && <FloatingQuoteButton />}{/* ← Condicional */}
 
       <Toaster
         position="top-right"
