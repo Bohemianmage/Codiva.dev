@@ -199,5 +199,35 @@
   "status": {
     "success": "Thank you for your request!",
     "error": "There was an error sending. Please try again."
+  },
+"ticket": {
+  "title": "Report a ticket",
+  "subtitle": "Include steps, URLs, and attach screenshots if relevant.",
+  "fields": {
+    "priority": "Priority",
+    "issueTitle": "Ticket title",
+    "incidentTime": "Incident time (optional)",
+    "issueDescription": "Problem description",
+    "attachments": "Attachments (optional)"
+  },
+  "priority": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "buttons": {
+    "submit": "Send ticket",
+    "remove": "Remove",
+    "removeAll": "Remove all",
+    "new": "Create another ticket"
+  },
+  "status": {
+    "submittedTitle": "Ticket received",
+    "submittedMsg": "We have received your report."
+  },
+  "hints": {
+    "attachments": "Images and documents accepted. Max ~10MB per file.",
+    "textarea": "What you expected, what happened, steps to reproduce, screenshots/URLs…"
   }
+}
 }

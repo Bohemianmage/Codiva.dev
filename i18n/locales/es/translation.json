@@ -199,5 +199,35 @@
   "status": {
     "success": "¡Gracias por tu solicitud!",
     "error": "Hubo un error al enviar. Intenta nuevamente."
+  },
+"ticket": {
+  "title": "Reportar ticket",
+  "subtitle": "Incluye pasos, URLs y adjunta capturas si aplica.",
+  "fields": {
+    "priority": "Prioridad",
+    "issueTitle": "Título del ticket",
+    "incidentTime": "Hora del incidente (opcional)",
+    "issueDescription": "Descripción del problema",
+    "attachments": "Adjuntos (opcional)"
+  },
+  "priority": {
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Baja"
+  },
+  "buttons": {
+    "submit": "Enviar ticket",
+    "remove": "Quitar",
+    "removeAll": "Quitar todo",
+    "new": "Crear otro ticket"
+  },
+  "status": {
+    "submittedTitle": "Ticket registrado",
+    "submittedMsg": "Hemos recibido tu reporte."
+  },
+  "hints": {
+    "attachments": "Se aceptan imágenes y documentos. Máx. ~10MB por archivo.",
+    "textarea": "Qué esperabas, qué ocurrió, pasos para reproducir, capturas/URLs…"
   }
+}
 }

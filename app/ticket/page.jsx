@@ -1,19 +1,19 @@
 'use client';
 
 /**
- * Formulario de tickets con adjuntos (múltiples).
- * Envío como multipart/form-data a /api/ticket.
- *
- * Mejora: lista de archivos seleccionados con botón "Quitar" (y "Quitar todo").
+ * i18n: todos los textos provienen de translation.json vía react-i18next.
+ * Nota: los valores de prioridad se mantienen como 'Alta' | 'Media' | 'Baja'
+ * para que sigan cuadrando con Notion, pero las etiquetas se traducen.
  */
 
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 const PRIMARY = '#104E4E';
 
-/* ---------- Field estable (fuera de TicketPage) ---------- */
+/* ---------- Field (fuera de TicketPage) ---------- */
 function Field({ formik, label, name, as = 'input', id, ...rest }) {
   const inputId = id || name;
 
@@ -62,24 +62,29 @@ function Field({ formik, label, name, as = 'input', id, ...rest }) {
     </div>
   );
 }
-/* --------------------------------------------------------- */
+/* -------------------------------------------------- */
 
 export default function TicketPage() {
+  const { t } = useTranslation();
+
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState('');
   const [files, setFiles] = useState([]); // archivos seleccionados
 
-  // Validación
+  // Validación con textos desde i18n
   const validationSchema = Yup.object({
-    name: Yup.string().required('Requerido'),
-    email: Yup.string().email('Correo inválido').required('Requerido'),
-    company: Yup.string().required('Requerido'),
-    issueTitle: Yup.string().required('Requerido'),
-    issueDescription: Yup.string().min(10, 'Describe con más detalle').required('Requerido'),
-    priority: Yup.mixed().oneOf(['Alta', 'Media', 'Baja']).required('Requerido'),
+    name: Yup.string().required(t('common.validation.required')),
+    email: Yup.string()
+      .email(t('common.validation.invalidEmail'))
+      .required(t('common.validation.required')),
+    company: Yup.string().required(t('common.validation.required')),
+    issueTitle: Yup.string().required(t('common.validation.required')),
+    issueDescription: Yup.string()
+      .min(10, t('common.validation.tooShort'))
+      .required(t('common.validation.required')),
+    priority: Yup.mixed().oneOf(['Alta', 'Media', 'Baja']).required(t('common.validation.required')),
   });
 
-  // Formik
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -99,17 +104,17 @@ export default function TicketPage() {
         files.forEach((f) => fd.append('attachments', f));
 
         const res = await fetch('/api/ticket', { method: 'POST', body: fd });
+        const data = await res.json().catch(() => ({}));
 
         if (res.ok) {
           setSubmitted(true);
           resetForm();
           setFiles([]);
         } else {
-          const data = await res.json().catch(() => ({}));
-          setServerError(data?.error || 'Error al crear el ticket.');
+          setServerError(data?.error || t('status.error'));
         }
       } catch {
-        setServerError('No se pudo conectar con el servidor.');
+        setServerError(t('status.error'));
       }
     },
   });
@@ -120,15 +125,15 @@ export default function TicketPage() {
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="w-full max-w-xl rounded-2xl border border-zinc-200 bg-white p-8">
           <h1 className="text-2xl font-semibold mb-2" style={{ color: PRIMARY }}>
-            Ticket registrado
+            {t('ticket.status.submittedTitle')}
           </h1>
-          <p className="text-zinc-700">Hemos recibido tu reporte.</p>
+          <p className="text-zinc-700">{t('ticket.status.submittedMsg')}</p>
           <button
             onClick={() => setSubmitted(false)}
             className="mt-6 w-full rounded-lg py-3 text-white"
             style={{ backgroundColor: PRIMARY }}
           >
-            Crear otro ticket
+            {t('ticket.buttons.new')}
           </button>
         </div>
       </div>
@@ -141,32 +146,36 @@ export default function TicketPage() {
       <div className="w-full max-w-2xl rounded-2xl border border-zinc-200 bg-white p-8">
         <header className="mb-6">
           <h1 className="text-3xl font-semibold mb-1" style={{ color: PRIMARY }}>
-            Reportar ticket
+            {t('ticket.title')}
           </h1>
-          <p className="text-sm text-zinc-600">
-            Incluye pasos, URLs y adjunta capturas si aplica.
-          </p>
+          <p className="text-sm text-zinc-600">{t('ticket.subtitle')}</p>
         </header>
 
         <form onSubmit={formik.handleSubmit} className="space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field formik={formik} label="Nombre" name="name" type="text" />
-            <Field formik={formik} label="Correo" name="email" type="email" />
-            <Field formik={formik} label="Empresa" name="company" type="text" />
-            <Field formik={formik} label="Prioridad" name="priority" as="select">
-              <option value="Alta">Alta</option>
-              <option value="Media">Media</option>
-              <option value="Baja">Baja</option>
+            <Field formik={formik} label={t('common.fields.name')} name="name" type="text" />
+            <Field formik={formik} label={t('common.fields.email')} name="email" type="email" />
+            <Field formik={formik} label={t('fields.company')} name="company" type="text" />
+            <Field formik={formik} label={t('ticket.fields.priority')} name="priority" as="select">
+              {/* Valores internos fijos para Notion; etiquetas traducidas */}
+              <option value="Alta">{t('ticket.priority.high')}</option>
+              <option value="Media">{t('ticket.priority.medium')}</option>
+              <option value="Baja">{t('ticket.priority.low')}</option>
             </Field>
           </div>
 
-          <Field formik={formik} label="Título del ticket" name="issueTitle" type="text" />
+          <Field
+            formik={formik}
+            label={t('ticket.fields.issueTitle')}
+            name="issueTitle"
+            type="text"
+          />
 
           {/* Hora del incidente (opcional) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Field
               formik={formik}
-              label="Hora del incidente (opcional)"
+              label={t('ticket.fields.incidentTime')}
               name="incidentTime"
               type="time"
             />
@@ -174,23 +183,24 @@ export default function TicketPage() {
 
           <Field
             formik={formik}
-            label="Descripción del problema"
+            label={t('ticket.fields.issueDescription')}
             name="issueDescription"
             as="textarea"
             rows={6}
-            placeholder="Qué esperabas, qué ocurrió, pasos para reproducir, capturas/URLs…"
+            placeholder={t('ticket.hints.textarea')}
           />
 
           {/* Adjuntos */}
           <div>
-            <label className="block mb-1 text-sm font-medium text-zinc-800">Adjuntos (opcional)</label>
+            <label className="block mb-1 text-sm font-medium text-zinc-800">
+              {t('ticket.fields.attachments')}
+            </label>
             <input
               type="file"
               multiple
               accept="image/*,.pdf,.txt,.doc,.docx,.xls,.xlsx"
               onChange={(e) => {
                 const picked = Array.from(e.target.files || []);
-                // Merge + dedupe por nombre-tamaño-fecha
                 const merged = [...files, ...picked];
                 const seen = new Set();
                 const unique = [];
@@ -202,7 +212,7 @@ export default function TicketPage() {
                   }
                 }
                 setFiles(unique);
-                e.target.value = ''; // permite volver a seleccionar los mismos archivos
+                e.target.value = '';
               }}
               className="w-full rounded-lg border border-zinc-300 px-4 py-2"
             />
@@ -226,9 +236,9 @@ export default function TicketPage() {
                         type="button"
                         onClick={() => setFiles((prev) => prev.filter((_, i) => i !== idx))}
                         className="ml-3 text-red-600 hover:underline"
-                        aria-label={`Quitar ${f.name}`}
+                        aria-label={`${t('ticket.buttons.remove')} ${f.name}`}
                       >
-                        Quitar
+                        {t('ticket.buttons.remove')}
                       </button>
                     </li>
                   ))}
@@ -240,15 +250,13 @@ export default function TicketPage() {
                     onClick={() => setFiles([])}
                     className="text-xs text-zinc-600 hover:underline"
                   >
-                    Quitar todo
+                    {t('ticket.buttons.removeAll')}
                   </button>
                 </div>
               </div>
             )}
 
-            <p className="mt-1 text-xs text-zinc-500">
-              Se aceptan imágenes y documentos. Máx. ~10MB por archivo.
-            </p>
+            <p className="mt-1 text-xs text-zinc-500">{t('ticket.hints.attachments')}</p>
           </div>
 
           <button
@@ -257,7 +265,7 @@ export default function TicketPage() {
             style={{ backgroundColor: PRIMARY }}
             disabled={formik.isSubmitting}
           >
-            {formik.isSubmitting ? 'Enviando…' : 'Enviar ticket'}
+            {formik.isSubmitting ? t('common.status.loading') : t('ticket.buttons.submit')}
           </button>
 
           {serverError && <p className="text-center text-sm text-red-600">{serverError}</p>}
