@@ -99,10 +99,10 @@ export async function POST(req) {
       uploadedUrls.push(url);
     }
 
-    const NOTION_TOKEN = process.env.NOTION_TOKEN;
+    const NOTION_TICKETS_TOKEN = process.env.NOTION_TICKETS_TOKEN;
     const NOTION_TICKETS_DB_ID = process.env.NOTION_TICKETS_DB_ID;
-    if (!NOTION_TOKEN || !NOTION_TICKETS_DB_ID) {
-      return NextResponse.json({ error: 'Faltan NOTION_TOKEN/NOTION_TICKETS_DB_ID' }, { status: 500 });
+    if (!NOTION_TICKETS_TOKEN || !NOTION_TICKETS_DB_ID) {
+      return NextResponse.json({ error: 'Faltan NOTION_TICKETS_TOKEN/NOTION_TICKETS_DB_ID' }, { status: 500 });
     }
 
     const notion = new Notion({ auth: NOTION_TOKEN });

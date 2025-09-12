@@ -4,9 +4,7 @@
  * Formulario de tickets con adjuntos (múltiples).
  * Envío como multipart/form-data a /api/ticket.
  *
- * Fix de foco:
- * - Field extraído fuera de TicketPage para que su tipo sea estable y no se re-monte en cada render.
- * - onBlur usa únicamente formik.handleBlur (sin refocus programático).
+ * Mejora: lista de archivos seleccionados con botón "Quitar" (y "Quitar todo").
  */
 
 import { useState } from 'react';
@@ -189,9 +187,65 @@ export default function TicketPage() {
             <input
               type="file"
               multiple
-              onChange={(e) => setFiles(Array.from(e.target.files || []))}
+              accept="image/*,.pdf,.txt,.doc,.docx,.xls,.xlsx"
+              onChange={(e) => {
+                const picked = Array.from(e.target.files || []);
+                // Merge + dedupe por nombre-tamaño-fecha
+                const merged = [...files, ...picked];
+                const seen = new Set();
+                const unique = [];
+                for (const f of merged) {
+                  const key = `${f.name}-${f.size}-${f.lastModified}`;
+                  if (!seen.has(key)) {
+                    seen.add(key);
+                    unique.push(f);
+                  }
+                }
+                setFiles(unique);
+                e.target.value = ''; // permite volver a seleccionar los mismos archivos
+              }}
               className="w-full rounded-lg border border-zinc-300 px-4 py-2"
             />
+
+            {/* Lista de archivos con botón Quitar */}
+            {files.length > 0 && (
+              <div className="mt-2">
+                <ul className="space-y-2">
+                  {files.map((f, idx) => (
+                    <li
+                      key={`${f.name}-${f.size}-${idx}`}
+                      className="flex items-center justify-between rounded-md border border-zinc-200 px-3 py-2 text-sm"
+                    >
+                      <span className="truncate">
+                        {f.name}{' '}
+                        <span className="text-zinc-400">
+                          ({(f.size / 1024 / 1024).toFixed(2)} MB)
+                        </span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setFiles((prev) => prev.filter((_, i) => i !== idx))}
+                        className="ml-3 text-red-600 hover:underline"
+                        aria-label={`Quitar ${f.name}`}
+                      >
+                        Quitar
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-2 text-right">
+                  <button
+                    type="button"
+                    onClick={() => setFiles([])}
+                    className="text-xs text-zinc-600 hover:underline"
+                  >
+                    Quitar todo
+                  </button>
+                </div>
+              </div>
+            )}
+
             <p className="mt-1 text-xs text-zinc-500">
               Se aceptan imágenes y documentos. Máx. ~10MB por archivo.
             </p>
