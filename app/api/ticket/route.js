@@ -6,20 +6,22 @@ import { Resend } from 'resend';
 import { put } from '@vercel/blob';
 
 const MAX_FILES = 5;
-const MAX_BYTES = 10 * 1024 * 1024; // 10MB/archivo permitido
+const MAX_BYTES = 10 * 1024 * 1024; // 10MB
 
-function toStr(v) { return typeof v === 'string' ? v : (v ?? '').toString(); }
+const toStr = (v) => (typeof v === 'string' ? v : (v ?? '').toString());
 
-function validate(p) {
+const validate = (p) => {
   const e = [];
-  const req = ['name','email','company','issueTitle','issueDescription','priority'];
-  req.forEach(k => { if (!p[k] || p[k].trim()==='') e.push(`${k} requerido`); });
+  const req = ['name', 'email', 'company', 'issueTitle', 'issueDescription', 'priority'];
+  req.forEach((k) => {
+    if (!p[k] || p[k].trim() === '') e.push(`${k} requerido`);
+  });
   if (p.email && !/^\S+@\S+\.\S+$/.test(p.email)) e.push('email inválido');
-  if (p.priority && !['Alta','Media','Baja'].includes(p.priority)) e.push('priority inválido');
+  if (p.priority && !['Alta', 'Media', 'Baja'].includes(p.priority)) e.push('priority inválido');
   return e;
-}
+};
 
-function notionProps(body, fileUrls) {
+const notionProps = (body, fileUrls) => {
   const props = {
     Name: { title: [{ text: { content: body.issueTitle } }] },
     Status: { select: { name: 'Nuevo' } },
@@ -33,23 +35,26 @@ function notionProps(body, fileUrls) {
   };
 
   if (fileUrls.length) {
-    // Notion Files admite "external" con URL pública
     props.Attachments = {
-      files: fileUrls.map((u) => ({ name: u.split('/').pop() || 'attachment', external: { url: u } })),
+      files: fileUrls.map((u) => ({
+        name: u.split('/').pop() || 'attachment',
+        external: { url: u },
+      })),
     };
   }
   return props;
-}
+};
 
-async function notifyEmail({ subject, text }) {
+const notifyEmail = async ({ subject, text }) => {
   const RESEND_API_KEY = process.env.RESEND_API_KEY;
   const RESEND_FROM = process.env.RESEND_FROM || 'Codiva Tickets <hello@codiva.dev>';
   const TO = 'hello@codiva.dev';
+
   if (!RESEND_API_KEY) return { skipped: true };
   const resend = new Resend(RESEND_API_KEY);
   await resend.emails.send({ from: RESEND_FROM, to: [TO], subject, text });
   return { skipped: false };
-}
+};
 
 export async function POST(req) {
   try {
@@ -73,7 +78,7 @@ export async function POST(req) {
     const errors = validate(body);
     if (errors.length) return NextResponse.json({ error: errors.join(' | ') }, { status: 400 });
 
-    // Procesar adjuntos
+    // Adjuntos
     const files = form.getAll('attachments').filter(Boolean);
     if (files.length > MAX_FILES) {
       return NextResponse.json({ error: `Máximo ${MAX_FILES} archivos` }, { status: 400 });
@@ -81,17 +86,14 @@ export async function POST(req) {
 
     const uploadedUrls = [];
     for (const f of files) {
-      // Cada f es un Blob (File) compatible
       if (!f?.size) continue;
       if (f.size > MAX_BYTES) {
         return NextResponse.json({ error: `Archivo ${f.name} excede 10MB` }, { status: 400 });
       }
-      // Nombre legible
       const safeName = `${Date.now()}-${(f.name || 'attachment').replace(/\s+/g, '-')}`;
-      // Subida pública a Vercel Blob
       const { url } = await put(`tickets/${safeName}`, f, {
         access: 'public',
-        token: process.env.BLOB_READ_WRITE_TOKEN, // requerido para escritura
+        token: process.env.BLOB_READ_WRITE_TOKEN,
       });
       uploadedUrls.push(url);
     }
@@ -99,7 +101,10 @@ export async function POST(req) {
     const NOTION_TOKEN = process.env.NOTION_TOKEN;
     const NOTION_TICKETS_DB_ID = process.env.NOTION_TICKETS_DB_ID;
     if (!NOTION_TOKEN || !NOTION_TICKETS_DB_ID) {
-      return NextResponse.json({ error: 'Faltan NOTION_TOKEN/NOTION_TICKETS_DB_ID' }, { status: 500 });
+      return NextResponse.json(
+        { error: 'Faltan NOTION_TOKEN/NOTION_TICKETS_DB_ID' },
+        { status: 500 }
+      );
     }
 
     const notion = new Notion({ auth: NOTION_TOKEN });
@@ -108,7 +113,8 @@ export async function POST(req) {
       properties: notionProps(body, uploadedUrls),
     });
 
-    const url = page?.url ?? '(sin URL)';
+    const notionUrl = page?.url ?? '(sin URL)';
+
     const subject = `[Ticket] ${body.priority} · ${body.issueTitle}`;
     const lines = [
       `Nuevo ticket`,
@@ -117,7 +123,7 @@ export async function POST(req) {
       `Empresa: ${body.company}`,
       `Reportado por: ${body.name} <${body.email}>`,
       `Descripción: ${body.issueDescription}`,
-      `Notion: ${url}`,
+      `Notion: ${notionUrl}`,
     ];
     if (uploadedUrls.length) {
       lines.push('Adjuntos:');
@@ -126,10 +132,13 @@ export async function POST(req) {
     const mail = await notifyEmail({ subject, text: lines.join('\n') });
 
     return NextResponse.json(
-      { ok: true, notionUrl: url, files: uploadedUrls, mailSkipped: mail.skipped },
+      { ok: true, notionUrl, files: uploadedUrls, mailSkipped: mail.skipped },
       { status: 201 }
     );
-  } catch (e) {
-    return NextResponse.json({ error: 'Error inesperado' }, { status: 500 });
+  } catch (err) {
+    // Usamos la variable para cumplir ESLint y dejar trazabilidad
+    console.error('Error en POST /api/ticket:', err);
+    const message = (err && err.message) ? `Error: ${err.message}` : 'Error inesperado';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
