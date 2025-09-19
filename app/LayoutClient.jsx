@@ -2,7 +2,8 @@
 
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation'; // ← NUEVO
+import { usePathname } from 'next/navigation'; 
+import { Analytics } from '@vercel/analytics/react';
 
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -66,6 +67,8 @@ export default function LayoutClient({ children }) {
           className: 'font-inter text-sm',
         }}
       />
+
+      <Analytics />
     </div>
   );
 }
