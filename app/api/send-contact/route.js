@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request) {
   try {
     const { name, email, message } = await request.json();
@@ -9,6 +7,13 @@ export async function POST(request) {
     if (!name || !email || !message) {
       return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
     }
+
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: 'Email service not configured' }), { status: 500 });
+    }
+
+    const resend = new Resend(apiKey);
 
     const { error } = await resend.emails.send({
       from: 'Codiva.dev <hello@codiva.dev>',
