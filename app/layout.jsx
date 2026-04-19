@@ -14,8 +14,9 @@ const satoshi = Plus_Jakarta_Sans({
 // ❌ No exportamos title/description para permitir cambio dinámico
 export const metadata = {
   icons: {
-    icon: '/favicon.ico',
+    icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
   },
+  manifest: '/site.webmanifest',
   other: {
     'google-site-verification': 'vaG5cbLjCNMZe1GDYegB9d3X1f8XFODHZGmk4PtJjFA',
     'og:url': 'https://www.codiva.dev/',
