@@ -36,7 +36,7 @@ export default function LayoutClient({ children }) {
     "@type": "Organization",
     "name": "Codiva.dev",
     "url": "https://www.codiva.dev",
-    "logo": "https://www.codiva.dev/logo.png",
+    "logo": "https://www.codiva.dev/logo.svg",
     "sameAs": ["https://www.linkedin.com/company/codiva"],
     "description": t('description')
   };

@@ -1,13 +1,24 @@
 import { NextResponse } from 'next/server';
 import { Client } from '@notionhq/client';
 import { Resend } from 'resend';
+import { escapeHtml } from '@/utils/escapeHtml';
 
 export async function POST(request) {
   try {
     const body = await request.json();
 
-    const notion = new Client({ auth: process.env.NOTION_TOKEN });
+    const notionToken = process.env.NOTION_TOKEN;
     const databaseId = process.env.NOTION_DATABASE_ID;
+    const resendKey = process.env.RESEND_API_KEY;
+    const resendFrom = process.env.RESEND_FROM;
+    if (!notionToken || !databaseId || !resendKey || !resendFrom) {
+      return NextResponse.json(
+        { error: 'Servicio no configurado (Notion/Resend)' },
+        { status: 503 }
+      );
+    }
+
+    const notion = new Client({ auth: notionToken });
 
     const properties = {
       'Nombre completo': {
@@ -60,12 +71,13 @@ export async function POST(request) {
       properties,
     });
 
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = new Resend(resendKey);
+    const greeting = escapeHtml(body.name || 'Cliente');
     await resend.emails.send({
-      from: process.env.RESEND_FROM,
+      from: resendFrom,
       to: body.email,
       subject: 'Hemos recibido tu solicitud en Codiva.dev',
-      html: `<p>Hola ${body.name || 'Cliente'},</p><p>Gracias por contactarnos. Pronto nos pondremos en contacto contigo.</p>`,
+      html: `<p>Hola ${greeting},</p><p>Gracias por contactarnos. Pronto nos pondremos en contacto contigo.</p>`,
     });
 
     return NextResponse.json({ success: true });

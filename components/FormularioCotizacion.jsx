@@ -35,7 +35,10 @@ export default function FormularioCotizacion() {
       hasHosting: Yup.string().required(t('validation.required')),
       deliveryDate: Yup.date().required(t('validation.required')),
       budget: Yup.string(),
-      referenceSite: Yup.string().url(t('validation.invalidUrl')),
+      referenceSite: Yup.string()
+        .transform((v) => (v === '' ? undefined : v))
+        .optional()
+        .url(t('validation.invalidUrl')),
       privacyConsent: Yup.boolean().oneOf([true], t('validation.required')),
     }),
     onSubmit: async (values, { resetForm }) => {

@@ -80,7 +80,7 @@ export default function CaseStudies() {
         <motion.div variants={fadeInUp}>
           <Heading
             as="h2"
-            id="casos"
+            id="casos-heading"
             size="text-3xl md:text-4xl"
             className="text-codiva-primary mb-6"
           >

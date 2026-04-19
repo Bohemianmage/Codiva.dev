@@ -1,16 +1,14 @@
 import './globals.css';
-import { Inter } from 'next/font/google';
-import localFont from 'next/font/local';
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import LayoutClient from './LayoutClient'; // Cliente
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
-const satoshi = localFont({
-  src: [
-    { path: '../fonts/Satoshi-Regular.woff2', weight: '400', style: 'normal' },
-    { path: '../fonts/Satoshi-Bold.woff2', weight: '700', style: 'normal' }
-  ],
+/* Plus Jakarta Sans sustituye Satoshi local: los .woff2 no estaban en el repo y rompían el despliegue. */
+const satoshi = Plus_Jakarta_Sans({
+  subsets: ['latin'],
   variable: '--font-satoshi',
+  weight: ['400', '700'],
 });
 
 // ❌ No exportamos title/description para permitir cambio dinámico
