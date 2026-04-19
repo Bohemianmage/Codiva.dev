@@ -11,19 +11,46 @@ const satoshi = Plus_Jakarta_Sans({
   weight: ['400', '700'],
 });
 
-// ❌ No exportamos title/description para permitir cambio dinámico
+const siteTitle =
+  'Codiva.dev | Desarrollo web personalizado y soluciones digitales';
+const siteDescription =
+  'Expertos en sitios web, plataformas SaaS y sistemas a medida. En Codiva.dev convertimos ideas complejas en tecnología clara, eficiente y lista para escalar.';
+
 export const metadata = {
+  metadataBase: new URL('https://www.codiva.dev'),
+  title: {
+    default: siteTitle,
+    template: '%s | Codiva.dev',
+  },
+  description: siteDescription,
   icons: {
     icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
   },
   manifest: '/site.webmanifest',
-  other: {
-    'google-site-verification': 'vaG5cbLjCNMZe1GDYegB9d3X1f8XFODHZGmk4PtJjFA',
-    'og:url': 'https://www.codiva.dev/',
-    'og:type': 'website',
-    'og:image': 'https://www.codiva.dev/og-image.jpg',
-    'twitter:card': 'summary_large_image',
-    'twitter:image': 'https://www.codiva.dev/og-image.jpg',
+  verification: {
+    google: 'vaG5cbLjCNMZe1GDYegB9d3X1f8XFODHZGmk4PtJjFA',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'es_ES',
+    url: 'https://www.codiva.dev/',
+    siteName: 'Codiva.dev',
+    title: siteTitle,
+    description: siteDescription,
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Codiva.dev',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteTitle,
+    description: siteDescription,
+    images: ['/og-image.png'],
   },
 };
 

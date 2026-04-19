@@ -9,7 +9,9 @@ i18n
   .use(LanguageDetector) // ✅ Detecta el idioma del navegador
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en', // en caso de que el idioma no esté soportado
+    fallbackLng: 'es',
+    supportedLngs: ['es', 'en'],
+    load: 'languageOnly',
     resources: {
       en: { translation: en },
       es: { translation: es },
