@@ -70,18 +70,19 @@ a {
 
 /* 🎯 Animaciones para carruseles infinitos */
 
+/* --marquee-copies: número de secuencias iguales en fila (≥2). Una vuelta = 100%/N del ancho total. */
 @keyframes scroll-left {
   0% {
     transform: translateX(0%);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% / var(--marquee-copies, 2)));
   }
 }
 
 @keyframes scroll-right {
   0% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% / var(--marquee-copies, 2)));
   }
   100% {
     transform: translateX(0%);

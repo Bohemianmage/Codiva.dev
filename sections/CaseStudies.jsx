@@ -5,6 +5,7 @@ import Heading from '../components/Heading';
 import casesMeta from '../utils/casesMeta';
 import TechProjectNetwork from '../components/TechProjectNetwork';
 import useMarqueePause from '../hooks/useMarqueePause';
+import useMarqueeCopies from '../hooks/useMarqueeCopies';
 
 function shuffleArray(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
@@ -35,6 +36,11 @@ export default function CaseStudies() {
   const [isMobile, setIsMobile] = useState(false);
   const logosMarquee = useMarqueePause();
   const techMarquee = useMarqueePause();
+  const logosCopies = useMarqueeCopies(
+    logos,
+    'gap-6 sm:gap-10 md:gap-14'
+  );
+  const techCopies = useMarqueeCopies(techs, 'gap-4');
 
   useEffect(() => {
     setIsMobile(typeof window !== 'undefined' && window.innerWidth < 768);
@@ -103,23 +109,47 @@ export default function CaseStudies() {
             <>
               {/* Scroll horizontal manual: la animación se pausa mientras hay gesto/scroll (useMarqueePause) */}
               <div
+                ref={(node) => {
+                  logosCopies.containerRef.current = node;
+                }}
                 className="relative w-full overflow-x-auto scrollbar-hidden px-2 sm:px-8 mb-10 touch-pan-x overscroll-x-contain"
                 {...logosMarquee.containerProps}
               >
                 <div
+                  ref={logosCopies.measureRef}
+                  className="pointer-events-none absolute left-0 top-0 flex w-max opacity-0 gap-6 sm:gap-10 md:gap-14"
+                  aria-hidden
+                >
+                  {logos.map((item) => (
+                    <div
+                      key={`meas-${item.name}`}
+                      className="flex flex-shrink-0 items-center justify-center"
+                      style={{ height: '6rem', minWidth: '6rem' }}
+                    >
+                      <img
+                        src={item.logo}
+                        alt=""
+                        className="h-full w-auto object-contain"
+                        decoding="async"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div
+                  style={logosCopies.marqueeStyle}
                   className={logosMarquee.innerClassName(
                     'flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max will-change-transform animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6'
                   )}
                 >
-                  {[...logos, ...logos].map((item, index) => (
+                  {logosCopies.flatWithKeys.map(({ item, key }) => (
                     <a
-                      key={`logo-${index}`}
+                      key={key}
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
                       onMouseEnter={() => setHoveredProject(item.name)}
                       onMouseLeave={() => setHoveredProject(null)}
-                      className="flex-shrink-0 flex items-center justify-center"
+                      className="flex flex-shrink-0 items-center justify-center"
                       style={{ height: '6rem', minWidth: '6rem' }}
                       aria-label={`Go to ${item.name} project`}
                     >
@@ -131,6 +161,7 @@ export default function CaseStudies() {
                             ? 'scale-110 drop-shadow-lg'
                             : 'opacity-60 md:opacity-100'
                         }`}
+                        decoding="async"
                       />
                     </a>
                   ))}
@@ -138,29 +169,47 @@ export default function CaseStudies() {
               </div>
 
               <div
+                ref={(node) => {
+                  techCopies.containerRef.current = node;
+                }}
                 className="relative w-full overflow-x-auto scrollbar-hidden touch-pan-x overscroll-x-contain"
                 {...techMarquee.containerProps}
               >
                 <div
+                  ref={techCopies.measureRef}
+                  className="pointer-events-none absolute left-0 top-0 flex w-max gap-4 opacity-0"
+                  aria-hidden
+                >
+                  {techs.map((tech) => (
+                    <span
+                      key={`meas-${tech}`}
+                      className="flex-shrink-0 rounded-full border border-zinc-200 bg-zinc-100 px-3 py-1 text-sm text-zinc-700"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <div
+                  style={techCopies.marqueeStyle}
                   className={techMarquee.innerClassName(
                     'flex gap-4 whitespace-nowrap min-w-max will-change-transform animate-scroll-left animate-slow sm:animate-medium lg:animate-fast'
                   )}
                 >
-                  {[...techs, ...techs].map((tech, i) => {
+                  {techCopies.flatWithKeys.map(({ item: tech, key }) => {
                     const isHighlighted = activeProject
-                      ? casesMeta.find(c => c.name === activeProject)?.tech.includes(tech)
+                      ? casesMeta.find((c) => c.name === activeProject)?.tech.includes(tech)
                       : false;
 
                     return (
                       <span
-                        key={`tech-${i}`}
+                        key={key}
                         role="listitem"
                         onMouseEnter={() => setHoveredTech(tech)}
                         onMouseLeave={() => setHoveredTech(null)}
-                        className={`px-3 py-1 border text-sm rounded-full whitespace-nowrap flex-shrink-0 cursor-pointer transition-all duration-300 ease-in-out ${
+                        className={`flex-shrink-0 cursor-pointer rounded-full border px-3 py-1 text-sm whitespace-nowrap transition-all duration-300 ease-in-out ${
                           isHighlighted
-                            ? 'bg-codiva-primary text-white border-codiva-primary'
-                            : 'bg-zinc-100 border-zinc-200 text-zinc-700'
+                            ? 'border-codiva-primary bg-codiva-primary text-white'
+                            : 'border-zinc-200 bg-zinc-100 text-zinc-700'
                         }`}
                       >
                         {tech}
