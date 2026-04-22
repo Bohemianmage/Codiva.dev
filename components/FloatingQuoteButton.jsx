@@ -12,26 +12,9 @@ import { Mail, MessageCircle } from 'lucide-react';
 export default function FloatingQuoteButton() {
   const [open, setOpen] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const [showArrow, setShowArrow] = useState(true);
-  const [isLandscape, setIsLandscape] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
   const { t } = useTranslation();
   const modalRef = useRef(null);
   const router = useRouter();
-
-  // Detectar zoom, orientación y desktop
-  useEffect(() => {
-    const handleResize = () => {
-      const zoomLevel = Math.round((window.outerWidth / window.innerWidth) * 100);
-      setShowArrow(zoomLevel < 150);
-      const landscape = window.matchMedia('(orientation: landscape)').matches;
-      setIsLandscape(landscape);
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   // Cerrar modal con Escape
   useEffect(() => {
@@ -72,49 +55,14 @@ export default function FloatingQuoteButton() {
     <>
       {/* Botón flotante */}
       <div className="fixed bottom-6 right-6 z-50">
-        <div className="relative flex items-center">
-          {showArrow && (!isLandscape || isDesktop) && (
-            <div className="hidden md:block absolute right-full mr-4 -mt-1 pointer-events-none">
-              <motion.svg
-                viewBox="0 0 300 500"
-                className="w-72 h-[500px] text-codiva-primary pointer-events-none"
-              >
-                <motion.path
-                  d="M100,1 C180,-20 350,50 170,160 C120,200 190,250 293,250"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 2, ease: 'easeInOut' }}
-                />
-                <motion.g
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: [0, 1], scale: [1, 1.3, 1] }}
-                  transition={{ delay: 2, repeat: Infinity, duration: 0.4, ease: 'easeInOut' }}
-                >
-                  <path
-                    d="M288,245 L293,250 L288,255"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </motion.g>
-              </motion.svg>
-            </div>
-          )}
-
-          <motion.button
-            onClick={() => setOpen(true)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-codiva-primary text-white px-5 py-3 rounded-full shadow-lg text-sm font-medium hover:bg-[#0c3e3e] transition"
-          >
-            {t('quote.button')}
-          </motion.button>
-        </div>
+        <motion.button
+          onClick={() => setOpen(true)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-codiva-primary text-white px-5 py-3 rounded-full shadow-lg text-sm font-medium hover:bg-[#0c3e3e] transition"
+        >
+          {t('quote.button')}
+        </motion.button>
       </div>
 
       {/* Modal principal */}
