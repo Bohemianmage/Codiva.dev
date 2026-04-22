@@ -75,6 +75,20 @@ const casesMeta = [
       'EmailJS'
     ],
   },
+  {
+    name: 'Suitable',
+    url: 'https://www.suitable.mx',
+    logo: '/logos/suitable.svg',
+    tech: [
+      'Next.js',
+      'React',
+      'TypeScript',
+      'Tailwind',
+      'Supabase',
+      'Vercel',
+      'Framer Motion',
+    ],
+  },
 ];
 
 export default casesMeta;

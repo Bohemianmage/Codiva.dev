@@ -56,6 +56,7 @@ export default function TechProjectNetwork() {
     if (p.name === 'Inquilia') size = 90;
     if (p.name === 'CD648') size = 130;
     if (p.name === 'Quimialcla') size = 120;
+    if (p.name === 'Suitable') size = 110;
 
     return {
       name: p.name,

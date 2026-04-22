@@ -96,6 +96,13 @@ a {
   animation: scroll-right linear infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-scroll-left,
+  .animate-scroll-right {
+    animation: none;
+  }
+}
+
 .animate-slow {
   animation-duration: 80s;
 }

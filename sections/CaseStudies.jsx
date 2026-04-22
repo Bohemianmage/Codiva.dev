@@ -98,8 +98,9 @@ export default function CaseStudies() {
         <motion.div variants={fadeInUp}>
           {isMobile ? (
             <>
-              <div className="relative w-full overflow-x-auto scrollbar-hidden px-2 sm:px-8 mb-10">
-                <div className="flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6">
+              {/* overflow-hidden: el carrusel es solo animación; overflow-x-auto competía con el marquee en táctil */}
+              <div className="relative w-full overflow-hidden px-2 sm:px-8 mb-10 touch-pan-y">
+                <div className="flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max will-change-transform animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6">
                   {[...logos, ...logos].map((item, index) => (
                     <a
                       key={`logo-${index}`}
@@ -126,8 +127,8 @@ export default function CaseStudies() {
                 </div>
               </div>
 
-              <div className="relative w-full overflow-x-auto scrollbar-hidden">
-                <div className="flex gap-4 whitespace-nowrap min-w-max animate-scroll-left animate-slow sm:animate-medium lg:animate-fast">
+              <div className="relative w-full overflow-hidden touch-pan-y">
+                <div className="flex gap-4 whitespace-nowrap min-w-max will-change-transform animate-scroll-left animate-slow sm:animate-medium lg:animate-fast">
                   {[...techs, ...techs].map((tech, i) => {
                     const isHighlighted = activeProject
                       ? casesMeta.find(c => c.name === activeProject)?.tech.includes(tech)
