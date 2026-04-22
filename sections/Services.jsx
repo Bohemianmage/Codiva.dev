@@ -74,8 +74,8 @@ export default function Services() {
               const isExpanded = expandedIndex === index;
               const detailsId = `service-details-${index}`;
               const price = currentLang === 'es'
-                ? ['Desde $28,000 MXN', 'Desde $60,000 MXN', 'Desde $10,000 MXN/mes'][index]
-                : ['From $1,400 USD', 'From $3,000 USD', 'From $500 USD/month'][index];
+                ? ['Desde $28,000 MXN', 'Desde $60,000 MXN', 'Desde $2,000 MXN/h'][index]
+                : ['From $1,400 USD', 'From $3,000 USD', 'From $100 USD/h'][index];
 
               return (
                 <motion.div
