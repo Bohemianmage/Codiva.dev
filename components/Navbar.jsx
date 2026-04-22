@@ -79,9 +79,9 @@ export default function Navbar() {
       initial={{ y: 0 }}
       animate={{ y: showNavbar ? 0 : -80 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="w-full fixed top-0 z-50 bg-white border-b border-[#6A757A33] px-6 md:px-12 py-4 font-inter"
+      className="fixed top-0 z-50 w-full border-b border-zinc-200/80 bg-white/85 font-inter shadow-[0_4px_24px_-8px_rgba(15,23,42,0.08)] backdrop-blur-md supports-[backdrop-filter]:bg-white/75 px-6 pb-3 pt-[max(0.75rem,env(safe-area-inset-top,0px))] md:px-12 md:pb-4"
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
+      <div className="mx-auto flex max-w-7xl items-center justify-between">
         {/* Logo principal (click lleva al inicio) */}
         <motion.div
           onClick={() => scrollTo('hero')}
@@ -150,20 +150,20 @@ export default function Navbar() {
             {/* Fondo clickeable para cerrar */}
             <motion.div
               onClick={() => setMenuOpen(false)}
-              className="fixed inset-0 bg-white/80 backdrop-blur-sm z-40"
+              className="fixed inset-0 z-40 bg-zinc-900/20 backdrop-blur-[2px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             />
 
-            {/* Menú móvil */}
+            {/* Menú móvil: debajo del header, sin altura fija mágica */}
             <motion.div
               id="mobile-menu"
-              initial={{ opacity: 0, scale: 0.98, y: -4 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.98, y: -4 }}
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="fixed top-[72px] left-0 right-0 z-50 px-6 pb-6 bg-white"
+              className="absolute left-0 right-0 top-full z-50 border-b border-zinc-200/90 bg-white/95 px-6 pb-6 pt-2 shadow-lg backdrop-blur-md supports-[backdrop-filter]:bg-white/90 md:hidden"
             >
               <motion.div
                 variants={navVariants}

@@ -40,7 +40,7 @@
   "about": {
     "title": "We turn ideas into scalable digital solutions",
     "paragraph1": "At Codiva.dev, we bridge the gap between technical complexity and real-world execution. We help startups, founders, and teams bring ambitious ideas to life through secure, structured, and future-proof products.",
-    "paragraph2": "We’re more than just developers — we’re your strategic tech partner. Whether you’re starting from scratch, evolving a platform, or seeking ongoing guidance, Codiva.dev helps you grow with confidence and precision."
+    "paragraph2": "We’re more than just developers — we work with you to build and evolve digital products that ship. Whether you’re starting from scratch or improving what’s already live, Codiva.dev brings clear execution, a sustainable pace, and a solid foundation to keep growing."
   },
   "services": {
     "title": "Our Services",
@@ -84,22 +84,22 @@
         ]
       },
       {
-        "title": "CTO as a Service",
-        "description": "Ongoing tech guidance, product evolution, and strategic support.",
+        "title": "Continuous improvement & support",
+        "description": "Fixes, enhancements, and new capabilities on what’s already in production: bookings, payments, dashboards, and more.",
         "badge": "",
         "details": [
-          "Technical audit and recommendations",
-          "1–2 strategic sessions per month",
-          "Flexible remote support",
-          "Documentation and roadmap (optional)",
-          "Does not include operational execution"
+          "Backlog prioritization and monthly or sprint-based delivery",
+          "Bug fixes and UX refinements",
+          "Small features and integrations (APIs, payments, maps, etc.)",
+          "Dependency updates and careful releases",
+          "Direct communication with the people doing the work"
         ],
         "extras": [
-          "Direct technical implementation",
-          "Team training",
-          "Leadership on critical projects",
-          "Advanced audits (security, performance)",
-          "Extended technical documentation"
+          "Focused technical audits (security, performance)",
+          "Light documentation or roadmap support",
+          "Short team enablement sessions",
+          "Extra capacity for launches or migrations",
+          "Monitoring and observability improvements"
         ]
       }
     ],
@@ -138,7 +138,7 @@
       "options": {
         "webEssentials": "Web Essentials",
         "appsSystems": "Apps & Systems",
-        "cto": "CTO as a Service",
+        "continuousCare": "Continuous improvement & support",
         "other": "Other"
       }
     },

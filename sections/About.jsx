@@ -43,7 +43,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="section-spacing w-full px-6 md:px-12 flex justify-center bg-zinc-50"
+      className="section-spacing scroll-mt-24 md:scroll-mt-28 w-full px-6 md:px-12 flex justify-center bg-zinc-50"
     >
       <div
         ref={sectionRef}

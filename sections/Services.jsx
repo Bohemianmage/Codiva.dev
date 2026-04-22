@@ -48,7 +48,7 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="section-spacing w-full px-6 md:px-12 flex justify-center bg-zinc-50"
+      className="section-spacing scroll-mt-24 md:scroll-mt-28 w-full px-6 md:px-12 flex justify-center bg-zinc-50"
     >
       <div className="w-full max-w-6xl bg-white rounded-xl shadow-md px-6 md:px-12 py-12 text-center">
         <motion.div

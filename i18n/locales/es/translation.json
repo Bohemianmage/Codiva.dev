@@ -40,7 +40,7 @@
   "about": {
     "title": "Transformamos ideas en soluciones digitales escalables",
     "paragraph1": "En Codiva.dev, cerramos la brecha entre conceptos complejos y una ejecución técnica impecable. Ayudamos a startups, equipos y fundadores a convertir su visión en productos web funcionales, modernos y seguros. Desde el prototipo hasta el despliegue final, brindamos claridad técnica para cada etapa del desarrollo.",
-    "paragraph2": "No solo desarrollamos: colaboramos como aliados estratégicos para lanzar y escalar soluciones digitales de alto impacto. Ya sea que necesites construir desde cero o evolucionar tu plataforma existente, Codiva.dev asegura progreso ágil, confianza técnica y una base sólida para tu crecimiento."
+    "paragraph2": "No solo desarrollamos: trabajamos contigo para construir y evolucionar productos digitales con impacto real. Ya sea que partas de cero o necesites mejorar lo que ya tienes en producción, Codiva.dev aporta ejecución técnica clara, ritmo sostenible y una base sólida para seguir creciendo."
   },
   "services": {
     "title": "Servicios",
@@ -84,22 +84,22 @@
         ]
       },
       {
-        "title": "CTO como Servicio",
-        "description": "Acompañamiento técnico continuo, evolución de producto y visión estratégica.",
+        "title": "Evolución y soporte continuo",
+        "description": "Mejoras, correcciones y nuevas funciones sobre lo que ya está en producción: reservas, pagos, paneles y más.",
         "badge": "",
         "details": [
-          "Auditoría técnica con recomendaciones",
-          "1–2 sesiones estratégicas mensuales",
-          "Soporte remoto flexible",
-          "Documentación técnica y roadmap (opcional)",
-          "No incluye ejecución operativa directa"
+          "Priorización de backlog y entregas por sprint o mes",
+          "Corrección de bugs y ajustes de UX",
+          "Pequeñas features e integraciones (APIs, pasarelas, mapas, etc.)",
+          "Actualizaciones de dependencias y despliegues con cuidado",
+          "Comunicación directa con quien ejecuta el trabajo"
         ],
         "extras": [
-          "Implementación técnica directa",
-          "Capacitación de equipo",
-          "Liderazgo en proyectos críticos",
-          "Auditorías avanzadas (seguridad, performance)",
-          "Documentación técnica extendida"
+          "Auditoría técnica puntual (seguridad, performance)",
+          "Documentación o roadmap ligero",
+          "Capacitación breve al equipo",
+          "Picos de carga para lanzamientos o migraciones",
+          "Monitoreo y mejoras de observabilidad"
         ]
       }
     ],
@@ -138,7 +138,7 @@
       "options": {
         "webEssentials": "Esenciales Web",
         "appsSystems": "Aplicaciones & Sistemas",
-        "cto": "CTO como Servicio",
+        "continuousCare": "Evolución y soporte continuo",
         "other": "Otro"
       }
     },

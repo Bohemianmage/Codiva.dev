@@ -78,7 +78,7 @@ export default function CaseStudies() {
   return (
     <section
       id="casos"
-      className="section-spacing w-full px-6 md:px-12 flex flex-col items-center bg-zinc-50"
+      className="section-spacing scroll-mt-24 md:scroll-mt-28 w-full px-6 md:px-12 flex flex-col items-center bg-zinc-50"
     >
       <motion.div
         variants={containerVariants}

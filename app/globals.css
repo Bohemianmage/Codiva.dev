@@ -6,9 +6,19 @@
 @tailwind utilities;
 
 /* Variables base */
-html,
-body {
+html {
   scroll-behavior: smooth;
+  /* Anclas (#servicios, etc.) no quedan bajo el navbar fijo */
+  scroll-padding-top: 6.5rem;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 7rem;
+  }
+}
+
+body {
   background-color: #F9FAFB; /* Fondo oficial Codiva */
   color: #18181B;            /* Equivale a text-zinc-900 */
   font-family: 'Inter', sans-serif;

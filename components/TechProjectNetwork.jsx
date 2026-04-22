@@ -2,8 +2,15 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import casesMeta from '../utils/casesMeta';
-import { getLogoFrame, getLogoLineOffset } from '../utils/logoFrame';
+import { getLogoFrame } from '../utils/logoFrame';
 import { motion, useInView } from 'framer-motion';
+
+/** Logos landscape muy anchos se solapan en el arco superior; se escalan solo en esta vista. */
+const NETWORK_LOGO_SCALE = 0.8;
+/** Radio interior mayor = más separación angular en píxeles entre marcas. */
+const INNER_RADIUS_RATIO = 0.58;
+/** Rota la distribución para no concentrar wordmarks anchos en la misma zona. */
+const PROJECT_ANGLE_OFFSET = Math.PI / 6;
 
 export default function TechProjectNetwork() {
   const containerRef = useRef(null);
@@ -32,8 +39,8 @@ export default function TechProjectNetwork() {
   const centerY = dimensions.height / 2;
   const outerRadiusX = centerX * 0.9;
   const outerRadiusY = centerY * 0.8;
-  const innerRadiusX = outerRadiusX * 0.5;
-  const innerRadiusY = outerRadiusY * 0.5;
+  const innerRadiusX = outerRadiusX * INNER_RADIUS_RATIO;
+  const innerRadiusY = outerRadiusY * INNER_RADIUS_RATIO;
 
   const shuffledTechList = useMemo(() => {
     const techListRaw = Array.from(new Set(casesMeta.flatMap(c => c.tech)));
@@ -53,15 +60,19 @@ export default function TechProjectNetwork() {
 
   const projectPositions = casesMeta.map((p, idx) => {
     const frame = getLogoFrame(p);
+    const width = frame.width * NETWORK_LOGO_SCALE;
+    const height = frame.height * NETWORK_LOGO_SCALE;
+    const n = casesMeta.length;
+    const angle = (2 * Math.PI * idx) / n + PROJECT_ANGLE_OFFSET;
     return {
       name: p.name,
       logo: p.logo,
       url: p.url,
-      width: frame.width,
-      height: frame.height,
-      lineOffset: getLogoLineOffset(frame),
-      x: centerX + innerRadiusX * Math.cos((2 * Math.PI * idx) / casesMeta.length),
-      y: centerY + innerRadiusY * Math.sin((2 * Math.PI * idx) / casesMeta.length),
+      width,
+      height,
+      lineOffset: Math.max(width, height) / 2,
+      x: centerX + innerRadiusX * Math.cos(angle),
+      y: centerY + innerRadiusY * Math.sin(angle),
     };
   });
 
@@ -113,7 +124,7 @@ export default function TechProjectNetwork() {
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[900px] select-none"
+      className="relative w-full min-h-[920px] h-[920px] select-none"
     >
       <svg width="100%" height="100%" className="absolute top-0 left-0 z-0">
         {casesMeta.flatMap((project) => {

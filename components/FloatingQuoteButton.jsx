@@ -218,8 +218,8 @@ export default function FloatingQuoteButton() {
                           <option value={t('quote.fields.options.appsSystems')}>
                             {t('quote.fields.options.appsSystems')}
                           </option>
-                          <option value={t('quote.fields.options.cto')}>
-                            {t('quote.fields.options.cto')}
+                          <option value={t('quote.fields.options.continuousCare')}>
+                            {t('quote.fields.options.continuousCare')}
                           </option>
                           <option value={t('quote.fields.options.other')}>
                             {t('quote.fields.options.other')}
