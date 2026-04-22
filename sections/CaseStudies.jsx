@@ -6,6 +6,7 @@ import casesMeta from '../utils/casesMeta';
 import TechProjectNetwork from '../components/TechProjectNetwork';
 import useMarqueePause from '../hooks/useMarqueePause';
 import useMarqueeCopies from '../hooks/useMarqueeCopies';
+import { getLogoFrame } from '../utils/logoFrame';
 
 function shuffleArray(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
@@ -120,11 +121,19 @@ export default function CaseStudies() {
                   className="pointer-events-none absolute left-0 top-0 flex w-max opacity-0 gap-6 sm:gap-10 md:gap-14"
                   aria-hidden
                 >
-                  {logos.map((item) => (
+                  {logos.map((item) => {
+                    const frame = getLogoFrame(item);
+                    return (
                     <div
                       key={`meas-${item.name}`}
                       className="flex flex-shrink-0 items-center justify-center"
-                      style={{ height: '6rem', minWidth: '6rem' }}
+                      style={{
+                        height: '6rem',
+                        minWidth:
+                          item.logoFrame === 'landscape'
+                            ? `${frame.width / 16}rem`
+                            : '6rem',
+                      }}
                     >
                       <img
                         src={item.logo}
@@ -133,7 +142,8 @@ export default function CaseStudies() {
                         decoding="async"
                       />
                     </div>
-                  ))}
+                  );
+                  })}
                 </div>
                 <div
                   style={logosCopies.marqueeStyle}
@@ -141,7 +151,9 @@ export default function CaseStudies() {
                     'flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max will-change-transform animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6'
                   )}
                 >
-                  {logosCopies.flatWithKeys.map(({ item, key }) => (
+                  {logosCopies.flatWithKeys.map(({ item, key }) => {
+                    const frame = getLogoFrame(item);
+                    return (
                     <a
                       key={key}
                       href={item.url}
@@ -150,7 +162,13 @@ export default function CaseStudies() {
                       onMouseEnter={() => setHoveredProject(item.name)}
                       onMouseLeave={() => setHoveredProject(null)}
                       className="flex flex-shrink-0 items-center justify-center"
-                      style={{ height: '6rem', minWidth: '6rem' }}
+                      style={{
+                        height: '6rem',
+                        minWidth:
+                          item.logoFrame === 'landscape'
+                            ? `${frame.width / 16}rem`
+                            : '6rem',
+                      }}
                       aria-label={`Go to ${item.name} project`}
                     >
                       <img
@@ -164,7 +182,8 @@ export default function CaseStudies() {
                         decoding="async"
                       />
                     </a>
-                  ))}
+                  );
+                  })}
                 </div>
               </div>
 

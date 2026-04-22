@@ -26,6 +26,7 @@ const casesMeta = [
     name: 'CD648',
     url: 'https://cd648.com',
     logo: '/logos/cd648.svg',
+    logoFrame: 'landscape',
     tech: [
       'React',
       'Stripe',
@@ -46,6 +47,7 @@ const casesMeta = [
     name: 'Quimialcla',
     url: 'https://quimialcla.com.mx',
     logo: '/logos/quimialcla.svg',
+    logoFrame: 'landscape',
     tech: [
       'React',
       'Tailwind',
@@ -76,6 +78,7 @@ const casesMeta = [
     name: 'AMIDA',
     url: 'https://amida.com.mx',
     logo: '/logos/amida.svg',
+    logoFrame: 'landscape',
     tech: [
       'Next.js',
       'Tailwind',

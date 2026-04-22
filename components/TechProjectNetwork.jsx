@@ -2,10 +2,8 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import casesMeta from '../utils/casesMeta';
+import { getLogoFrame, getLogoLineOffset } from '../utils/logoFrame';
 import { motion, useInView } from 'framer-motion';
-
-/** Caja cuadrada única para todos los logos: el SVG mantiene su ratio con object-contain. */
-const LOGO_BOX_PX = 108;
 
 export default function TechProjectNetwork() {
   const containerRef = useRef(null);
@@ -53,14 +51,19 @@ export default function TechProjectNetwork() {
     y: centerY + outerRadiusY * Math.sin((2 * Math.PI * idx) / shuffledTechList.length),
   }));
 
-  const projectPositions = casesMeta.map((p, idx) => ({
-    name: p.name,
-    logo: p.logo,
-    url: p.url,
-    size: LOGO_BOX_PX,
-    x: centerX + innerRadiusX * Math.cos((2 * Math.PI * idx) / casesMeta.length),
-    y: centerY + innerRadiusY * Math.sin((2 * Math.PI * idx) / casesMeta.length),
-  }));
+  const projectPositions = casesMeta.map((p, idx) => {
+    const frame = getLogoFrame(p);
+    return {
+      name: p.name,
+      logo: p.logo,
+      url: p.url,
+      width: frame.width,
+      height: frame.height,
+      lineOffset: getLogoLineOffset(frame),
+      x: centerX + innerRadiusX * Math.cos((2 * Math.PI * idx) / casesMeta.length),
+      y: centerY + innerRadiusY * Math.sin((2 * Math.PI * idx) / casesMeta.length),
+    };
+  });
 
   const applyOffset = (from, to, distance) => {
     const dx = to.x - from.x;
@@ -119,7 +122,7 @@ export default function TechProjectNetwork() {
             const techPos = techPositions.find(t => t.name === tech);
             if (!projPos || !techPos) return null;
 
-            const logoOffset = applyOffset(projPos, techPos, projPos.size / 2);
+            const logoOffset = applyOffset(projPos, techPos, projPos.lineOffset);
 
             const isHighlighted =
               (hoveredProject && hoveredProject === project.name) ||
@@ -190,10 +193,10 @@ export default function TechProjectNetwork() {
           rel="noopener noreferrer"
           className="absolute box-border flex items-center justify-center p-2"
           style={{
-            left: `${project.x - project.size / 2}px`,
-            top: `${project.y - project.size / 2}px`,
-            width: `${project.size}px`,
-            height: `${project.size}px`,
+            left: `${project.x - project.width / 2}px`,
+            top: `${project.y - project.height / 2}px`,
+            width: `${project.width}px`,
+            height: `${project.height}px`,
             zIndex: 20,
           }}
           transition={{ duration: 0.6, delay: idx * 0.05 + 0.3 }}
