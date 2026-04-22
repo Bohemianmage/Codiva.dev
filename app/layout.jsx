@@ -24,7 +24,19 @@ export const metadata = {
   },
   description: siteDescription,
   icons: {
-    icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      {
+        url: '/android-chrome-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        url: '/android-chrome-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+    ],
   },
   manifest: '/site.webmanifest',
   verification: {
@@ -39,10 +51,11 @@ export const metadata = {
     description: siteDescription,
     images: [
       {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Codiva.dev',
+        url: '/android-chrome-512x512.png',
+        width: 512,
+        height: 512,
+        type: 'image/png',
+        alt: 'Codiva',
       },
     ],
   },
@@ -50,7 +63,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: siteTitle,
     description: siteDescription,
-    images: ['/og-image.png'],
+    images: ['/android-chrome-512x512.png'],
   },
 };
 
