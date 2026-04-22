@@ -4,6 +4,9 @@ import React, { useState, useMemo, useEffect, useRef } from 'react';
 import casesMeta from '../utils/casesMeta';
 import { motion, useInView } from 'framer-motion';
 
+/** Caja cuadrada única para todos los logos: el SVG mantiene su ratio con object-contain. */
+const LOGO_BOX_PX = 108;
+
 export default function TechProjectNetwork() {
   const containerRef = useRef(null);
   const intervalRef = useRef(null);
@@ -50,23 +53,14 @@ export default function TechProjectNetwork() {
     y: centerY + outerRadiusY * Math.sin((2 * Math.PI * idx) / shuffledTechList.length),
   }));
 
-  const projectPositions = casesMeta.map((p, idx) => {
-    let size = 100;
-    if (p.name === 'Morningstar') size = 60;
-    if (p.name === 'Inquilia') size = 90;
-    if (p.name === 'CD648') size = 130;
-    if (p.name === 'Quimialcla') size = 120;
-    if (p.name === 'Suitable') size = 110;
-
-    return {
-      name: p.name,
-      logo: p.logo,
-      url: p.url,
-      size,
-      x: centerX + innerRadiusX * Math.cos((2 * Math.PI * idx) / casesMeta.length),
-      y: centerY + innerRadiusY * Math.sin((2 * Math.PI * idx) / casesMeta.length),
-    };
-  });
+  const projectPositions = casesMeta.map((p, idx) => ({
+    name: p.name,
+    logo: p.logo,
+    url: p.url,
+    size: LOGO_BOX_PX,
+    x: centerX + innerRadiusX * Math.cos((2 * Math.PI * idx) / casesMeta.length),
+    y: centerY + innerRadiusY * Math.sin((2 * Math.PI * idx) / casesMeta.length),
+  }));
 
   const applyOffset = (from, to, distance) => {
     const dx = to.x - from.x;
@@ -194,7 +188,7 @@ export default function TechProjectNetwork() {
           href={project.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="absolute flex items-center justify-center"
+          className="absolute box-border flex items-center justify-center p-2"
           style={{
             left: `${project.x - project.size / 2}px`,
             top: `${project.y - project.size / 2}px`,
@@ -209,9 +203,8 @@ export default function TechProjectNetwork() {
           <motion.img
             src={project.logo}
             alt={project.name}
-            className="object-contain cursor-pointer"
-            style={{ width: '100%', height: '100%' }}
-            whileHover={{ scale: 1.2 }}
+            className="max-h-full max-w-full cursor-pointer object-contain"
+            whileHover={{ scale: 1.08 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
           />
         </motion.a>

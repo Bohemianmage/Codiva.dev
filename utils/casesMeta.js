@@ -1,3 +1,7 @@
+/**
+ * Por cliente: `tech` son tecnologías destacadas asociadas al trabajo (portfolio),
+ * no un inventario exhaustivo del stack en producción — validar con el cliente si se publicitan como “todo lo que usa”.
+ */
 const casesMeta = [
   {
     name: 'Inquilia',
@@ -14,6 +18,8 @@ const casesMeta = [
       'Yup',
       'Vercel',
       'Resend',
+      'TanStack Query',
+      'Sentry',
     ],
   },
   {
@@ -33,6 +39,7 @@ const casesMeta = [
       'Yup',
       'Tailwind',
       'Custom Hooks',
+      'Sentry',
     ],
   },
   {
@@ -47,6 +54,7 @@ const casesMeta = [
       'HTML/CSS',
       'Responsive Design',
       'Custom Hooks',
+      'Sentry',
     ],
   },
   {
@@ -60,6 +68,8 @@ const casesMeta = [
       'Vercel',
       'CI/CD',
       'Design Systems',
+      'TanStack Query',
+      'Radix UI',
     ],
   },
   {
@@ -72,13 +82,16 @@ const casesMeta = [
       'Framer Motion',
       'i18next',
       'Keen Slider',
-      'EmailJS'
+      'EmailJS',
+      'Zod',
+      'Radix UI',
     ],
   },
   {
     name: 'Suitable',
     url: 'https://www.suitable.mx',
     logo: '/logos/suitable.svg',
+    // Destacados acordes al tipo de producto (ops / propiedades); el producto puede usar más servicios internamente.
     tech: [
       'Next.js',
       'React',
@@ -87,6 +100,11 @@ const casesMeta = [
       'Supabase',
       'Vercel',
       'Framer Motion',
+      'Stripe',
+      'Zod',
+      'TanStack Query',
+      'Sentry',
+      'Radix UI',
     ],
   },
 ];
