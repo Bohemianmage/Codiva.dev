@@ -96,6 +96,10 @@ a {
   animation: scroll-right linear infinite;
 }
 
+.marquee-paused {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-scroll-left,
   .animate-scroll-right {

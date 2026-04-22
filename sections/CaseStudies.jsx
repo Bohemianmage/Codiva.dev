@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Heading from '../components/Heading';
 import casesMeta from '../utils/casesMeta';
 import TechProjectNetwork from '../components/TechProjectNetwork';
+import useMarqueePause from '../hooks/useMarqueePause';
 
 function shuffleArray(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
@@ -32,6 +33,8 @@ export default function CaseStudies() {
   const [logos, setLogos] = useState([]);
   const [techs, setTechs] = useState([]);
   const [isMobile, setIsMobile] = useState(false);
+  const logosMarquee = useMarqueePause();
+  const techMarquee = useMarqueePause();
 
   useEffect(() => {
     setIsMobile(typeof window !== 'undefined' && window.innerWidth < 768);
@@ -98,9 +101,16 @@ export default function CaseStudies() {
         <motion.div variants={fadeInUp}>
           {isMobile ? (
             <>
-              {/* overflow-hidden: el carrusel es solo animación; overflow-x-auto competía con el marquee en táctil */}
-              <div className="relative w-full overflow-hidden px-2 sm:px-8 mb-10 touch-pan-y">
-                <div className="flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max will-change-transform animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6">
+              {/* Scroll horizontal manual: la animación se pausa mientras hay gesto/scroll (useMarqueePause) */}
+              <div
+                className="relative w-full overflow-x-auto scrollbar-hidden px-2 sm:px-8 mb-10 touch-pan-x overscroll-x-contain"
+                {...logosMarquee.containerProps}
+              >
+                <div
+                  className={logosMarquee.innerClassName(
+                    'flex gap-6 sm:gap-10 md:gap-14 whitespace-nowrap min-w-max will-change-transform animate-scroll-right animate-slow sm:animate-medium lg:animate-fast pb-6 pt-6'
+                  )}
+                >
                   {[...logos, ...logos].map((item, index) => (
                     <a
                       key={`logo-${index}`}
@@ -127,8 +137,15 @@ export default function CaseStudies() {
                 </div>
               </div>
 
-              <div className="relative w-full overflow-hidden touch-pan-y">
-                <div className="flex gap-4 whitespace-nowrap min-w-max will-change-transform animate-scroll-left animate-slow sm:animate-medium lg:animate-fast">
+              <div
+                className="relative w-full overflow-x-auto scrollbar-hidden touch-pan-x overscroll-x-contain"
+                {...techMarquee.containerProps}
+              >
+                <div
+                  className={techMarquee.innerClassName(
+                    'flex gap-4 whitespace-nowrap min-w-max will-change-transform animate-scroll-left animate-slow sm:animate-medium lg:animate-fast'
+                  )}
+                >
                   {[...techs, ...techs].map((tech, i) => {
                     const isHighlighted = activeProject
                       ? casesMeta.find(c => c.name === activeProject)?.tech.includes(tech)
