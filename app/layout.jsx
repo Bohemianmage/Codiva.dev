@@ -38,7 +38,6 @@ export const metadata = {
       },
     ],
   },
-  manifest: '/site.webmanifest',
   verification: {
     google: 'vaG5cbLjCNMZe1GDYegB9d3X1f8XFODHZGmk4PtJjFA',
   },
