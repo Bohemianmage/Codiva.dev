@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import casesMeta from '../utils/casesMeta';
+import { CaseStudyLogo } from './CaseStudyLogo';
 import { getLogoFrame } from '../utils/logoFrame';
 import { motion, useInView } from 'framer-motion';
 
@@ -214,12 +215,14 @@ export default function TechProjectNetwork() {
           onMouseEnter={() => handleMouseEnterProject(project.name)}
           onMouseLeave={handleMouseLeave}
         >
-          <motion.img
-            src={project.logo}
+          <CaseStudyLogo
+            item={casesMeta.find((c) => c.name === project.name) ?? { logo: project.logo }}
             alt={project.name}
             className="max-h-full max-w-full cursor-pointer object-contain"
-            whileHover={{ scale: 1.08 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            motionProps={{
+              whileHover: { scale: 1.08 },
+              transition: { type: 'spring', stiffness: 260, damping: 20 },
+            }}
           />
         </motion.a>
       ))}

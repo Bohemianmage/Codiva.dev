@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import Heading from '../components/Heading';
+import { CaseStudyLogo } from '../components/CaseStudyLogo';
 import casesMeta from '../utils/casesMeta';
 import TechProjectNetwork from '../components/TechProjectNetwork';
 import useMarqueePause from '../hooks/useMarqueePause';
@@ -135,11 +136,10 @@ export default function CaseStudies() {
                             : '6rem',
                       }}
                     >
-                      <img
-                        src={item.logo}
+                      <CaseStudyLogo
+                        item={item}
                         alt=""
                         className="h-full w-auto object-contain"
-                        decoding="async"
                       />
                     </div>
                   );
@@ -171,15 +171,14 @@ export default function CaseStudies() {
                       }}
                       aria-label={`Go to ${item.name} project`}
                     >
-                      <img
-                        src={item.logo}
+                      <CaseStudyLogo
+                        item={item}
                         alt={`${item.name} logo`}
                         className={`h-full w-auto object-contain transition-all duration-300 ${
                           activeProject === item.name
                             ? 'scale-110 drop-shadow-lg'
                             : 'opacity-60 md:opacity-100'
                         }`}
-                        decoding="async"
                       />
                     </a>
                   );

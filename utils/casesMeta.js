@@ -108,6 +108,22 @@ const casesMeta = [
       'Radix UI',
     ],
   },
+  {
+    name: 'YOU.',
+    url: 'https://www.yousoluciones.com',
+    logo: '/logos/you-soluciones-inmobiliarias.png',
+    /** Lockup en fondo negro: se muestra sobre contenedor oscuro en la sección de casos. */
+    logoSurface: 'dark',
+    tech: [
+      'Next.js',
+      'Tailwind',
+      'i18n',
+      'Vercel',
+      'Framer Motion',
+      'Zod',
+      'Sentry',
+    ],
+  },
 ];
 
 export default casesMeta;
