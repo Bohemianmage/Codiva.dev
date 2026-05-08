@@ -111,7 +111,7 @@ const casesMeta = [
   {
     name: 'YOU.',
     url: 'https://www.yousoluciones.com',
-    logo: '/logos/you-soluciones-inmobiliarias.png',
+    logo: '/logos/you-soluciones-inmobiliarias.svg',
     /** Lockup en fondo negro: se muestra sobre contenedor oscuro en la sección de casos. */
     logoSurface: 'dark',
     tech: [
